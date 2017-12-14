@@ -6,8 +6,11 @@ public class UtilityClass {
         a.add(10);
         a.add(10 >> 1);
         a.add(21);
-        System.out.println(a.get(1));
+
         a.remove(2);
+        a.add(0,22);
+        System.out.println(a.get(1));
+
 
     }
 }
