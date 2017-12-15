@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Scanner;
 
-public class UtilityClass {
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("How many number of Strings you want to enter ?");
@@ -18,6 +18,8 @@ public class UtilityClass {
 
         System.out.println(evalRPN(input));
     }
+
+//=========================================================
 
     public static int evalRPN(ArrayList<String> tokens) {
         // Check if the input can be count
