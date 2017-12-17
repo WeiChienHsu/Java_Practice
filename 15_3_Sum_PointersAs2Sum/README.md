@@ -36,7 +36,6 @@ Arrays.sort(num)
 List<List<Integer>> res = new LinkedList<>(); 
 ```
 
-
 - Pointers
 * Set up a pointer
 ```java
