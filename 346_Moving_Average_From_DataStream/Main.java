@@ -14,7 +14,7 @@ public class MovingAverage {
 
     publid double next(int val) {
         if(queue.size() == size) {
-            int last = queue.pullLast();
+            int last = queue.pullFirst();
             sum -= last;
         }
 
