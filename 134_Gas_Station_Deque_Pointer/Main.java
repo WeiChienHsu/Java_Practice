@@ -1,29 +1,27 @@
 class Solution {
-    public int canCompleteCircuit(int[] gas, int[] cost) {
-        if (gas == null || cost == null) {
-            return -1;
+    public void sortColors(int[] nums) {
+        if(nums == null || nums.length < 1){
+            return;
         }
         
-        if (gas.length != cost.length) {
-            return -1;
-        }
+        int left = 0; //Left boundary of processed 0
+        int right = nums.length -1; // Right boundary of processed 2
+        int cur = 0; // Scanner for un processed data
         
+        while(cur <= right) {
+            if(nums[cur]  == 2) {
+                nums[cur] = nums[right];
+                nums[right] = 2;
+                right --;
+                cur --;
+            } else if(nums[cur] == 0) {
+                nums[cur] = nums[left];
+                nums[left] = 0;
+                left ++;
+            } 
+            // Meet 1 and after switched
+            cur ++;
 
-        int start = gas.length - 1;
-        int end = 0;
-        int sum = gas[start] - cost[start];
-        
-        while(start > end) {
-            // Enough gas
-            if(sum >= 0) {
-                sum += gas[end] - cost[end]; // count the remain gas
-                end++  ; // keep move on
-            } else { // Not enough Gas
-                start--  ; // brower gas from last gas station
-                sum += gas[start] - cost[start];
-            }
         }
-        return sum >= 0 ? start : -1;
-
     }
 }
