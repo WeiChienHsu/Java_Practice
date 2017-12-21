@@ -1,8 +1,24 @@
-# Merge Sort
+# Merge Sort - Recurision
+
+```
+           38  27  43  3  9  10  80
+                      / \
+        38 27 43 3         9  10  80
+            / \              /  \
+    38 27      43  3      9  10    80
+     / \         / \       / \     /
+   38    27    43     3   9   10   80
+   |---------a--------|   |----b----|
+
+   
+```
 
 - Keeping finding the middle value on an array.
 - Give a helper integer array to record all value.
 - Until you separate each number into the end.
+- The end point is while start = end, thus you return the value, Recurision will be end and into the merge period.
+
+
 ```java
    private static void doSort(int[] arr, int[] helper, int start, int end) {
         // End the recursion
@@ -20,6 +36,13 @@
 
 
 - Then, merge all separate number together by comparing two final arraies with each other.
+- By using aCur pointer and bCur pointer to choose the less number pushing into array.
+- You might face four situtions
+* Chosen all a area numbers already.
+* Chosen all b area numbers already.
+* Pointed number in a > b.
+* Pointed number in b > a.
+
 ```java
 private static void merge(int[] arr, int[] helper, int aStart, int aEnd, int bEnd) {
     // Copy arr from aStart to bEnd
@@ -46,12 +69,6 @@ private static void merge(int[] arr, int[] helper, int aStart, int aEnd, int bEn
 
     }
 ```
-- Recurision 
-
-```
-           38  27  43  3  9  10  80
-                      / \
-        38 27 43 3         9  10  80
+-  
 
 
-```
