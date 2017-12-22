@@ -53,6 +53,100 @@ Key = 9
    / \   
   2    10  
  / \
-1   5
+1  *5
 
 Find 9 and go through left subtree and Find 5
+->> Change value 9 to 5
+
+      12
+     / 
+   *5   
+   / \   
+  2    10  
+ / \
+1  *5
+
+--> Remove 5 in the leaf
+      12
+     / 
+   *5   
+   / \   
+  2    10  
+ / 
+1 
+```
+
+## Used dummy node to deal with root
+```java
+    TreeNode dummy = new TreeNode(Integer.MIN_VALUE);
+    dummy.left = root;
+    TreeNode prev = dummy;
+    TreeNode cur = root;
+```
+## Find the Node with key
+- key is smaller, go left
+- key is larger, go right
+```java
+        while(cur != null && cur.val != key) {
+            prev = cur;
+            if(cur.val < key) {
+                cur = cur.right;
+            } else {
+                cur = cur.left;
+            }
+        }
+```
+
+## If no found, return the whole tree
+```java
+if(cur == null) return dummy.left;
+```
+
+## Found the key, give a pointer "target" to it
+```java
+TreeNode target = cur;
+```
+
+## Two Children
+- if left and right not null, keeping going left, until left is null (but right not null), go right!
+- Change the target value to that key value
+```java
+if(cur.left != null && cur.right != null) {
+    prev = cur;
+    cur = cur.left;
+    while(cur.right != null) {
+        prev = cur;
+        cur = cur.right;
+    }
+    // Change value  
+    target.val = cur.val;
+}
+```
+
+## One or child
+- Now the node only have one child or no child
+- For no child (cur.left == null):
+* if node on the pre left, give the cur right to it
+* if node on the pre right, gitve the cur right to it
+- For onw child on the left side:
+* if node on the pre left, give the cur left to its left side
+* if node on the pre right, gitve the cur left to its left side
+
+```java
+        if(cur.left == null) {
+            if(prev.left == cur) {
+                prev.left = cur.right;
+            } else {
+                prev.right = cur.right;
+            }
+        } else {
+            if(prev.left == cur) {
+                prev.left = cur.left;
+            } else {
+                prev.right = cur.left;
+            }
+```
+- Return the dummy left (whole tree
+```java
+return dummy.left;
+```
