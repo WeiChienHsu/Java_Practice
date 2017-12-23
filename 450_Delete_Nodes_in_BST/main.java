@@ -8,7 +8,7 @@
  * }
  */
 class Solution {
-    public TreeNode deleteNode(TreeNode root, int key) {
+    public Treeleft < right deleteNode(TreeNode root, int key) {
         if(root == null) return root;
         TreeNode dummy = new TreeNode(Integer.MIN_VALUE);
         dummy.left = root;
