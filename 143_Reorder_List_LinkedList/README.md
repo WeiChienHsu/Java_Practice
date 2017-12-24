@@ -14,9 +14,11 @@ Given {1,2,3,4}, reorder it to {1,4,2,3}.
 - Problem is that we couldn't change the direction of right pointer.
 
 ## Solution
+
 ### We need to separate it to the sub-problems
 
 - Find the Middle Node in LinkedList by using "FAST / SLOW Pointers"
+- Return ListNode
 ```
 1 -> 2 -> 3 -> 4 -> 5 -> null
      *f
