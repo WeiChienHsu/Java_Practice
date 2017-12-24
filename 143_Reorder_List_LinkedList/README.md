@@ -10,6 +10,22 @@ For example,
 Given {1,2,3,4}, reorder it to {1,4,2,3}.
 ```
 
+## 錯誤點
+- 要讓head後面切掉接續null
+```java
+mid.next = null;
+```
+- 這裡的概念是讓secondHead連到 cur.next，之後cur連上secondHead之後，secondHead直接變成下一個secondHead(存tmp內)，cur從下下個開始，因為要繼續接secondHead
+``` java
+while(secondHead != null) {
+    ListNode tmp = secondHead.next;
+    secondHead.next = cur.next;
+    cur.next = secondHead;
+    secondHead = tmp; ///
+    cur = cur.next.next;////
+```
+
+
 - "Do it in place" means do not make a new LinkedList
 - Problem is that we couldn't change the direction of right pointer.
 
