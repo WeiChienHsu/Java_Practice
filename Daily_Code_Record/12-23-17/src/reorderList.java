@@ -21,7 +21,7 @@ public class reorderList {
         // Reverse the second
         secondHead = reverse(secondHead);
         //Reconnect
-//        head = merge(head, secondHead);
+        head = merge(head, secondHead);
 
         ListNode current = head;
 
