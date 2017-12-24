@@ -29,6 +29,29 @@ null <-  1   2  ->  3  ->  4
             tmp
 ```
 
+### Logic of subList
+```
+
+D -> O -> O | O -> O
+
+1. Reverse
+
+D -> O <- O | O -> O
+
+2. Save tail point to the second head
+
+D -> O <- O | O -> 0
+     |        |
+      --------
+
+3. pointer to the preHead change to the newHead
+
+D  0 <- 0 | 0  -> 0 | 
+|__|____|   |
+   |________|
+
+```
+
 - Separate each K number : we need two pointers
 * Head: Track the number next we need to connect wiht
 * Tail: Deal with the reverse
