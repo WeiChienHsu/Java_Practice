@@ -13,6 +13,8 @@
 
 ## Solution
 
+## In java, comparing string should use equals not ==.
+
 - Check if the input is invaild
 ```java
 if(tokens == null || tokens.size() == 0){
