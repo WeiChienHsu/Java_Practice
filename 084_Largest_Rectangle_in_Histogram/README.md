@@ -31,7 +31,13 @@ cur > stack.peek() ---> Offer 現在這塊可以包含前面的面積
 cur <= stack.peeK() ---> Continuously Poll 往前結算 - > poll out stack.peek -> calculate area
 右邊界：下個存不進來的
 左邊界：上個比她小的
+
 ```
+* Don't forget:
+```java
+int leftBound = stack.isEmpty()? 0 : stack.peekLast() + 1;
+```
+
 ## Demo
 ```
 height [3, 1, 2, 3, 4, 5, 1]
