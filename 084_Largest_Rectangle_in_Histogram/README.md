@@ -36,15 +36,17 @@ cur <= stack.peeK() ---> Continuously Poll 往前結算 - > poll out stack.peek 
 ```
 height [3, 1, 2, 3, 4, 5, 1]
 index   0  1  2  3  4  5  6  0 <- for the corner case (met the last number)
-
--> pointer : 0
+```
+- -> pointer : 0
+```
 curVal = height[0] = 3
 stack.isEmpty() -> offerLast(i)
  ________
 | 0
  --------
-
--> pointer : 1
+ ```
+ - -> pointer : 1
+ ```
 curVal = height[1] = 1
 stack.peek -> 0 = height[stack.peek] -> 3 > curVal : couldn't count in 
 !stack.isEmpty() -> pollLast()
@@ -55,8 +57,10 @@ stack.peek -> 0 = height[stack.peek] -> 3 > curVal : couldn't count in
  L                      R      Height                  Area
  0 : stack.peek + 1     i      hieght[pollLast()]
  0                      1       3                      = 3
+```
 
--> pointer : 2
+- -> pointer : 2
+```
 curVal = height[2] = 2
 stack.isEmpty() -> offerLast(i)
  ________
@@ -66,8 +70,10 @@ stack.isEmpty() -> offerLast(i)
  L                      R      Height                  Area
  0 : stack.peek + 1     i      hieght[pollLast()]
  0                      1       3                      = 3
+```
 
--> pointer : 3
+- -> pointer : 3
+```
 curVal = height[3] = 3
 stack.isEmpty() -> offerLast(i)
  ________
@@ -77,8 +83,10 @@ stack.isEmpty() -> offerLast(i)
  L                      R      Height                  Area
  0 : stack.peek + 1     i      hieght[pollLast()]
  0                      1       3                      = 3
+```
 
- -> pointer : 4
+-  -> pointer : 4
+```
 curVal = height[4] = 4
 stack.isEmpty() -> offerLast(i)
  ________
@@ -89,7 +97,9 @@ stack.isEmpty() -> offerLast(i)
  0 : stack.peek + 1     i      hieght[pollLast()]
  0                      1       3                      = 3
 
- -> pointer : 5
+```
+-  -> pointer : 5
+```
 curVal = height[5] = 5
 stack.isEmpty() -> offerLast(i)
  ________
@@ -99,8 +109,9 @@ stack.isEmpty() -> offerLast(i)
  L                      R      Height                  Area
  0 : stack.peek + 1     i      hieght[pollLast()]
  0                      1       3                      = 3
-
- -> pointer : 6
+```
+-  -> pointer : 6
+```
 curVal = height[6] = 1
 stack.peek -> 5 = height[stack.peek] -> 5 > curVal : couldn't count in 
 !stack.isEmpty() -> pollLast()
@@ -112,10 +123,13 @@ stack.peek -> 5 = height[stack.peek] -> 5 > curVal : couldn't count in
  0 : stack.peek + 1     i      hieght[pollLast()]
  0                      1       3                      = 3
  5                      6       5                      = 5
+```
 
+```
  ***** Need to clear the Stack
-
-  -> pointer : 6
+```
+-   -> pointer : 6
+```
 curVal = height[6] = 1
 stack.peek -> 4 = height[stack.peek] -> 4 > curVal : couldn't count in 
 !stack.isEmpty() -> pollLast()
@@ -128,8 +142,10 @@ stack.peek -> 4 = height[stack.peek] -> 4 > curVal : couldn't count in
  0                      1       3                      = 3
  5                      6       5                      = 5
  4                      6       4                      = 8
+```
 
-   -> pointer : 6
+-    -> pointer : 6
+```
 curVal = height[6] = 1
 stack.peek -> 3 = height[stack.peek] -> 3 > curVal : couldn't count in 
 !stack.isEmpty() -> pollLast()
@@ -143,8 +159,10 @@ stack.peek -> 3 = height[stack.peek] -> 3 > curVal : couldn't count in
  5                      6       5                      = 5
  4                      6       4                      = 8
  3                      6       3                      = 9
+```
 
-   -> pointer : 6
+-  -> pointer : 6
+```
 curVal = height[6] = 1
 stack.peek -> 2 = height[stack.peek] -> 2 > curVal : couldn't count in 
 !stack.isEmpty() -> pollLast()
@@ -161,8 +179,9 @@ stack.peek -> 2 = height[stack.peek] -> 2 > curVal : couldn't count in
  3                      6       3                      = 9
  2                      6       2                      = 8
 
-
-   -> pointer : 6
+```
+-    -> pointer : 6
+```
 curVal = height[6] = 1
 stack.peek -> 2 = height[stack.peek] -> 2 > curVal : couldn't count in 
 stack.isEmpty() -> offerLast(i)
@@ -177,10 +196,10 @@ stack.isEmpty() -> offerLast(i)
  4                      6       4                      = 8
  3                      6       3                      = 9
  2                      6       2                      = 8
+```
 
-
-********
--> pointer : 7 (which is set to curVal = 0)
+- -> pointer : 7 (which is set to curVal = 0)
+```
 curVal = height[7] = 0
 stack.peek -> 6 = height[stack.peek] -> 1 > curVal : couldn't count in 
 !stack.isEmpty() -> pollLast()
@@ -196,10 +215,9 @@ stack.peek -> 6 = height[stack.peek] -> 1 > curVal : couldn't count in
  3                      6       3                      = 9
  2                      6       2                      = 8
  0                      6       1                      = 6
-
+```
+ ```
  Max = 9
-
-
  ```
 
 - curVal = i == height.length ? 0 : height[i]
