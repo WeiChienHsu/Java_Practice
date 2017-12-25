@@ -1,7 +1,7 @@
 
 public class SimplfyString {
     public static void main(String[] args) {
-        String s = "/a/./b/../../c/";
+        String s = "/.";
 
         System.out.println(simplifyPath(s));
     }
