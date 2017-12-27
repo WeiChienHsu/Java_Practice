@@ -22,14 +22,11 @@ class Solution {
             fast = fast.next;
             n --;
         }
-        
         while(fast.next != null) {
             fast = fast.next;
             slow = slow.next;
         }
-        
         slow.next = slow.next.next;
         return dummy.next;
-        
     }
 }
