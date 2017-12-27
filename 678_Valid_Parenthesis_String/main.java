@@ -2,7 +2,6 @@ class Solution {
     public boolean checkValidString(String s) {
         Deque<Integer> pStack = new ArrayDeque<>();
         Deque<Integer> sStack = new ArrayDeque<>();
-
         for(int i = 0; i < s.length(); i++) {
             if(s.charAt(i) == '(') {
                 pStack.offerLast(i); // Offer into an index to know the position between "(" & "*"
@@ -18,7 +17,7 @@ class Solution {
                 }
             }
         }
-
+        
         // **((  is useless
         
         while(!pStack.isEmpty() && !sStack.isEmpty()) {
@@ -26,7 +25,6 @@ class Solution {
                 return false;
             }
         }
-
         return pStack.isEmpty();
     }
 }

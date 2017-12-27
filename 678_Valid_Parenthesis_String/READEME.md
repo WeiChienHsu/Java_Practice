@@ -40,7 +40,7 @@ for(int i = 0; i < s.length(); i++) {
 }
 ```
 
-
+## Corner Case when going through String
 - After going through the string, chek the index of s and p Sracks
 - Since if * is behind (, it couldn't be seen as ).
 - Record the index instead of char, then we could use this value to see the result.
