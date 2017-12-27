@@ -12,7 +12,7 @@ Return the starting gas station's index if you can travel around the circuit onc
 - Not Nature, it takes O(n^2)
 
 ### Second Thought - Queue
-- We onlu care about "gas_left_if_move"
+- We only care about "gas_left_if_move"
 - Add new Node if there is enough gas
 - Remove the first Node if there is no enough gas
 - Queue: First in first out
@@ -55,3 +55,8 @@ else { // Not enough Gas
 ```java
 return sum >= 0 ? start : -1;
 ```
+
+## Direct solution
+- Whenever the sum is negative, reset it and let the car start from next point.
+- In the mean time, add up all of the left gas to total. If it's negative finally, return -1 since it's impossible to finish.
+- If it's non-negative, return the last point saved in res;
