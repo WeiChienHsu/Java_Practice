@@ -1,19 +1,32 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
 class Solution {
-    public int canCompleteCircuit(int[] gas, int[] cost) {
-      int size = gas.length;
-        int sum = 0;
-        int start = 0;
-        int left_gas = 0;
-        
-        for(int i = 0; i < size; ++i){
-            sum += gas[i] - cost[i];
-            if( sum < 0){
-                left_gas += sum;
-                sum = 0;
-                start = i+1;
-            }
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head == null || head.next == null) {
+            return null;
         }
-        left_gas += sum;
-        return left_gas < 0? -1 : start;
+        
+        ListNode dummy = new ListNode(0);
+        ListNode slow = dummy;
+        ListNode fast = dummy;
+        dummy.next = head;
+        
+        // Fast pointer Move n step
+        while(n > 0) {
+            fast = fast.next;
+            n --;
+        }
+        while(fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return dummy.next;
     }
 }

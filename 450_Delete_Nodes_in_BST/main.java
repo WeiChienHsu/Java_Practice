@@ -82,3 +82,66 @@ public class reorderList {
         
 
 }
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        if(head == null || head.next == null || head.next.next == null) {
+            return;
+        } 
+        
+        // mid: 3 -> 4 -> null
+        // secondHead: 3 -> 4 -> null
+        ListNode mid = findMid(head);
+        ListNode secondHead = mid.next;
+        mid.next = null;
+        
+        // head: 1 -> 2 -> null
+        // secondHead: 4 -> 3 -> null
+        secondHead = reverse(secondHead);
+        // 1 -> 4 -> 2 -> 3 -> null
+        head = merge(head, secondHead);
+        
+    }
+    
+    public ListNode findMid(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    
+    public ListNode reverse(ListNode head) {
+        ListNode cur = head;
+        ListNode pre = null;
+        while(cur != null) {
+            ListNode temp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
+        }
+        return pre;
+    }
+
+    public ListNode merge(ListNode head, ListNode secondHead){
+        ListNode cur = head;
+        
+        while(secondHead != null) {
+            ListNode tmp = secondHead.next;
+            secondHead.next = cur.next;
+            cur.next = secondHead;
+            secondHead = tmp; ///
+            cur = cur.next.next;////
+        }
+        return head; 
+    }
+    }
