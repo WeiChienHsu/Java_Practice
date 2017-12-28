@@ -1,4 +1,4 @@
-# Top K Frequent Elements
+# Top K Frequent Elements _ Bucket Sort
 
 ## Given a non-empty array of integers, return the k most frequent elements.
 
@@ -9,7 +9,99 @@ For example,
 Given [1,1,1,2,2,3] and k = 2, return [1,2].
 ```
 
+***
+## Good to know this way to init the map from Array !!!!!! 
+```java
+for(int n: nums) {
+    map.put(n, map.getOrDefault(n, 0) + 1);
+    }
+```
+
+## Concept of Heap- O(nlogK) !!!!!
+```
+num     2  1  7  5  3  12
+
+count   5  6  1  3  2   7 
+
+A Heap with size.() = k
+
+      /    \
+     /      \ 
+    /  2-5   \
+   /   1-6    \
+
+
+7-1 / 5-3 / 3 -2 couldn't add in
+But we could add in 12-7 since 7 > 5
+
+      /     \
+     /       \ 
+    /  12-7   \
+   /   1-6     \
+
+0 n(lognK)
+
+```
+
+## Quick Serach - Amanitize O(n)
+```
+num     2  1  7  5  3  12   4
+
+count   5  6  1  3  2   7   4
+
+Chose 4 to be a pivot
+Two pointers to be the boundry, larger than 5 will be on the right, less than 5 will be on the left
+
+
+num     2  1  7  5  3  12   4
+
+count   5  6  1  3  2   7   4
+        *
+        l                   r
+
+count   5  4  1  3  2   7   6
+           *
+        l               r       
+
+count   4  5  1  3  2   7   6
+              *
+           l            r      
+
+count   4  1  5  3  2   7   6
+                 *
+              l         r          
+
+count   4  1  3  5  2   7   6
+                    *
+                 l      r                    
+
+count   4  1  3  2  5   7   6
+                        *
+                    l   r     
+
+count   4  1  3  2  5   7   6
+
+```
+
+## Bucket Sort!!!!!!
+
+
+
+***
+
+
 ## Solution - Bucket Sort
+
+
+* At least use O(n) to go through the array.
+```
+class Num{
+    int val;
+    int count;
+}
+```
+* If we need to sort the array, it should take O(nlogn).
+
 - Scaned and Used HashMap to record the number
 - Map<number, frequency>
 ```
@@ -25,6 +117,9 @@ for(int n : nums) {
     frequencyMap.put(n, frequencyMap.getOrDefault(n,0) +1 );
 }
 ```
+
+## Heap 堆
+
 
 - Create a bucket list with space n + 1 to save the number
 
