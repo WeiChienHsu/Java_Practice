@@ -126,12 +126,69 @@ private static class Node<E> {
 - Closest Binary tree value 2 -
 
 #### Discussion 12_22
+- Sorted Array to BST --- divide conquer
+- Spiral Matrix --- scan l->r u->b r->l b->u
+- Merge Sort --- divide conquer merge
+- Search in Rotated Sorted Array --- binary search
+- ZigZag Level Order Traversal  --- bfs --- if the res save treenode, use res sublist as pointer
+- Delete a Node in BST 
+
+#### Week2
+#### Java Foundation
+- 2's complement, Modular/Remainder operation, X mod 2 ^ n = X & (2 ^ n - 1)
+- Hash Code: many to one
+- Hashing: Probing vs Separate Chain
+- Hash Table: Load factor, Rehashing
+- Java HashMap: Use separate chain, modular optimization
+- Java HashSet: Wrapper of Hashmap
+- TreeMap: Red-black tree, sorted keys, O(log N)
+- JVM: virtual machine as running environment
+- Stack space, heap space, GC
+
+#### Java pre-Algorithm
+- copyRandomList
+- copyRandomList_method2
+- isBadVersion
+- upsideDownBinaryTree
+- upsideDownBinaryTree_method2
+- Level Order Traversal
+- Search a 2D Matrix
+- Symmetric tree
+- Longest consecutive Sequence
+- Search/Insert a Node in BST
+- Validate a BST
+
+#### Java Algorithm
 - Sorted Array to BST
 - Spiral Matrix
 - Merge Sort
 - Search in Rotated Sorted Array
-- ZigZag Level Order Traversal 
-- Delete a Node in BST 
+- ZigZag Level Order Traversal
+- Delete a Node in BST
+- Path Sum I~V -
+- Largest BST SubTree -
 
+#### Java Advanced Algorithm
+- sqrt -
+- Count Complete Tree Nodes -
+- Find Leaves of Tree -
+- Invert Binary tree -
+- Largest BST -
+- Russian Doll Envolopes -
+- Is Subsequence -
+- Split Array Largest Sum -
+
+#### Discussion 12_26
+- path Sum
+- Two sum - method 1
+- Two sum - method 2
+- Remove N th Node From Tail 
+- Sort Colors
+- Valid Parentheses
+- Three Sum - method1
+- Three Sum - method2
+- Reverse Node in k-Group
+
+***
 
 - Course contents are summarized by @[mwangxx0129](https://github.com/mwangxx0129)

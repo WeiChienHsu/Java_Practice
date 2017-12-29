@@ -1,18 +1,23 @@
-class Solution {
-
-    public int removeDuplicates(int[] nums){
-        if (nums == null || nums.length == 0) {
-            return 0;
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head == null) return null;
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode start = head;
+        
+        while(fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) {
+                // when there is a circle
+                while(slow != start) {
+                    slow = slow.next;
+                    start = start.next;
+                }
+                return start;
+            }  
         }
-
-        int index = 0;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[index] == nums[i]) {
-                continue;
-            } else {
-                nums[++index] = nums[i];
-            }
-        }
-        return index + 1;
+        // There is no circle
+        return null;
     }
 }
