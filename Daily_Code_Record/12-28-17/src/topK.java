@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class topK {
-    
+
     public static void main(String[] args) {
         int[] nums = {1,1,1,2,4,5,2,1};
         int k = 2;
