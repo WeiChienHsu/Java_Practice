@@ -39,6 +39,6 @@ class Solution {
             sb.deleteCharAt(0);
         }
 
-        return sb.toString();   
+        return sb.length() == 0? "0" : sb.toString();
     }
 }

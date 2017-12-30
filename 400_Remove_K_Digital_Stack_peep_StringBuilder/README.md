@@ -32,6 +32,7 @@ Explanation: Remove all the digits from the number and it is left with nothing w
 - StringBuilder to deal with add and reverse number
 - Remove all those character '0' in fort of number. ex "00324" -> "324"
 - Make a StringBuilder back toString().
+* Think about when the input = [1,0] and k = 2, what should I have to return.!!!!!!!!!
 
 
 ```
@@ -109,7 +110,7 @@ public String removeKdigits(String num, int k) {
         sb.deleteCharAt(0);
     }
 
-    return sb.toString();   
+    return sb.length() == 0? "0" : sb.toString();  
 }
 }
 ```
