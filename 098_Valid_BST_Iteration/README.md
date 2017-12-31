@@ -1,7 +1,9 @@
-# Valid Binary Search Tree
+# Valid Binary Search Tree - Iteration
 
 
 ## Given a binary tree, determine if it is a valid binary search tree (BST).
+
+- If we gave a in-order travesal and get an array, then we could check if this array is from the small to the large.
 
 ```
 Assume a BST is defined as follows:
