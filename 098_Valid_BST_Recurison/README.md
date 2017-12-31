@@ -1,7 +1,9 @@
 # Valid BST Recurison
-
-- Used a helper Function
+- Give a reasonable Range!!!!!
+- Different from the Iteration methods we compare each Node with the previous one.
 - Recurse Down: Pass Valid range down
+
+
 ```
 helper(current_node, min, max)
 ```
