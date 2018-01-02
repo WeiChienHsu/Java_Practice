@@ -99,3 +99,44 @@ For the third Level -> !isLeftToRight
             deque.addFirst(current.left);
         }
 ```
+
+## Solution
+- 1. Give a res List<List<Integer>>
+```java
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+```
+- 2. Used a Queue to record the nodes and pop out afer we're going to record its value
+- 3. add root firstly into the queue.
+```java
+ Deque<TreeNode> queue = new ArrayDeque<>();     
+        queue.offerLast(root);
+        boolean order = true;
+```
+- 4. Give a size for each level and the for loop depends on the size of each level
+```java
+        int size = queue.size();
+```
+
+- In while loop:
+
+- 5. Given a temperory list to record the value of node we visited, by using [n.val] and [0, n.val] to separate different order
+- 6. Used a Queue to record the nodes we visited, add in left and then right
+```java
+     for(int i = 0; i < size ; i++) {
+                // poll out the node and add in the temp list
+                TreeNode cur = queue.pollFirst();
+                if(order) {
+                    list.add(cur.val);
+                } else {
+                    list.add(0, cur.val);
+                }
+                if(cur.left != null) queue.offerLast(cur.left);
+                if(cur.right != null) queue.offerLast(cur.right);
+            }
+```
+- 5. Used a variable oreder to record different level, after traveling for each level, change the status of order 
+```java
+            res.add(list);
+            size = queue.size();
+            order = !order;
+```
