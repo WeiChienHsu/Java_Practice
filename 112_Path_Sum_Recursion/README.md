@@ -19,6 +19,7 @@ Return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 - Make sure if that's the leaf (root.right and root.left == null)
 - send the value of "sum - root.val" to the next Level
 - Used root == null return false to send function back to last level
+
 ```java
     public boolean hasPathSum(TreeNode root, int sum) {
         
