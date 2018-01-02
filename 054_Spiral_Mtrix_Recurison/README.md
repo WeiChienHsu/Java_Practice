@@ -147,3 +147,19 @@ for(int i = offset + row - 1; i > offset; i --) {
 ```java
         helper(res, m, row - 2, col - 2, offset + 1);
 ```
+
+# BEST SOLUTION !!!!!!!!!!!!
+- Changign the boundary and using for loop to go through each row and col
+```
+1  2  3  4  5
+12 13 14 15 6
+11 10 9  8  7
+
+1 -> 5 : matrix[rowMin][i] i : colMin -> colMax ; rowMin++
+6 -> 7 : matrix[i][colMax] i : rowMin -> rowMax ; colMax--
+8 -> 11 : matrix[rowMax][i] i : colMax -> colMin ; rowMax--
+12 : matrix[i][colMin] i : rowMax -> rowMin ; colMin++
+-----
+13 -> 15 : matrix[rowMin][i] i : colMin -> colMax ; rowMin++
+```
+- Need to check if minCol > maxCol and minRow > maxRow middle the loop
