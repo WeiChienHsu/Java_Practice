@@ -1,4 +1,4 @@
-# Sorted Array to Height Balance
+# Sorted Array to Height Balance - Binary Serach
 
 ```
 Given the sorted array: [-10,-3,0,5,9],
