@@ -1,4 +1,12 @@
 # Merge Sort - Recurision
+- Time : O(nlogn) by the heigh of tree (DFS)
+- Merge time in each evel: O(n)
+- Height == logn
+- Space Complexity: O(n)
+
+
+- doSort (binary search to find mid and separate into two array)
+- Merge (used helper arr to copy the didSort array and grab from the smaller number to the end )
 
 ```
            38  27  43  3  9  10  80
