@@ -47,10 +47,7 @@ class Solution {
             } else {
                 pre.right = cur.right;
             }
-        }
-            
-        
-        if(cur.right == null) {
+        } else {
             if(pre.left == cur) {
                 pre.left = cur.left;
             } else {
