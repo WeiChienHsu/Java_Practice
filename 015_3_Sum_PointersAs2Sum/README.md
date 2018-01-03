@@ -26,7 +26,7 @@ A solution set is:
 ```java
 Skip array[i] == array[i-1]
 ```
-* Sort?
+* Sort
 ```java
 Arrays.sort(num)
 ```
