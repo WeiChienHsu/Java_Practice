@@ -123,7 +123,7 @@ if(cur.left != null && cur.right != null) {
 }
 ```
 
-## One or child
+## One or No child
 - Now the node only have one child or no child
 - For no child (cur.left == null):
 * if node on the pre left, give the cur right to it
