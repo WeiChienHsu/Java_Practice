@@ -1,32 +1,29 @@
-public class matrix2 {
-    public static void main(String[] args) {
-        int[][] m = {{1,   3,  5,  7},{10, 11, 16, 20},{23, 30, 34, 50}};
-        System.out.println(searchMatrix(m,55));
-    }
-
-    public static boolean searchMatrix(int[][] matrix, int target) {
-        if(matrix == null || matrix.length == 0) {
-            return false;
-        }
-        if(matrix[0] == null || matrix[0].length ==0 ) {
-            return false;
-        }
-        int m = matrix.length;
-        int n = matrix[0].length;
+class Solution {
+    public int search(int[] nums, int target) {
+        if(nums.length == 0) return -1;
         int start = 0;
-        int end = m * n -1;
-
-        while(end >= start){
-            int mid = start + (end - start)/2;
-            if(matrix[mid / n][mid % n] == target){
-                return true;
-            } else if(matrix[mid / n][mid % n] > target) {
-                end = mid - 1;
-            } else {
-                start = mid + 1;
+        int end = nums.length -1 ;
+        int mid;
+        
+        while(start < end) {
+            mid = start + (end - start) / 2 ;
+            if(nums[mid] > nums[end]) { // 4 5 6 7 0 1 2
+                if(target > nums[mid] || target <= nums[end]) {
+                    start = mid + 1;
+                } else {
+                    end = mid;
+                }
+            }  
+                if(nums[mid] < nums[end]){ // 5 6 7 0 1 2 3
+                    if(target > nums[mid] && target <= nums[end]){
+                        start = mid + 1;
+                    } else {
+                        end = mid;
+                    }
             }
         }
-        return false;
-    }
+        
+        return start == end && target != nums[start]? -1 : start;
 
     }
+}

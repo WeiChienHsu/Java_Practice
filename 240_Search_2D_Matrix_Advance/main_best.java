@@ -1,37 +1,22 @@
-public class matrix2 {
-    public static void main(String[] args) {
-        int[][] matrix = {
-                {1,   4,  7, 11, 15},
-                {2,   5,  8, 12, 19},
-                {3,   6,  9, 16, 22},
-                {10, 13, 14, 17, 24},
-                {18, 21, 23, 26, 30}
-        };
-
-        System.out.println(searchMatrix(matrix,32));
+public List<Integer> spiralOrder(int[][] matrix) {
+    List<Integer> list = new ArrayList<>();
+    if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return list;
+    
+    int rowMin = 0, rowMax = matrix.length-1, colMin = 0, colMax = matrix[0].length-1;
+    while(rowMin <= rowMax && colMin <= colMax) {
+        for(int i=colMin; i<=colMax; i++) list.add(matrix[rowMin][i]);
+        rowMin++;
+        
+        for(int i=rowMin; i<=rowMax; i++) list.add(matrix[i][colMax]);
+        colMax--;
+        
+        if(rowMin > rowMax || colMin > colMax) break;
+        
+        for(int i=colMax; i>=colMin; i--) list.add(matrix[rowMax][i]);
+        rowMax--;
+        
+        for(int i=rowMax; i>=rowMin; i--) list.add(matrix[i][colMin]);
+        colMin++;
     }
-
-    public static boolean searchMatrix(int[][] matrix, int target) {
-        int row = matrix.length;
-        if(row == 0 || matrix[0] == null) return false;
-        int col = matrix[0].length;
-        if(col == 0) return false;
-
-
-        // Start from the top-right point
-        int curRow = 0;
-        int curCol = col - 1;
-
-        while(curRow < row && curCol >= 0) {
-            if(matrix[curRow][curCol] > target) {
-                curCol--;
-            } else if(matrix[curRow][curCol] < target) {
-                curRow++;
-            } else {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    return list;
 }
