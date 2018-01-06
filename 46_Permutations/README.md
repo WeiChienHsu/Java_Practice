@@ -14,7 +14,7 @@ For example,
   [3,2,1]
 ]
 ```
-# Solution: SWAP
+# Solution: SWAP - Traversal
 - Fix a position for going down
 - Change the original array 
 - Before going into recursion, we need to swap for fixing a position 
@@ -107,3 +107,28 @@ swap (nums, pos = 1, i = 2) -> 1 2 3
  [1,2,3]   [1,3,2] 
 
  ```
+
+ ## DFS
+- Save a number not exist in the list and go to the next level 
+- When meet the base case, return back to the last evel
+- Add a number into the list and go to the next level
+- When back to the last level, remove one number in the list
+
+* Base Case
+```java
+  if(list.size() == num.length) {
+      res.add(new ArrayList<Integer>(list));
+      return;
+  }
+```
+
+* Condtional move
+```java
+  for(int i = 0; i < num.length; i++) {
+    if(!list.contains(num[i])) {
+        list.add(num[i]);
+        dfs(num, list, res);
+        list.remove(list.size()-1);
+    }
+}
+```
