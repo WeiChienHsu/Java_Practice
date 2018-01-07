@@ -6,7 +6,7 @@ import java.util.Set;
 public class par2 {
 
     public static void main(String[] args) {
-        int[] num = {1 , 1 , 2};
+        int[] num = {1 , 1 , 1, 1, 2};
         System.out.println(permuteUnique(num));
     }
 
