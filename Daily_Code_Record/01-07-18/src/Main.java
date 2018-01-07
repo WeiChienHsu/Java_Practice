@@ -1,66 +1,82 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-class HDTV {
-    private int size;
-    private String brand;
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Sort the students by their scores and if its same, sort by Age");
+        Student std1 = new Student(90,21,"Kevin");
+        Student std2 = new Student(90,19,"Jay");
+        Student std3 = new Student(97,22,"Albert");
+        Student std4 = new Student(88,39,"Alex");
+        Student std5 = new Student(88,11,"Eric");
 
-    public HDTV(int size, String brand) {
-        this.size = size;
-        this.brand = brand;
-    }
+        List<Student> lists = new ArrayList<>();
+        lists.add(std1);
+        lists.add(std2);
+        lists.add(std3);
+        lists.add(std4);
+        lists.add(std5);
 
-    public int getSize() {
-        return size;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-}
-
-class SizeComparator implements Comparator<HDTV> {
-    @Override
-    public int compare(HDTV tv1, HDTV tv2) {
-        int tv1Size = tv1.getSize();
-        int tv2Size = tv2.getSize();
-
-        if(tv1Size > tv2Size) {
-            return -1;
-        } else if (tv1Size < tv2Size) {
-            return 1;
-        } else {
-            return 0;
+        Collections.sort(lists, new StuComparator());
+        for(Student list : lists) {
+            System.out.println(list.getScore()+ " is age " + list.getAge() + " Name: " + list.getName());
         }
     }
 }
 
-public class Main {
+class Student {
+    private int score;
+    private int age;
+    private String name;
 
-    public static void main(String[] args) {
-        HDTV tv1 = new HDTV(50, "Apple");
-        HDTV tv2 = new HDTV(28,"Samsung");
-        HDTV tv3 = new HDTV(33,"Foxconn");
+    public Student(int score, int age, String name) {
+        this.score = score;
+        this.age = age;
+        this.name = name;
+    }
 
-        List<HDTV> al = new ArrayList<>();
-        al.add(tv1);
-        al.add(tv2);
-        al.add(tv3);
+    public int getScore() {
+        return score;
+    }
 
-        Collections.sort(al, new SizeComparator());
+    public int getAge() {
+        return age;
+    }
 
-        for(HDTV a : al) {
-            System.out.println(a.getBrand() + ": size - " + a.getSize());
+    public String getName() {
+        return name;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+class StuComparator implements Comparator<Student>{
+    @Override
+    public int compare(Student std1, Student std2) {
+        int std1Score = std1.getScore();
+        int std2Score = std2.getScore();
+        int std1Age = std1.getAge();
+        int std2Age = std2.getAge();
+
+        if(std1Score > std2Score) {
+            return -1;
+        } else if (std1Score < std2Score) {
+            return 1;
+        } else {
+            if(std1Age > std2Age) {
+                return -1;
+            } else {
+                return 1;
+            }
         }
     }
 }
