@@ -1,14 +1,6 @@
-public class minimumSubstring_array {
-
-    public static void main(String[] args) {
-        String s = "ABDGCEBANC";
-        String t = "BAC";
-        System.out.println(minWindow(s,t));
-    }
-
-    public static String minWindow(String s, String t) {
+class Solution {
+    public String minWindow(String s, String t) {
         int[] map = new int[128];
-
         int start = 0;
         int end = 0;
         int count = t.length();
@@ -39,6 +31,6 @@ public class minimumSubstring_array {
                }
            }
         }
-        return minLen == chS.length ? new String() : new String(chS, startIndex, minLen);
-    }
+        return minLen == Integer.MAX_VALUE ? new String() : new String(chS, startIndex, minLen);
+    }  
 }
