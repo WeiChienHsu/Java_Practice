@@ -11,7 +11,7 @@ public class insertionSort {
     private static void sort(int[] nums) {
         int left = 0;
         int right = nums.length - 1;
-        for(int i = left, j = i; i < right; j = ++i) {
+        for(int i = left, j = i ; i < right; j = ++i) {
             int ai = nums[i + 1];
             while (ai < nums[j]) {
                 nums[j + 1] = nums[j];
@@ -22,5 +22,4 @@ public class insertionSort {
             nums[j +1] = ai;
         }
     }
-
 }
