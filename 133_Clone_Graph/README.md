@@ -1,8 +1,10 @@
 # Clone Graph
-
-
+## Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
 
 ## DFS
+- Time: O(V + 2E)
+- Space: O(V)
+
 - When Creating a New Copy Node, put the original and copy Nodes both into Map <ori, copy>
 -  Map<UndirectedGraphNode, UndirectedGraphNode>
 ```java
@@ -192,3 +194,147 @@ ____________________
 3  <->  2       5
         
 ____________________
+```
+
+## BFS
+- Use Queue to record the next level
+- Map to find copied Node
+- While Creating a new Node, put it into the Queue
+- While poll out the Node in Queue, we connect current node with it by searching in Map
+- 將現在處理的Node放入Queue和Map中，每次都處理Queue彈出來的Node，複製一個點，將其鄰居遍歷一次，如果沒在Map內的，放入Map同時放入Queue，有在Map內的，將複製的點連接至剛放入Map內的值，下回繼續從Queue中彈出來Node。
+
+```
+0  <->  1  <->  4
+|       |       |
+3  <->  2       5
+--------------------
+放0到Queue & Map內
+
+0  <->  1  <->  4
+|       |       |
+3  <->  2       5
+
+____________
+0
+____________
+
+0
+
+-------------------
+彈出0
+1,3不在Map內
+Map中放入1,3
+Queue放入1,3
+0連接 1,3
+
+
+0  <->  1  <->  4
+|       |       |
+3  <->  2       5
+
+____________
+  3   1       0->
+____________
+
+0  -> 1
+|
+3
+-------------------
+
+彈出1
+0在Map內
+2,4不在Map內
+Map中放入2,4
+Queue放入2,4
+1連接 0, 2,4
+
+
+0  <->  1  <->  4
+|       |       |
+3  <->  2       5
+
+____________
+ 2  4  3       1 ->     
+____________
+
+0 <-> 1   ->  4
+|     |
+3     2
+-------------------
+
+彈出3
+0,2在Map內
+3連接 2,0
+
+
+0  <->  1  <->  4
+|       |       |
+3  <->  2       5
+
+____________
+ 2  4         3 ->     
+____________
+
+0 <-> 1   ->  4
+|     |
+3  -> 2
+-------------------
+
+彈出4
+1在Map內
+5不在Map內
+Map中放入5
+Queue放入5
+4連接 1, 5
+
+
+0  <->  1  <->  4
+|       |       |
+3  <->  2       5
+
+____________
+    5   2        4 ->     
+____________
+
+0 <-> 1   <->  4
+|     |        |
+3  -> 2        5
+-------------------
+
+彈出2
+1 3在Map內
+2連接 1, 3
+
+
+0  <->  1  <->  4
+|       |       |
+3  <->  2       5
+
+____________
+    5          2  ->     
+____________
+
+0 <-> 1   <->  4
+|     |        |
+3 <-> 2        5
+-------------------
+
+
+彈出5
+4在Map內
+5連接 4
+
+
+0  <->  1  <->  4
+|       |       |
+3  <->  2       5
+
+____________
+             5  ->     
+____________
+
+0 <-> 1   <->  4
+|     |        |
+3 <-> 2        5
+-------------------
+```
