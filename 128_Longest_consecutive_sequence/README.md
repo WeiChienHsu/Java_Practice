@@ -1,6 +1,15 @@
 #  Longest Consecutive Sequence
 
 ## Solution 
+
+- 將Array內的數字依序加入Map中，Map的Key是數字，Value是出現的次數。
+- 檢查該數字的左鄰居與右鄰居，是否在Map當中，如果有的話 left & right 的值將會改變。
+- left and right 的數值取決於他們在Map中所記錄的長度。
+- 總和的長度為 right  +  left  +  1 
+- 更新總和的最大長度
+- 更新Map中左右鄰居的長度（假如Map中有1&3，掃到2，2的長度變為 1 + 1 + 1 = 3，同時，1&3的長度應該更新為 3 3。
+- 更新（n - left) && (n-right)，因為要改變的是邊界值，而不是鄰近值！！！！
+
 ```
 {1,3,2}
 Map
