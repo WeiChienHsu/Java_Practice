@@ -1,13 +1,7 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Solution {
-    public static void main(String[] args) {
-        int[] nums = {1,2,3,4};
-        int ans = maxThree(nums);
-        System.out.println(getFactors(4));
-    }
 
     public static int maxSubArray(int[] nums) {
         int maxEndHere = nums[0];
@@ -37,7 +31,6 @@ public class Solution {
          if(nums.length == 1) return nums[0];
          if(nums.length == 2) return nums[0] * nums[1];
          int max = Integer.MIN_VALUE;
-         Arrays.sort(nums);
          int n = nums.length -1;
          max = Math.max((nums[0]*nums[1]*nums[n]),nums[n]*nums[n-1]*nums[n-2]);
          return max;
@@ -94,6 +87,52 @@ public class Solution {
 //    }
 
     public static int[] plusOne(int[] nums) {
+        for(int i = nums.length -1 ; i >= 0; i--) {
+            if(nums[i] < 9) {
+                nums[i] = nums[i] + 1;
+                break;
+            } else {
+                nums[i] = 0;
+            }
+        }
+
+        if(nums[0] == 0) {
+            int[] result = new int[nums.length + 1];
+            result[0] = 1;
+            return result;
+        }
+        return nums;
+    }
+
+    public static String addBinary(String a, String b) {
+        StringBuilder sb = new StringBuilder();
+        int aStrL = a.length() - 1;
+        int bStrL = b.length() - 1;
+        int carry = 0;
+        while(aStrL >= 0 || bStrL >= 0) {
+            int sum = carry;
+            if(aStrL >= 0) sum += a.charAt(aStrL--) - '0';
+            if(bStrL >= 0) sum += b.charAt(bStrL--) - '0';
+            sb.append(sum % 2);
+            carry = sum / 2;
+        }
+
+        if(carry != 0) {
+            sb.append(carry);
+        }
+
+        return sb.reverse().toString();
 
     }
+
+    public static void main(String[] args) {
+        int[] nums = {9,9,9,9};
+        String a = "111";
+        String b = "1";
+
+        System.out.println(addBinary(a,b));
+
+
+    }
+
 }
