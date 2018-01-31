@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class JavaStream {
+public class pratice {
     public static void main(String[] args) {
         EmployeeFactory employeeFactory = Employee::new;
         Employee e1 = employeeFactory.create("Kevin", 12);
@@ -32,6 +34,33 @@ public class JavaStream {
                 .map(e -> e.getName().toUpperCase())
                 .reduce((o1, o2) -> o1 + " # " + o2);
         System.out.println(longName.get());
+
+        // Type -> Accumulator -> Result
+        List<String> nameList = employeeList.stream()
+                .filter((e) -> e.getAge() >= 18)
+                .sorted((o1, o2) -> o1.getAge() - o2.getAge())
+                .map(e -> e.getName().toUpperCase())
+                .collect(Collectors.toList());
+        System.out.println(nameList);
+
+        String employeeList2 = employeeList.stream()
+                .filter((e) -> e.getAge() >= 18)
+                .sorted((o1, o2) -> o1.getAge() - o2.getAge())
+                .map(e -> e.getName().toUpperCase())
+                .collect(Collectors.joining("#"));
+        System.out.println(employeeList2);
+
+        int ageSum = employeeList.stream().mapToInt(Employee::getAge).sum();
+        System.out.println(ageSum);
+
+        IntSummaryStatistics summary = employeeList.stream()
+                .map(Employee::getAge)
+                .collect(Collectors.summarizingInt(p -> p));
+        System.out.println("Average Age: " + Math.floor(summary.getAverage()));
+        System.out.println("How many people: " + summary.getCount());
+        System.out.println("Max: " + summary.getMax());
+        System.out.println("Min: " + summary.getMin());
+        System.out.println("Sum: " + summary.getSum());
     }
 }
 
