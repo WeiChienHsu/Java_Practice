@@ -1,11 +1,9 @@
 # Valid Parenthese
 
 ## Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
-
 ```
 The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
 ```
-
 ## Solution
 ###  "" for String, '' for character
 
@@ -36,7 +34,6 @@ if(ch == '{' || ch == '(' || ch == '[' ) {
         return false;
     }
 ```
-
 - Return stack.Empty() since there might be a remain left parenthese
 ```java
 return stack.isEmpty()
