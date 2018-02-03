@@ -4,6 +4,15 @@
 - Record each max and min values
 - Compare (max * num) & (min * min) & num
 - Remind: If we change the max value, then the judgment of min value need to use temp value 
+
+- Move Head : Expand current result
+- Move Tail : Reset the Subarray
+
+#### Dynamic Programming - Greedy
+- max[i] = Math.max(Math.max(max[i-1] * nums[i], min[i-1] * nums[i]), nums[i]);
+- min[i] = Math.min(Math.min(max[i-1] * nums[i], min[i-1] * nums[i]), nums[i]);
+
+
 ```java
     public static int maxProduct(int[] nums) {
         int max = nums[0];
