@@ -2,6 +2,7 @@ class Solution {
   public int jump(int[] nums) {
       if(nums == null || nums.length == 0) return 0;
       int[] min = new int[nums.length];
+      
       min[0] = 0;
       int curIndex = 0;
 
