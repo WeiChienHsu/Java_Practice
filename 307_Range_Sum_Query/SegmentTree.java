@@ -45,6 +45,7 @@ class NumArray {
       } else {
           update(root.right, index, newVal);
       }
+      
       root.sum = root.left.sum + root.right.sum; // 更新sum
   }
   

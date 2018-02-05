@@ -2,8 +2,8 @@ public class SimpleDotCom {
     private int[] locationCells;
     int numOfHits;
 
-    public SimpleDotCom(){
-        this.locationCells =  locationCells;
+    public SimpleDotCom() {
+        this.locationCells = locationCells;
         this.numOfHits = 0;
     }
 
@@ -11,18 +11,24 @@ public class SimpleDotCom {
         this.locationCells = locations;
     }
 
-    public String checkYourself(String userGuess) {
-        int userGuessInt = Integer.parseInt(userGuess);
-        for(int i : locationCells) {
-            if(i == userGuessInt) {
-                if(numOfHits == locationCells.length - 1) {
-                    return "Kill";
-                } else {
-                    numOfHits++;
-                    return "Hit";
-                }
+    public String checkYourself(String userGuessStr) {
+        int userGuess = Integer.parseInt(userGuessStr);
+        String result = "miss";
+
+        for (int i : locationCells) {
+            if (i == userGuess) {
+                result = "hit";
+                numOfHits++;
+                break;
             }
         }
-        return "Miss~~";
+
+        if(numOfHits == locationCells.length ){
+            result = "kill";
         }
+
+        System.out.println(result);
+        return result;
+
     }
+}
