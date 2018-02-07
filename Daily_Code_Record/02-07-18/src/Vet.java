@@ -8,7 +8,10 @@ public class Vet {
         Dog d = new Dog();
         Cat c = new Cat();
         v.giveShot(d);
-        v.giveShot(c);
+        c.makeNoise();
+        c.eat();
+        d.eat();
+
     }
 }
 
