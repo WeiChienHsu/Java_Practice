@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public class SimpleDotCom {
-    private int[] locationCells;
+    private ArrayList<Integer> locationCells;
     int numOfHits;
 
     public SimpleDotCom() {
@@ -7,28 +9,22 @@ public class SimpleDotCom {
         this.numOfHits = 0;
     }
 
-    public void setLocationCells(int[] locations) {
+    public void setLocationCells(ArrayList<Integer> locations) {
         this.locationCells = locations;
     }
 
     public String checkYourself(String userGuessStr) {
         int userGuess = Integer.parseInt(userGuessStr);
-        String result = "miss";
 
-        for (int i : locationCells) {
-            if (i == userGuess) {
-                result = "hit";
-                numOfHits++;
-                break;
+        while (!locationCells.isEmpty()){
+            for (int i : locationCells) {
+                if (i == userGuess) {
+                    locationCells.remove(locationCells.indexOf(i));
+                    return "hit";
+                }
             }
+            return "miss";
         }
-
-        if(numOfHits == locationCells.length ){
-            result = "kill";
-        }
-
-        System.out.println(result);
-        return result;
-
+        return "kill";
     }
 }
