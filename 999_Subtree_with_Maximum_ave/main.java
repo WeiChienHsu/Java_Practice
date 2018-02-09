@@ -1,5 +1,3 @@
-
-
 public class Solutinon {
   privae class ResultType{
     public int sum, size;
