@@ -1,5 +1,7 @@
 public class Dog extends Animal implements Pet {
     int size = 0;
+    boolean isDog = false;
+
     public Dog(){
         this.size = size;
     }

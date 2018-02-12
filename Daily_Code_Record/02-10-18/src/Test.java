@@ -1,15 +1,16 @@
 public class Test {
-    public static void main(String[] args) {
-        String test = "yes";
-        try {
-            System.out.println("Start Try");
-            doRisky(test);
-            System.out.println("End Test");
-        } catch(ScaryException ex) {
-            System.out.println("Exception!");
-        } finally {
-            System.out.println("Finally");
-        }
+    public static void main(String[] args) throws ScaryException {
+        String test = "no";
+        doRisky(test);
+//        try {
+//            System.out.println("Start Try");
+//            doRisky(test);
+//            System.out.println("End Test");
+//        } catch(ScaryException ex) {
+//            System.out.println("Exception!");
+//        } finally {
+//            System.out.println("Finally");
+//        }
         System.out.println("End of Main");
     }
 
