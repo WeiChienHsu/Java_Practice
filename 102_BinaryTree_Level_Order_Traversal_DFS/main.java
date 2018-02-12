@@ -17,7 +17,6 @@ class Solution {
         
         while (!queue.isEmpty()) {
             int size = queue.size();
-
             List<Integer> list = new ArrayList<>();
             
             for(int i = 0; i < size; i++) {
