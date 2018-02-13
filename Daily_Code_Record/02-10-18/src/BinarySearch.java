@@ -8,6 +8,8 @@ public class BinarySearch {
 
     while(start + 1 < end){
         int mid = start + (end - start)/2 ;
-        if(num[s])
+        if(nums[0] != null){
+
+        }
     }
 }
