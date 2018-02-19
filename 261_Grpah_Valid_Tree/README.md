@@ -10,8 +10,19 @@ Given n = 5 and edges = [[0,1],[1,2],[2,3],[1,3],[1,4]] reutrn false
 
 ```
 ### 轉化結構，變成適合使用 Queue + HashSet (InitializeGraph)
-- 把 pair 改成方便存儲跟改變的圖狀結構（鄰接表）: Adjent List
+- 把 pair 改成方便存儲跟改變的圖狀結構（鄰接表）: [Adjacency List](https://www.geeksforgeeks.org/graph-and-its-representations/)
 - 通常不常存成矩陣表，會存成這種表：最外成是個Map，內容是該點配上一個HashSet
+```
+edges = [[0,1],[0,2],[0,3],[1,4]]
+graph <0> set(1,2,3)
+graph <1> set(0,4)
+graph <2> set(0)
+graph <3> set(0)
+graph <4> set(1)
+
+
+```
+
 
 ```java
   private Map<Integer, Set<Integer>> initializeGraph(int n, int[][] edges) {

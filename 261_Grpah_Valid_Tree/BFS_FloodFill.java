@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.HashSet;
-
-import javafx.scene.layout.GridPane;
+import java.util.*;
 
 public class Solution {
   public boolean validTree(int n, int[][] edges) {
@@ -48,5 +45,6 @@ public class Solution {
         graph.get(u).add(v);
         graph.get(v).add(u);
     }
+    return graph;
   }
 }
