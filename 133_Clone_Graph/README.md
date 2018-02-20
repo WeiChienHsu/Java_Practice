@@ -197,6 +197,14 @@ ____________________
 ```
 
 ## BFS
+
+
+1. 只給了一個點，要如何透過該點找到「所有點」： 從 node 出發，找到所有點 （node -> nodes)
+2. 複製所有的點，成為一個新的圖 (copy nodes)
+3. 原本圖中有連接的部分，到了新圖中也要連接 (copy edges)
+4. return 的值為map.get(node)，Map中對應的node
+
+
 - Use Queue to record the next level
 - Map to find copied Node
 - While Creating a new Node, put it into the Queue
