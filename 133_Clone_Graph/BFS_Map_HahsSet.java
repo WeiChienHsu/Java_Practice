@@ -1,5 +1,6 @@
 public class Solution {
   public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+      // Coner Case
       if(node == null) {
           return node;
       }
