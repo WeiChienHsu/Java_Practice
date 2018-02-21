@@ -111,3 +111,73 @@ Some courses may have prerequisites, for example to take course 0 you have to fi
         return count == numCourses? true : false;
     }
 ```
+
+
+### Solution - Best
+- int[] indegree 記錄每堂課的 indegree
+- ArrayList[] graph 記錄每堂課指向的課程
+- count 計算有多少indegree == 0 
+- 1. 先init graph，new ArrayList放進 ArrayList Array內
+- 2. 算每個點的indegree，遍歷一次prerequisites，加入int[] indegree ，同時將箭頭指向的課程加入ArrayList[]中
+- 3. 遍歷一次 indegree，找尋 StartNodes (indegree == 0)
+- 4. 用BFS，使用queue來記錄indegree==0的點，代表著出發的起點，從queue中取出一點，遍歷其指向的課程，將其indegree--，如果此時indegree == 0，加入queue中，繼續當起點，count++
+
+
+注意： 
+```java
+for(int i = 0; i < prerequisites.length; i++) {
+```
+```java
+for(int i = 0; i < indegree.length; i++) {
+```
+```java
+  int neighbor = (int)graph[curCourse].get(i);
+```
+
+***
+
+#### BFS
+
+```java
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] indegree = new int[numCourses];
+        ArrayList[] graph = new ArrayList[numCourses];
+        Deque<Integer> queue = new ArrayDeque<>();
+        int count = 0;
+        
+        // Init graph
+        for(int i = 0; i < numCourses; i++){
+            graph[i] = new ArrayList<Integer>();
+        }
+        
+        // Put neighbors into graph and count the indegree
+        for(int i = 0; i < prerequisites.length; i++) {
+            indegree[prerequisites[i][0]]++;
+            graph[prerequisites[i][1]].add(prerequisites[i][0]);
+        }
+        
+        // Find startNodes and put into Queue (also count)
+        for(int i = 0; i < indegree.length; i++) {
+            if(indegree[i] == 0) {
+                queue.offerLast(i);
+                count++;
+            }
+        }
+        
+        // BFS
+        while(!queue.isEmpty()) {
+            int curCourse = queue.pollFirst();
+            for(int i = 0; i < graph[curCourse].size(); i++) {
+                int neighbor = (int)graph[curCourse].get(i);
+                indegree[neighbor]--;
+                if(indegree[neighbor] == 0) {
+                    count++;
+                    queue.offerLast(neighbor);
+                }
+            }
+        }
+        return count == numCourses;
+    }
+}
+```
