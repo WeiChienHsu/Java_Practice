@@ -11,7 +11,7 @@ The same repeated number may be chosen from C unlimited number of times.
 - Input number will be duplicate [2,2,2,3] -> [2,3]
 - There is a target number
 
-## DFS Solution
+## DFS Solution (Dont forget to SORT the array fitst!!!!!!!)
 
 ```java
 public void helper(int[] candidates, 
