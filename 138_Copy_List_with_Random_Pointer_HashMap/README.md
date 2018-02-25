@@ -20,6 +20,15 @@ O  ->  O  ->  O  ->  O ->
 O  ->  O  ->  O  ->  O ->
 ```
 
+
+## My two padd Record way (Deep Copy)
+- Copy all nodes into the Map <old, Copied> (Which we needed to new a node into Heap)
+- Find copied in the Map and connect both "next" and "random" together
+- Used a dummy node to record the result
+- Return the dummy Node
+
+
+
 ### One Pass to Record both Node and Random copy
 - Add in: Check if Node is already in the Map <Original Node, Copy Node>
 - 1. Add (cur, curCopy) -> Check if it's already copied
