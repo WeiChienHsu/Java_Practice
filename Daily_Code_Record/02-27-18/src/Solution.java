@@ -1,41 +1,41 @@
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 public class Solution {
 
     public static void main(String[] args) {
-        int[] nums = new int[5];
+        int[] nums = new int[2];
         nums[0]= 1;
-        nums[1]= 2;
-        nums[2]= 100;
-        nums[3]= 2;
-        nums[4]= 2;
+        nums[1]= 100;
         int size = 3;
-        double allowIncrease = 1.5;
+        float allowIncrease = (float) 1.5;
         System.out.println(alerter(nums, size, allowIncrease));
 
         }
 
-    private static boolean alerter(int[] nums, int size, double incre) {
+    private static boolean alerter(int[] nums, int size, float incre) {
     // Two Conditions to alert:
     // 1. The Max number in each Window is greater than minAverage times allowIncrease.
         // We need to track the Max number and count the Average and also record the min Average number.
     // 2. Current Average is greater than Last Average times allowIncrease.
         // Reuse the Average Number and record the Last Average Number.
-
+//        if(nums.length < size) return false;
 
         Deque<Integer> deque = new ArrayDeque<>();
+        List<Integer> aveList = new ArrayList<>();
         int curMax = Integer.MIN_VALUE;
         int curSum = 0;
-        double curAve = Integer.MIN_VALUE;
-        double minAve = Integer.MAX_VALUE;
-        double lastAve = Integer.MIN_VALUE;
+        float curAve = Float.MIN_VALUE;
+        float minAve = Float.MAX_VALUE;
+        float lastAve = Float.MIN_VALUE;
 
         for(int i = 0; i < nums.length; i ++) {
 
             curMax = findMaxNumber(nums, size, deque, i);
             curSum = countSum(nums, size, i, curSum);
-            curAve = curSum / (size * 1.0);
+            curAve = curSum /(float) (size);
             lastAve = curAve;
 
             // Update the min Average
@@ -45,6 +45,11 @@ public class Solution {
 
             // if the amounts of number is greater than size and one of two conditions
             // happen, we'll return true to alert
+
+            if(nums.length < size) {
+                return maxLargerThanAveTimesIncreAlert(curMax, minAve, incre) || curAveLargerThanLastAveTimesIncreAlert(curAve, lastAve,incre);
+            }
+
 
             if(i + 1 >= size &&
                     (maxLargerThanAveTimesIncreAlert(curMax, minAve, incre) ||
@@ -56,11 +61,11 @@ public class Solution {
     }
 
 
-    private static boolean maxLargerThanAveTimesIncreAlert(int curMax, double minAve, double incre ) {
+    private static boolean maxLargerThanAveTimesIncreAlert(int curMax, float minAve, float incre ) {
         return curMax > minAve * incre;
     }
 
-    private static boolean curAveLargerThanLastAveTimesIncreAlert(double curAve, double lastAve, double incre ) {
+    private static boolean curAveLargerThanLastAveTimesIncreAlert(float curAve, float lastAve, float incre ) {
         return curAve > lastAve * incre;
     }
 
