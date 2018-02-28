@@ -100,3 +100,15 @@ return dummy.next;
         return tail;
     }
 ```
+
+## Other Solution
+
+- Dummy node 指向 Head
+- ListNode pre = dummy
+- 需要一個 reverseNextKNodes(pre, k)
+```
+pre -> n1 -> n2 ... -> nk -> nk+1
+pre -> nk -> nk-1 ..-> n1 -> nk+1
+```
+
+- 判斷是否有足夠的K ， 如果沒有 return null
