@@ -77,3 +77,24 @@ head = head.next;
 ```java
 return smallDummy.next; 
 ```
+
+
+## Solution: BEST
+```
+1 -> 4 -> 3 -> 2 -> 5 ->2
+
+small 0
+large 0
+
+dummySmall = 0
+dummyLarge = 0
+
+0 -> 1 -> 2 -> 2
+
+0 -> 4 -> 3 -> 5
+
+small.next = dummyLarge.next
+large.next = null;
+
+return dummySmall.next
+```
