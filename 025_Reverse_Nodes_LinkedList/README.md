@@ -112,3 +112,42 @@ pre -> nk -> nk-1 ..-> n1 -> nk+1
 ```
 
 - 判斷是否有足夠的K ， 如果沒有 return null
+
+## reverseNextKNodes(pre, k)
+- Input : pre  (pre -> n1 -> n2 -> .. nk -> nk+1)
+- 要得到: pre -> nk -> ..-> n2 -> n1 -> nk+1
+- Return: nk+1
+
+- 第一步: ListNode n1 = head.next;
+- 第二步: ListNode cur = head;
+- 第三部: cur 要走到 nk 的地方
+- 第四部: 用 for loop 讓 cur 走到 nk，順便判斷是否足夠n長度，不夠的話return null (不做操作)
+```java
+for(int i = 0; i < k; i++) {
+    cur = cur.next;
+    if(cur == null) {
+        return null;
+    }
+}
+```
+- 第五部: ListNode nk = cur
+- 第六部: ListNode nkPlus = cur.next (要被回傳的值)
+- 第七部: Reverse: pre -> Nk -> n1
+
+```java
+ListNode pre = head;
+ListNode cur = haed.next;
+while(cur != nkPlusOne){
+    ListNode temp = cur.next;
+    cur.next = pre;
+    pre = cur;
+    cur = temp
+}
+```
+
+- 第七部: pre -> nk / n1 -> nk+1 / return n1
+```java
+head.next = nK;
+n1.next = nKplusOne
+return n1
+```
