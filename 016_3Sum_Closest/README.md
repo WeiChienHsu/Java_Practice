@@ -8,6 +8,13 @@
     The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 ```
 
+## 思路
+- For Loop 走過一所有的數，先挑掉一個，看剩下的數裡面與挑選的值的合，哪個最接近Target
+- 先選了 nums[0] + nums[1] + nums[2] 當作是 result
+- 每次比較 nums[i] + nums[left] + nums[right] = sum 的數值和result，哪個比較接近(target剪掉之後的絕對值較小)
+- 更新res，如果res == target，直接return res
+- 如果 target > sum -> 數字太小，left++，如果 target < sum -> 數字太大，right--
+
 ## Solution
 - Sort the array!!!!!!!
 - Pick nums[0] + nums[1] + nums[2] to be the res temporatory
