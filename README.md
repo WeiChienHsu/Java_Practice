@@ -13,6 +13,17 @@
 
 :tada::tada::tada::tada:
 
+***
+
+## LeetCode Daily Record
+
+|  #  |      Title     |   Solutions   | Time          | Space         | Difficulty  | 
+|-----|----------------|---------------|---------------|---------------|-------------|
+|001|[Two Sum](https://leetcode.com/problems/rotated-digits/)|[Solution](https://github.com/WeiChienHsu/Java_Practice/tree/master/001_two_Sum) | O(n*m) | O(1)|Easy|
+
+
+
+
 
 
 ***
@@ -63,26 +74,6 @@ Algorithm Advance: New Problems on Same Topic Correspondingly
 8. ArrayDeque: O(1) Amortized performance for queue
 9. ArrayDeque: fastest practice for algorithm
 
-Basically, Read the source code from Official library
-http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8u40-b25/java/util/Arrays.java?av=f
-
-e.g.
-Arrays toString()
-
-Node<E> in LinkedList<E> 
-
-```java
-private static class Node<E> {
-    E item;
-    Node<E> next;
-    Node<E> prev;
-    Node (Node<E> prev, E item, Node<E> next) {
-        this.item = item;
-        this.prev = prev;
-        this.next = next;
-    }
-}
-```
 
 #### Java pre-Algorithm
 
@@ -188,7 +179,3 @@ private static class Node<E> {
 - Three Sum - method1
 - Three Sum - method2
 - Reverse Node in k-Group
-
-***
-
-- Course contents are summarized by @[mwangxx0129](https://github.com/mwangxx0129)
