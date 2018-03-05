@@ -1,101 +1,105 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+public List<List<Integer>> fourSum(int[] nums, int target) {
+    ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
+    int len = nums.length;
+    if (nums == null || len < 4)
+        return res;
 
-public class fourSum {
-    public static void main(String[] args) {
-        int[] nums = { 1, 0, -1, 0, -2, 2 };
-        int target = 0;
+    Arrays.sort(nums);
 
-        List<List<Integer>> results = getFourSum(nums, target);
-        System.out.println(results);
-    }
+    int max = nums[len - 1];
+    if (4 * nums[0] > target || 4 * max < target)
+        return res;
 
-    private static List<List<Integer>> getFourSum(int[] nums, int target) {
-        Arrays.sort(nums);
-        List<List<Integer>> results = new ArrayList<>();
-        int len = nums.length;
-        if(len < 4) return results;
-        int start = 0;
-        int end = len - 1;
-
-        // Too Large or Too small
-        if(nums[start] * 4 > target || nums[end] * 4 < target) return results;
-
-        for(int i = 0; i < len - 1; i++){
-            int z0 = nums[i];
-            if(i > 0 && z0 == nums[i-1]) continue; // Duplicate
-            if(z0 + 3 * nums[end] < target) continue; // Too small
-            if(z0 * 4 > target) break; // Too large
-            // Boundary
-            if(4 * z0 == target) {
-                if(nums[i + 3] == z0) {
-                    results.add(Arrays.asList(z0,z0,z0,z0));
-                }
-                break;
-            }
-
-        getThreeSumFromFourSum(results, i + 1, end, z0, target - z0, nums);
-
+    int i, z;
+    for (i = 0; i < len; i++) {
+        z = nums[i];
+        if (i > 0 && z == nums[i - 1])// avoid duplicate
+            continue;
+        if (z + 3 * max < target) // z is too small
+            continue;
+        if (4 * z > target) // z is too large
+            break;
+        if (4 * z == target) { // z is the boundary
+            if (i + 3 < len && nums[i + 3] == z)
+                res.add(Arrays.asList(z, z, z, z));
+            break;
         }
-        return results;
+
+        threeSumForFourSum(nums, target - z, i + 1, len - 1, res, z);
     }
 
-    private static void getThreeSumFromFourSum(List<List<Integer>> results,
-                                               int start,
-                                               int end,
-                                               int z0,
-                                               int target,
-                                               int[] nums) {
+    return res;
+}
 
-        if(start +1  >= end) return;
-        if(nums[start] * 3 > target || nums[end] * 3 < target) return;
+/*
+ * Find all possible distinguished three numbers adding up to the target
+ * in sorted array nums[] between indices low and high. If there are,
+ * add all of them into the ArrayList fourSumList, using
+ * fourSumList.add(Arrays.asList(z1, the three numbers))
+ */
+public void threeSumForFourSum(int[] nums, int target, int low, int high, ArrayList<List<Integer>> fourSumList,
+        int z1) {
+    if (low + 1 >= high)
+        return;
 
-        for(int i = start; i < end; i++) {
-            int z1 = nums[i];
-            if(i > 0 && z1 == nums[i-1]) continue; // Duplicate
-            if(z1 + 2 * nums[end] < target) continue; // Too small
-            if(z1 * 3 > target) break; // Too large
-            // Boundary
-            if(3 * z1 == target) {
-                if(nums[i + 2] == z1) {
-                    results.add(Arrays.asList(z0,z1,z1,z1));
-                }
-                break;
-            }
+    int max = nums[high];
+    if (3 * nums[low] > target || 3 * max < target)
+        return;
 
-            getTwoSumFromThreeSum(results, i + 1, end, z0, z1, target - z1, nums);
+    int i, z;
+    for (i = low; i < high - 1; i++) {
+        z = nums[i];
+        if (i > low && z == nums[i - 1]) // avoid duplicate
+            continue;
+        if (z + 2 * max < target) // z is too small
+            continue;
+
+        if (3 * z > target) // z is too large
+            break;
+
+        if (3 * z == target) { // z is the boundary
+            if (i + 1 < high && nums[i + 2] == z)
+                fourSumList.add(Arrays.asList(z1, z, z, z));
+            break;
         }
+
+        twoSumForFourSum(nums, target - z, i + 1, high, fourSumList, z1, z);
     }
 
-    private static void getTwoSumFromThreeSum(List<List<Integer>> results,
-                                              int start,
-                                              int end,
-                                              int z0,
-                                              int z1,
-                                              int target,
-                                              int[] nums) {
-        if(start >= end) return;
-        if(nums[start] * 2 > target || nums[end] * 2 < target) return;
+}
 
-        int left = start;
-        int right = end;
+/*
+ * Find all possible distinguished two numbers adding up to the target
+ * in sorted array nums[] between indices low and high. If there are,
+ * add all of them into the ArrayList fourSumList, using
+ * fourSumList.add(Arrays.asList(z1, z2, the two numbers))
+ */
+public void twoSumForFourSum(int[] nums, int target, int low, int high, ArrayList<List<Integer>> fourSumList,
+        int z1, int z2) {
 
-        while (left < right){
+    if (low >= high)
+        return;
 
-            if(nums[left] + nums[right] == target) {
-                results.add(Arrays.asList(z0, z1, nums[left], nums[right]));
+    if (2 * nums[low] > target || 2 * nums[high] < target)
+        return;
 
-                // Deduplicate
-                while ( left + 1  < right && nums[left] == nums[left + 1]) left++;
-                while ( right -1  > left && nums[right] == nums[right - 1]) right--;
-            }
+    int i = low, j = high, sum, x;
+    while (i < j) {
+        sum = nums[i] + nums[j];
+        if (sum == target) {
+            fourSumList.add(Arrays.asList(z1, z2, nums[i], nums[j]));
 
-            if(nums[left] + nums[right] < target ) {
-                left++;
-            } else {
-                right--;
-            }
+            x = nums[i];
+            while (++i < j && x == nums[i]) // avoid duplicate
+                ;
+            x = nums[j];
+            while (i < --j && x == nums[j]) // avoid duplicate
+                ;
         }
+        if (sum < target)
+            i++;
+        if (sum > target)
+            j--;
     }
+    return;
 }
