@@ -1,4 +1,4 @@
-#BFS - 最省時省力的算法
+# BFS - 最省時省力的算法
 
 ### 圖的遍歷 Traversal in Graph
 - Level Order Traversal 層級遍歷 ： 給起點，分層次的找下去
