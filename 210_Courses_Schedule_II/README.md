@@ -94,3 +94,49 @@ class Solution {
 ```
 
 ## Better Solution in Leetcode
+
+
+```java
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] indegree = new int[numCourses];
+        List<List<Integer>> adjs = new ArrayList<>(numCourses);
+       
+        initialiseGraph(indegree, adjs, prerequisites);
+         //return solveByBFS(incLinkCounts, adjs);
+        return solveByBFS(indegree, adjs);
+    }
+    
+    private void initialiseGraph(int[] indegree, List<List<Integer>> adjs, int[][] prerequisites){
+        int n = indegree.length;
+         while (n-- > 0) adjs.add(new ArrayList<>());
+        
+        for (int[] edge : prerequisites) {
+            indegree[edge[0]]++;
+            adjs.get(edge[1]).add(edge[0]);
+        }
+    }
+    
+    private int[] solveByBFS(int[] indegree, List<List<Integer>> adjs){
+        
+        int[] order = new int[indegree.length];
+        Queue<Integer> toVisit = new ArrayDeque<>();
+        
+        for (int i = 0; i < indegree.length; i++) {
+            if (indegree[i] == 0) toVisit.offer(i);
+        }
+        
+        int visited = 0;
+        while (!toVisit.isEmpty()) {
+            int from = toVisit.poll();
+            order[visited++] = from;
+            for (int to : adjs.get(from)) {
+                indegree[to]--;
+                if (indegree[to] == 0) toVisit.offer(to);
+            }
+        }
+        
+        return visited == indegree.length ? order : new int[0]; 
+    }
+}
+```
