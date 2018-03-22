@@ -477,6 +477,139 @@ class Coordinate {
 }
 ```
 
+## 包圍島問題
+
+- Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
+
+- A region is captured by flipping all 'O's into 'X's in that surrounded region.
+
+### For example
+```
+X X X X
+X O O X
+X X O X
+X O X X
+```
+After running your function, the board should be:
+```
+X X X X
+X X X X
+X X X X
+X O X X
+```
+
+## Solution - BFS
+- 1. Give a Class of Points{int x, int y} to record the Node in Queue
+- 2. Traversal all Edges to transfer all 'O' into '+' and also add them into a Queue
+- 3. Now, we got all Edges with 'X' or '+'
+- 4. Base on the '+' in the edges, we use Queue to do a BFS to all the '+'
+- 5. Transfer those 'O' around(up, bottom, left and right) into '+' as well
+- 6. How to use BFS? 
+- Check the vaild (row - 1 >= 0) (row + 1 < rowN) (col - 1 >= 0) (col + 1 < colN)
+- If broad[row-1] == 'O' , change it into 'X' and Add into the Queue
+- 7. When the Queue is Empty, means we have already traversal all Nodes the start from edge O
+- 8. Traversal all Nodes again: Change '+' into O, change 'O' into 'X'
+- (Which means we couldn't change those 'O' that aren't be touched by edged O)
+
+
+```java
+class Solution {
+    public void solve(char[][] board) {
+        
+        if(board.length == 0){
+            return;
+        }
+        
+        Deque<Point> queue = new ArrayDeque<>();
+        int rowN = board.length;
+        int colN = board[0].length;
+        
+        if(colN == 0) {
+            return;
+        }
+        
+        // Row Edges
+        for(int i = 0; i < rowN; i++ ) {
+            if(board[i][0] == 'O'){
+                board[i][0] = '+';
+                queue.offerLast(new Point(i, 0));
+            }
+            
+            if(board[i][colN - 1] == 'O'){
+                board[i][colN - 1] = '+';
+                queue.offerLast(new Point(i, colN - 1));
+            }
+        }
+            
+        // Col Edges
+        for(int j = 0; j < colN; j++) {
+            if(board[0][j] == 'O'){
+                board[0][j] = '+';
+                queue.offerLast(new Point(0, j));
+            }
+            
+            if(board[rowN - 1][j] == 'O'){
+                board[rowN - 1][j] = '+';
+                queue.offerLast(new Point(rowN - 1, j));
+            }
+        }
+        
+        // BFS all '+' in queue to change all 'O' met by '+'
+        while(!queue.isEmpty()){
+            
+            Point cur = queue.pollFirst();
+            int row = cur.x;
+            int col = cur.y;
+            
+            // Upside
+            if(row - 1 >= 0 && board[row - 1][col] == 'O'){
+                board[row - 1][col] = '+';
+                queue.offerLast(new Point(row - 1, col));
+            }
+                
+            // Buttom
+            if(row + 1 < rowN && board[row + 1][col] == 'O'){
+                board[row + 1][col] = '+';
+                queue.offerLast(new Point(row + 1, col));
+            }
+                
+            // Left
+            if(col - 1 >= 0 && board[row][col - 1] == 'O') {
+                board[row][col - 1] = '+';
+                queue.offerLast(new Point(row, col - 1));
+            }
+            // Right 
+            if(col + 1 < colN && board[row][col + 1] == 'O'){
+                board[row][col + 1] = '+';
+                queue.offerLast(new Point(row, col + 1));
+            } 
+        }
+        
+        // Traversal All nodes and change '+' to 'O', 'O' to 'X'
+        for(int i = 0; i < rowN ; i++){
+            for(int j = 0; j < colN; j++){
+                if(board[i][j] == 'O'){
+                    board[i][j] = 'X';
+                } else if(board[i][j] == '+'){
+                    board[i][j] = 'O';
+                } else{
+                    continue;
+                }
+            }
+        }
+    }
+}
+
+class Point{
+    int x;
+    int y;
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+```
+
 ### BFS 概要
 - 使用 Queue
 - while(!queue.isEmpty)
@@ -489,7 +622,7 @@ class Coordinate {
 ***
 
 ## Remind
-### 103 Binary Tree ZigZag Level Order Traveral
+## 103 Binary Tree ZigZag Level Order Traveral
 - 1. Queue的接口為 Deque，實現方式為ArrayDeque
 ```java
 Deque<Integer> queue = new ArrayDeque<>(); 
@@ -499,3 +632,42 @@ Deque<Integer> queue = new ArrayDeque<>();
 - 4. Level Traversal後，再改變 Order
 - 5. 檢查 Corner Case，別忘記 input == null 的時候該做的操作
 
+## 107 Binary Tree Level Order Traversal II
+- 1. 題目改變 res 放入 ans List 的順序
+
+## 130 Surrounded Region
+- 1. new 一個 blooean Array, default value is False
+- 2. boolean[] visited = new boolean[1] means there is only one space in memory, you couldn't find visited[1]
+- 3. char：用 "=="  | string：用 "equals"
+- 4. Matrix-> rowN = matrix.length, colN = matrix[0].length
+```java
+matrix[row][col]
+```
+- 5. 邊界判斷方式：
+```java
+// Top
+if(row - 1 >= 0 && board[row - 1][col] == 'O'){ }    
+// Buttom
+if(row + 1 < rowN && board[row + 1][col] == 'O'){ } 
+// Left
+if(col - 1 >= 0 && board[row][col - 1] == 'O') { }
+// Right 
+if(col + 1 < colN && board[row][col + 1] == 'O'){ }
+```
+- 6. Corner Case 判斷方式： 先 matrix != null， 後 matrix[0] != null
+
+## 199. Binary Tree Right Side View
+- 1. Level Traversal and Get the last number
+
+## 310. Minimum Height Trees
+- 1.  List<Set<Integer>> lsit 的操作
+- 2. list.get(i).size() 得到第i個Set的大小
+- 3. list.get(i).add(j) 將j放入第i個Set當中
+- 4. list.get(i).iterator().next() 取得第i個Set當中第一個數值
+- 5. 如何 init 這個List
+```java
+for(int i = 0; i < n; i++) {
+    list.get(i).add(new HashSet);
+}
+```
+- 6. 使用Queue處理Level Traversal的時候，要先定義Size，才不會因為處理過程中改變Queue Size大小，而有取不到值的問題。
