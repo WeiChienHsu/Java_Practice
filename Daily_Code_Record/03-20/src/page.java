@@ -17,8 +17,16 @@ public class page {
         for(int i = 0; i < 3; i++ ) ans.add(new HashSet<>());
         System.out.println(ans.get(1).size());
         ans.get(1).add(1);
-        int num = ans.get(1).iterator().next();
-        System.out.println(num);
+        ans.get(1).add(2);
+        for(int n : ans.get(1)) {
+            System.out.println(n);
+        }
+
+        int[] a = new int[1];
+        a[0]++;
+        int[] emptyArray = new int[0];
+        System.out.println(a[0]);
+
 
         }
     }
