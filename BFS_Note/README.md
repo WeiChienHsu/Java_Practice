@@ -618,6 +618,27 @@ class Point{
 - 判斷什麼條件要再放回queue
 - grid[][] 和 set 擔任去重的角色
 
+***
+
+## BFS vs DFS
+[StackOverFlow](https://stackoverflow.com/questions/20429310/why-is-depth-first-search-claimed-to-be-space-efficient)
+
+Your confusion is stemming from the fact that you apparently assume that DFS algorithm can be obtained from BFS algorithm by replacing the FIFO queue with a LIFO stack.
+
+This is a popular misconception - it is simply not true. The classic DFS algorithm cannot be obtained by replacing the BFS queue with a stack. The difference between these algorithms is much more significant.
+
+If you take a BFS algorithm and simply replace the FIFO queue with a LIFO stack, you will obtain something that can be called a pseudo-DFS algorithm. This pseudo-DFS algorithm will indeed correctly reproduce the DFS vertex forward traversal sequence, but it will not have DFS space efficiency and it will not support DFS backward traversal (backtracking).
+
+Meanwhile, the true classic DFS cannot be obtained from BFS by such a naive queue-to-stack replacement. The classic DFS is a completely different algorithm with significantly different core structure. True DFS is a genuinely recursive algorithm that uses stack for backtracking purposes, not for storing the vertex discovery "front" (as is the case in BFS). The most immediate consequence of that is that in DFS algorithm the maximum stack depth is equal to the maximum distance from the origin vertex in the DFS traversal. In BFS algorithm (as in the aforementioned pseudo-DFS) the maximum queue size is equal to the width of the largest vertex discovery front.
+
+The most prominent and extreme example that illustrates the difference in peak memory consumption between DFS and BFS (as well as pseudo-DFS) is a star-graph: a single central vertex surrounded by a large number (say, 1000) of peripheral vertices, with each peripheral vertex connected to the central vertex by an edge. If you run BFS on this graph using the central vertex as origin, the queue size will immediately jump to 1000. The same thing will obviously happen if you use pseudo-DFS (i.e. if you simply replace the queue with a stack). But classic DFS algorithm will need stack depth of only 1 (!) to traverse this entire graph. See the difference? 1000 versus 1. This is what is meant by better space efficiency of DFS.
+
+Basically, take any book on algorithms, find a description of classic DFS and see how it works. You will notice that the difference between BFS and DFS is far more extensive that a mere queue vs. stack.
+
+P.S. It should also be said that one can build an example of a graph that will have smaller peak memory consumption under BFS. So the statement about better space efficiency of DFS should be seen as something that might apply "on average" to some implied class of "nice" graphs.
+
+
+
 
 ***
 
@@ -671,3 +692,37 @@ for(int i = 0; i < n; i++) {
 }
 ```
 - 6. 使用Queue處理Level Traversal的時候，要先定義Size，才不會因為處理過程中改變Queue Size大小，而有取不到值的問題。
+
+## 417 Pacific Atlantic Water Flow
+- 1. 如何處理四個方向
+```java
+int[][] dir = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+for(int[] d : dir) {
+    int x = cur[0] + d[0];
+    int y = cur[1] + d[1];
+}
+```
+- 2. 如何處理垂直或水平加入Queue和Array
+```java
+int row = matrix.length;
+int col = matrix[0].length;
+// Put All Vertical boarder into Queue and visited
+// p -> [i][0]
+// a -> [i][col - 1]
+for(int i = 0; i < row; i++) {
+    pQueue.offerLast(new int[]{i, 0});
+    aQueue.offerLast(new int[]{i, col - 1});
+    pVisited[i][0] = true;
+    aVisited[i][col - 1] = true;
+}
+
+// Put All Horizontal boarder into Queue
+// p -> [0][j]
+// a -> [row - 1][j]
+for(int j = 0; j < col; j++) {
+    pQueue.offerLast(new int[]{0, j});
+    aQueue.offerLast(new int[]{row - 1, j});
+    pVisited[0][j] = true;
+    aVisited[row - 1][j] = true;
+}
+```
