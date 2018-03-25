@@ -752,3 +752,23 @@ map.get(key).add(new Pair(num, num));
 ```
 - 2. Arrays.fill(array, value) 可以填入預設值
 - 3. int[] num = new int[N] -> 不要忘記 new!!!!
+
+
+## 529 Mineweeper
+- 1. 將 Integer 放入 char[]當中的方式：
+```java
+int num = 2;
+char[] charList = new char[1];
+char[1] = (char)(num + '0');
+```
+- 2. 操作 matrix 中的 dirHelper Array的時候，記得先檢查邊界
+```java
+int[][] helper = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, -1}, {-1, 1}, {1, 1}, {-1, -1}};
+
+for(int[] dir : helper) {
+    int newRow = x + dir[0];
+    int newCol = y + dir[1];
+    if(newRow < 0 || newRow >= row || newCol < 0 || newCol >= col){
+        continue;
+    }
+```
