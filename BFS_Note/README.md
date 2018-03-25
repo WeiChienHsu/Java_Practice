@@ -726,3 +726,7 @@ for(int j = 0; j < col; j++) {
     aVisited[row - 1][j] = true;
 }
 ```
+## 690 Employee Importance
+- 1. List<Integer> list -> list.size() 
+- 2. int[] num -> num.length
+- 3. String s -> s.length() 
