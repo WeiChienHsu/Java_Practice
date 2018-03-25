@@ -730,3 +730,25 @@ for(int j = 0; j < col; j++) {
 - 1. List<Integer> list -> list.size() 
 - 2. int[] num -> num.length
 - 3. String s -> s.length() 
+
+## 743 Network Delay Time
+- 0. New 一個新的Class操作，不要忘記init value 和 constructor
+```java
+class Pair{
+    int time, dest;
+    public Pair(int time, int dest) {
+        this.time = time;
+        this.dest = dest;
+    }
+}
+```
+- 1. 操作 Map <Integer, Set<Pair>> : 先 check if key in the map 在加入(add) Value 在 Set當中
+```java
+if(!map.containsKey(key)) {
+    map.put(key, new HashSet<>());
+}
+
+map.get(key).add(new Pair(num, num));
+```
+- 2. Arrays.fill(array, value) 可以填入預設值
+- 3. int[] num = new int[N] -> 不要忘記 new!!!!
