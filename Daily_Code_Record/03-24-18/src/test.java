@@ -14,6 +14,6 @@ public class test {
         char[] cap = new char[1];
         int num = 2;
         cap[0] = (char)(num + '0') ;
-        System.out.println(a | a);
+        System.out.println(false || true);
     }
 }

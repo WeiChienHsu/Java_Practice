@@ -772,3 +772,11 @@ for(int[] dir : helper) {
         continue;
     }
 ```
+
+## 542 01 Matrix
+- 1. 判斷 newRow 和 newCol 是否 valid，記得不要用錯邊界值 “>=" "&&"
+```java
+    public boolean isValid(int newRow, int newCol, int row, int col){
+        return newRow >= 0 && newCol >= 0 && newRow < row && newCol < col;
+    }
+```
