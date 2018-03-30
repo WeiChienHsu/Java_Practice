@@ -403,3 +403,58 @@ Subset問題，求所有的子集，子即個數一共有2^n個，每個集合�
 
 - Conquer Divide : O(二叉樹結點數 + 每個節點間）
 最大深度問題，每節點個數為亦算時間為O(1)，節點個數為N-> 時間O(n)
+
+***
+
+# Reminder
+## 695. Max Area of Island
+[DFS - solution](https://www.youtube.com/watch?v=R4Nh-EgWjyQ)
+- 1. 簡單的 DFS(recursion) return 
+```java
+public int dfsHelper(int[][] g, int i, int j, boolean[][] visited) {
+  
+  if(i < 0 || j < 0 || i >= g.length || j >= g[0].length || visited[i][j]) return 0;
+  
+  visited[i][j] = true;
+  
+  if(g[i][j] == 0) return 0;
+  
+  return 1 + dfsHelper(g, i + 1, j, visited) + dfsHelper(g, i - 1, j, visited) 
+            + dfsHelper(g, i, j + 1, visited) + dfsHelper(g, i, j - 1, visited);
+}
+```
+- 2. 利用for loop 的 return 
+```java
+public int dfsHelper(int[][] grid, boolean[][] visited, int row, int col, int size) {
+    // boundry case or visited -> return 0
+    if(row < 0 || col < 0 || row >= grid.length || 
+       col >= grid[0].length || visited[row][col]) {
+         return 0;
+    }
+    
+    int[][] helper = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    
+    // Mark as visited and check if current node equal to 0 -> return 0
+    visited[row][col] = true;
+    if(grid[row][col] == 0) return 0;
+    
+    
+    // Go through the four directions
+    for(int[] dir : helper) {
+        int newRow = row + dir[0];
+        int newCol = col + dir[1];
+        size += dfsHelper(grid, visited, newRow, newCol, 1);
+    }
+    
+    return size;
+}       
+```
+
+## 105 Construct Binary Tree from Preorder and Inorder Traversal
+- 1. Recursion的問題，要先找規律
+- 2. Array的問題很多需要找start and end point 來切割
+- 3. Binary Tree會先找到一個Root，剩餘的部分分成root.left 與 root.right來解決
+
+
+## 106. Construct Binary Tree from Inorder and Postorder Traversal
+- 1. End: index 必須是 num.length - 1
