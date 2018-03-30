@@ -458,3 +458,57 @@ public int dfsHelper(int[][] grid, boolean[][] visited, int row, int col, int si
 
 ## 106. Construct Binary Tree from Inorder and Postorder Traversal
 - 1. End: index 必須是 num.length - 1
+
+## 129. Sum Root to Leaf Numbers
+- 1. 思考樹的Recursion問題:
+- 考慮每一次要傳入什麼給下層？
+- 考慮每一次希望下層回傳什麼給上層？
+- 上往下的時候會遇到的三種狀況，該如何反應？
+- 1) 超過Leaf -> root == null
+- 2) 到達了Leaf -> root.right == null && root.left == null
+- 3) 中間Nodes
+
+- 2. 此題解：
+- 傳入下層Node 以及 當層總數
+- 下層回傳更新後的總數給上層 (上層*10 + 當層)
+- 1) 檢查是否為null，直接回傳 0，或更新
+```java
+if(root == null) {
+    return 0;
+} 
+
+curSum =  curSum * 10 + root.val;
+```
+- 2) 直接回傳 更新值
+```java
+if(root.left == null && root.right == null) {
+    return curSum;
+}
+```
+- 3) 搜集 左節點 與 右節點 的回傳更新值 (DFS)
+```java
+int leftSum = dfsHelper(root.left, curSum);  
+int rightSum = dfsHelper(root.right, curSum);
+return leftSum + rightSum;
+```
+
+## 394. Decode String
+- 1. 如何檢查char，是否為數字-> Character.isDigit(c) || 如何得到char的數值 -> Character.getNumericValue()
+- 2. 如將char push進 Stack中的 StringBuilder
+```java
+StringBuilder sb = new StringBuilder();
+Deque<StringBuilder> stringStack = new ArrayDeque<>();
+stringStack.offerLast(sb);
+
+char c = 'a';
+stringStack.offerLast(stringStack.pollLast().append(c));
+```
+- 3. 抓到String中的char -> string.charAt(i)
+- 4. char 用 "==" || string 用 equals
+
+
+## 494. Target Sum
+- 1. 解決DFS問題時，會有一種不需要return value，但要有個global variable紀錄結果的方式
+- 2. 畫一個 strategy Tree來討論每一層之間的關係，這層到下層，如何變動？
+- 3. 使用Target還是RemainTarget？ 我們要的解是在底層發生嗎？返回條件為何？
+- 4. 有些題目可以減枝來優化，當符合某種條件時，繼續處理下去是沒有意義的。（這題就是remainTarget大於剩下的值可以組合成最大的數，直接reture回上層。
