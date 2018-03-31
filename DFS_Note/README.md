@@ -512,3 +512,4 @@ stringStack.offerLast(stringStack.pollLast().append(c));
 - 2. 畫一個 strategy Tree來討論每一層之間的關係，這層到下層，如何變動？
 - 3. 使用Target還是RemainTarget？ 我們要的解是在底層發生嗎？返回條件為何？
 - 4. 有些題目可以減枝來優化，當符合某種條件時，繼續處理下去是沒有意義的。（這題就是remainTarget大於剩下的值可以組合成最大的數，直接reture回上層。
+
