@@ -22,3 +22,5 @@ Output: 1
 Explanation:The 0th and 1st students are direct friends, the 1st and 2nd students are direct friends, 
 so the 0th and 2nd students are indirect friends. All of them are in the same friend circle, so return 1.
 ```
+
+## Solution
