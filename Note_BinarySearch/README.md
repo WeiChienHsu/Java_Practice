@@ -3,7 +3,7 @@ Given an sorted integer array - nums/ an integer/ target.
 - Find the any/first/last position of target in nums
 - Return -1 if target does not exist.
 
-## 時間複雜度
+## 時間複雜度計算
 
 二分法：通過O(1)的時間，把規模為n的問題變成 n/2 規模的問題
 時間複雜度O(logn)

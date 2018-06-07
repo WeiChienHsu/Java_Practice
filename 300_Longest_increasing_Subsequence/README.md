@@ -125,3 +125,5 @@ class Solution {
     }
 }
 ```
+
+## Binary Search

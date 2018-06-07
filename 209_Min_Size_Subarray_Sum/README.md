@@ -7,6 +7,7 @@ Input: s = 7, nums = [2,3,1,2,4,3]
 Output: 2
 Explanation: the subarray [4,3] has the minimal length under the problem constraint
 ```
+
 ## Two Pointers
 - Right Pointer: 只要 Sum < target ， 就不斷向前
 - Left Pointer: 只要 Sum >= target， 紀錄當前 Length (與minLength比較)， Left 向前
