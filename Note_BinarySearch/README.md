@@ -253,4 +253,9 @@ class Solution {
 }
 ```
 
+## Map Differences
+HashMap is implemented as a hash table, and there is no ordering on keys or values. 
+TreeMap is implemented based on red-black tree structure, and it is ordered by the key. 
+LinkedHashMap preserves the insertion order. 
+Hashtable is synchronized, in contrast to HashMap.
 
