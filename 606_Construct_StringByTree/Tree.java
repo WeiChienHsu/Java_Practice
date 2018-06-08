@@ -12,8 +12,8 @@ public void helper(StringBuilder sb,TreeNode t){
           sb.append(")");
           if(t.right!=null){
               sb.append("(");
-          helper(sb,t.right);
-          sb.append(")");
+              helper(sb,t.right);
+              sb.append(")");
           }
       }
   }
