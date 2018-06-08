@@ -43,25 +43,37 @@ except we can't omit the first parenthesis pair to break the one-to-one mapping 
 7. Traversal 結束後，將這個點關閉，加入")"
 
 ```java
-public String tree2str(TreeNode t) {
-  StringBuilder sb = new StringBuilder();
-  helper(sb,t);
-  return sb.toString();
-}
-public void helper(StringBuilder sb,TreeNode t){
-  if(t!=null){
-      sb.append(t.val);
-      if(t.left!=null||t.right!=null){
-          sb.append("(");
-          helper(sb,t.left);
-          sb.append(")");
-          if(t.right!=null){
-            sb.append("(");
-            helper(sb,t.right);
-            sb.append(")");
-          }
-      }
-  }
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public String tree2str(TreeNode t) {
+        StringBuilder sb = new StringBuilder();
+        Solution.helper(sb, t);
+        return sb.toString();
+    }
+    
+    public static void helper(StringBuilder sb, TreeNode root) {
+        if(root != null) {
+            sb.append(root.val);
+            if(root.left != null || root.right != null) {
+                sb.append("(");
+                Solution.helper(sb, root.left);
+                sb.append(")");
+                if(root.right != null) {
+                    sb.append("(");
+                    Solution.helper(sb, root.right);
+                    sb.append(")");
+                }
+            }
+        }
+    }
 }
 
 ```
