@@ -59,3 +59,16 @@ class Solution {
 }
 
 ```
+
+## Solution - Recursion
+解釋樹：
+```
+root.left = root.right
+root.left.left = root.right.right
+root.left.right = root.right.left
+root.left.left.left = root.right.right.right
+root.left.left.right = root.right.right.left
+```
+
+1. 找出第一規律， something.left.left == something.right.right
+2. 第二規律， something.left.right = something.right.left
