@@ -21,3 +21,19 @@ class Solution {
     }
    
 }
+
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        
+        return root == null || Solution.helper(root.left, root.right);
+    }
+    
+    public static boolean helper(TreeNode rootL, TreeNode rootR) {
+        if(rootL == null || rootR == null) return rootL == rootR;
+        if(rootL.val != rootR.val) return false;
+        
+        // 1. 找出第一規律， something.left.left == something.right.right
+        // 2. 第二規律， something.left.right = something.right.left
+        return Solution.helper(rootL.left, rootR.right) && Solution.helper(rootL.right, rootR.left);
+    }
+}
