@@ -38,3 +38,20 @@ class Solution {
     }
 }
 ```
+
+## Solution - DFS
+- 處理左子樹
+- 處理右子樹
+- Base Case: 當 root == null return 0
+- 回傳值： 當 right == 0 或 left == 0 代表一邊的樹沒有child，回傳當前Node下面的 left + right + 1，如果左右都有子樹，回傳 left 和 right 小的那個。
+
+```java
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root == null) return 0;
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        return (right == 0 || left == 0) ? left + right + 1 : Math.min(left, right) + 1;
+    }
+}
+```
