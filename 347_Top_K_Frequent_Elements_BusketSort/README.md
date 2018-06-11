@@ -1,4 +1,4 @@
-# Top K Frequent Elements _ Bucket Sort
+# Top K Frequent Elements - Bucket Sort
 
 ## Given a non-empty array of integers, return the k most frequent elements.
 

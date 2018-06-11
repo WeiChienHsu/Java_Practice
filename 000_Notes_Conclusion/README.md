@@ -5,7 +5,7 @@
 
 ## Interval 類
 
-#### 56 Merge Intervals
+### 56 Merge Intervals
 Override the Comparator
 
 - [Example code](../056_Merge_Intervals/Iteration_Comparator.java)
@@ -31,6 +31,13 @@ Collections.sort(intervals, new Comparator<Interval>(){
 ```
 
 ***
+
+## Tree 類
+
+
+***
+
+## DP 類
 
 
 
