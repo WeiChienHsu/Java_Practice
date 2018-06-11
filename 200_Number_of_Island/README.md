@@ -120,3 +120,5 @@ private void markByBFS(boolean[][] grid, int x, int y) {
         return islands;
     }
 ```
+
+## Solution - DFS
