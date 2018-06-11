@@ -7,8 +7,9 @@
 
 #### 56 Merge Intervals
 Override the Comparator
-[Example code](../056_Merge_Intervals/Iteration_Comparator.java)
-[Details Description](../056_Merge_Intervals/)
+
+- [Example code](../056_Merge_Intervals/Iteration_Comparator.java)
+- [Details Description](../056_Merge_Intervals/)
 
 #### Override
 ```java
