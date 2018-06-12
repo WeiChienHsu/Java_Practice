@@ -21,7 +21,6 @@ The count-and-say sequence is the sequence of integers with the first five terms
 ```java
 class Solution {
     public String countAndSay(int n) {
-        System.out.println(n);
         // Base Case 
         if(n == 1) return "1";
         

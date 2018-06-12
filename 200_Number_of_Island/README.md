@@ -122,3 +122,7 @@ private void markByBFS(boolean[][] grid, int x, int y) {
 ```
 
 ## Solution - DFS
+1. 遍歷整個圖，當遇到 沒有 visited 過的，以及 '1' 的時候，小島數+1，並丟入DFS中處理
+2. DFS: 當該點為 '1' 且 沒有 visited 過，處理該點：
+- 標記為 visited
+- 檢查邊界（上下左右），如果都在邊界內，丟入DFS處理

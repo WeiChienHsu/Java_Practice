@@ -1,10 +1,17 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Solution {
     public static void main(String[] args) {
 //        Set<Integer> set = new HashSet<>(Arrays.asList(2, 3, 5, 7, 11, 13));
 //        System.out.println(set.contains(4));
 
-        String newString = "apple";
-        System.out.println(newString.indexOf("ab"));
+//        String newString = "apple";
+//
+//        System.out.println(newString.charAt());
+
+        List<Integer> test = new ArrayList<>();
+        test.add(0, 20);
     }
 
     public static int getPrime(int num) {
