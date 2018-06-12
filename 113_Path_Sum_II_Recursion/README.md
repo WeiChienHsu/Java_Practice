@@ -195,3 +195,62 @@ root == null return;
 
 ```
 #### Start the helper(root.right) and back to 5
+
+
+***
+
+## 在當層處理好 Sum 的方法，不需要判斷下層是否為Null
+
+```java
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> answer = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+        // result.add(root.val);
+        dfsHelper(root, sum, answer, result);
+        return answer;
+    }
+    
+    public static void dfsHelper(TreeNode root, int sum, List<List<Integer>> answer, List<Integer> result) {
+        if(root == null) return;
+        
+        // 讓扣除Current Value的工作在每一層中處理
+        result.add(root.val);
+        sum -= root.val;
+        
+        if(root.left == null && root.right == null && sum == 0) {
+                List<Integer> res = new ArrayList<>(result);
+                answer.add(res);
+        }
+        
+        // 分治法：處理左右子樹
+        dfsHelper(root.left, sum, answer, result);
+        dfsHelper(root.right, sum, answer, result);
+        
+        // 當這層處理完畢，回到上層時，需要backtracking，將array內新加入的這層數值移出
+        result.remove(result.size() - 1);
+    }
+}
+
+```
+
+## 在當層處理好下層的Sum，需要先確定root.left 和 root.right 不是 Null
+
+```java
+    private void helper(TreeNode root, int sum, List<Integer> list, List<List<Integer>> res) {
+        if (root == null) return;
+        
+        // Add the number we go through
+        list.add(root.val);
+        
+        if( sum == root.val && root.right == null && root.left == null ) {
+            res.add(new ArrayList<Integer>(list));
+        } else {
+            helper(root.left, sum - root.val, list, res);
+            helper(root.right, sum - root.val, list, res); 
+        }
+        
+        // Remove the node value from list since we'll back to last level
+        list.remove(list.size() - 1);
+    }
+```
