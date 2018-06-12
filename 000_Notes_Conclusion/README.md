@@ -231,6 +231,62 @@ public static boolean containsCircle(int course, Set<Integer> passed, Set<Intege
 
 ## Tree 類
 
+## 113. Path Sum II 
+Divide and Conquer + Backtracking
+分辨有兩種處理“將Target丟到下一層"處理的算法。
+Hard Copy and Soft Copy
+
+### 將 ArrayList<Integer> list 中的值 Softcopy 到新的 ArrayList Instance當中，並且add入 List<List<Integer>> 
+
+```java
+res.add(new ArrayList<Integer>(list));
+```
+
+### 當層處理 Target ， 不需要事先判斷 root.right 和 root.left 是否為 Null
+
+```java
+public static void dfsHelper(TreeNode root, int sum, List<List<Integer>> answer, List<Integer> result) {
+    if(root == null) return;
+    // 讓扣除Current Value的工作在每一層中處理
+    result.add(root.val);
+    sum -= root.val;
+    if(root.left == null && root.right == null && sum == 0) {
+            List<Integer> res = new ArrayList<>(result);
+            answer.add(res);
+    }
+    // 分治法：處理左右子樹
+    dfsHelper(root.left, sum, answer, result);
+    dfsHelper(root.right, sum, answer, result);
+    
+    // 當這層處理完畢，回到上層時，需要backtracking，將array內新加入的這層數值移出
+    result.remove(result.size() - 1);
+}
+```
+### 丟到下一層處裡 Sum
+
+```java
+private void helper(TreeNode root, int sum, List<Integer> list, List<List<Integer>> res) {
+    if (root == null) return;
+
+    // Add the number we go through
+    list.add(root.val);
+
+    if( sum == root.val && root.right == null && root.left == null ) {
+        res.add(new ArrayList<Integer>(list));
+    } else {
+        helper(root.left, sum - root.val, list, res);
+        helper(root.right, sum - root.val, list, res); 
+    }
+
+    // Remove the node value from list since we'll back to last level
+    list.remove(list.size() - 1);
+}
+```
+
+***
+
+
+***
 
 ## Inorder Traversal
 
