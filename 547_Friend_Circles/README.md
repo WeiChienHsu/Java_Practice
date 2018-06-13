@@ -24,3 +24,53 @@ so the 0th and 2nd students are indirect friends. All of them are in the same fr
 ```
 
 ## Solution
+
+類似 Number of Island 的解法，使用DFS：
+
+1. 將連結到的friend index 標記為 visited，只要再次造訪，代表他是在原本的朋友圈內
+2. 遍歷一次整個圖，只要遇到該值 == 1 的時候，就將該點丟入 dfs 中
+3. dfs 遍歷該點的那一個row (會遍歷所有該學生的朋友)，如果該學生曾經被造訪返回空值不處理，如果尚未造訪，則是標記該值並丟入dfs中繼續找這串friend circle連結到的人。
+4. 跳出 dfs 代表這個環結束，count ++，並繼續遍歷下個沒有被visited的學生。
+
+不需要和 Number of Islands 一樣引用row與col找邊界值，因為這裡的0與1有不同的意義。
+
+```java
+class Solution {
+    public int findCircleNum(int[][] M) {
+        if(M == null || M.length == 0 || M[0].length == 0) return 0;
+        int n = M.length; // row == col, we used n to present number of students
+        
+        boolean[] visited = new boolean[n];
+        int count = 0;
+        
+        // 遍歷過一次所有的row，代表遍歷過所有的學生
+        // 標記visited過的，代表已經進入了朋友圈
+        for(int i = 0; i < n; i++) {
+                if(!visited[i]) {
+                    count++;
+                    Solution.dfsHelper(M,i, n, visited);
+                }
+        }
+        return count;
+    }
+    public static void dfsHelper(int[][] M, int currentStudent, int n, boolean[] visited) {
+        
+        // If this student has been visited
+        // it means he or she will be someone's friend in the current friend circle
+        // Dismiss
+        
+        if(visited[currentStudent]) return;
+        
+        // Marked the current Studnet as visited
+        visited[currentStudent] = true;
+        
+        // Loop through the relationship of currentStudent with others
+        for(int i = 0; i < n; i++) {
+            // Find currentStudent's friend and put it into DFS
+            if(M[currentStudent][i] == 1) {
+                Solution.dfsHelper(M, i, n, visited);
+            }
+        }
+    }
+}
+```
