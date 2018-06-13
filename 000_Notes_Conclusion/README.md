@@ -297,7 +297,54 @@ private void helper(TreeNode root, int sum, List<Integer> list, List<List<Intege
 
 ## DP 類
 
+***
 
+## Union Find Forest
+[Example Template](../UnionFind)
+[Example 684 Redundant Connection](../684_Redundant_Connection/)
+[Example 547 Friend Circles](../547_Friend_Circles)
+[Example 737 Sentence Similarity II](../737_Sentence_SimilarityII)
+
+
+```java
+class UnionFindSet {
+  private int[] ranks;
+  private int[] parents;
+  public UnionFindSet(int n) {
+      this.ranks = new int[n + 1];
+      this.parents = new int[n + 1];
+      for(int i = 0; i < n + 1; i++) {
+          ranks[i] = 1;
+          parents[i] = i;
+      }    
+  }
+  
+  public boolean Union(int u, int v) {
+      int rootU = Find(u);
+      int rootV = Find(v);
+      
+      if(rootU == rootV) return false;
+      
+      if(this.ranks[rootU] > this.ranks[rootV]) {
+          this.parents[rootV] = rootU;
+      } else if(this.ranks[rootU] < this.ranks[rootV]) {
+          this.parents[rootU] = rootV;
+      } else {
+          parents[rootV] = rootU;
+          this.ranks[rootU]++;
+      }
+      
+      return true;
+  }
+  
+  public int Find(int u) {
+      while(this.parents[u] != u) {
+          this.parents[u] = this.parents[this.parents[u]];
+          u = this.parents[u];
+      }
+      return u;
+  }
+  ```
 
 ***
 
