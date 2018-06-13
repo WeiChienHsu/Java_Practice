@@ -23,7 +23,7 @@ Explanation:The 0th and 1st students are direct friends, the 1st and 2nd student
 so the 0th and 2nd students are indirect friends. All of them are in the same friend circle, so return 1.
 ```
 
-## Solution
+## Solution - DFS
 
 類似 Number of Island 的解法，使用DFS：
 
@@ -73,4 +73,83 @@ class Solution {
         }
     }
 }
+```
+
+***
+
+
+## Solution - Union Find
+
+使用 UnionFind，將每個學生視為一個Node，只要兩個學生是朋友，就將這兩個Node連再一起，中間的邏輯是使用Union Find的邏輯，rank低得到高，每次Find到該Node的root node。
+
+與其他題不同之處，為了方便計算，我將Count variable寫入Class當中，Constructor的時候預設為n，只要需要Union連結兩個點時（代表著將少一個Circle，併入一個大個)，減少Count，最後Return UnionFind.count()。
+
+```java
+class Solution {
+    public int findCircleNum(int[][] M) {
+        if(M == null || M.length == 0 || M[0].length == 0) return 0;
+        int n = M.length; // row == col, we used n to present number of students
+        int m = M[0].length;
+        
+        int count = 0;
+        
+        UnionFindSet set = new UnionFindSet(n);
+        
+        for(int i = 0; i < n; i++) {
+          for(int j = 0; j < m; j++ ) {
+              if(M[i][j] == 1) set.Union(i, j);
+          }  
+        }
+        return set.count();
+    }
+    
+}
+
+class UnionFindSet {
+    private int ranks[];
+    private int parents[];
+    private int count;
+    public UnionFindSet(int n) {
+        this.ranks = new int[n];
+        this.parents = new int[n];
+        this.count = n;
+        for(int i = 0; i < n; i++) {
+            ranks[i] = 1;
+            parents[i] = i;
+        }
+    }
+    
+    public void Union(int u, int v) {
+        int rootU = Find(u);
+        int rootV = Find(v);
+        
+        if(rootV == rootU) return;
+        
+        if(ranks[rootU] > ranks[rootV]) {
+            parents[rootV] = rootU;
+        } else if(ranks[rootV] > ranks[rootU]) {
+            parents[rootU] = rootV;
+        } else {
+            parents[rootU] = rootV;
+            ranks[rootV]++;
+        }
+        
+        this.count--;
+        
+        return;
+    }
+    
+    public int Find(int u) {
+        while(parents[u] != u) {
+            parents[u] = parents[parents[u]];
+            u = parents[u];
+        }
+        return u;
+    }
+    
+    public int count() {
+        return this.count;
+    }
+}
+
 ```
