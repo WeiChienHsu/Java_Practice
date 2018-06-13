@@ -300,6 +300,9 @@ private void helper(TreeNode root, int sum, List<Integer> list, List<List<Intege
 ***
 
 ## Union Find Forest
+
+當需要判斷該點的源頭，或是兩個點是否有相同的Root時，使用此算法（或資料結構亦可）
+
 [Example Template](../UnionFind)
 [Example 684 Redundant Connection](../684_Redundant_Connection/)
 [Example 547 Friend Circles](../547_Friend_Circles)
