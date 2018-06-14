@@ -39,6 +39,10 @@ class Solution {
 
 The idea is simply. The product basically is calculated using the numbers before the current number and the numbers after the current number. Thus, we can scan the array twice. First, we calcuate the running product of the part before the current number. Second, we calculate the running product of the part after the current number through scanning from the end of the array.
 
+
+將從左至currentIndex前一個相乘的結果紀錄在 int fromLeft 當中，不段更新，並且放入result[]
+再將右至左currentIndex後一個相成的結果直接乘在在 result當中， int fromRight 紀錄從右邊相成過來的結果。
+
 ```java
 public class Solution {
 public int[] productExceptSelf(int[] nums) {
