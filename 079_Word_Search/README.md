@@ -1,88 +1,76 @@
-# Word Search 
+# Word Search
+
+Given a 2D board and a word, find if the word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
 
 ```
-Example 1:
+Example:
 
-Given input matrix = 
+board =
 [
-  [1,2,3],
-  [4,5,6],
-  [7,8,9]
-],
-
-rotate the input matrix in-place such that it becomes:
-[
-  [7,4,1],
-  [8,5,2],
-  [9,6,3]
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
 ]
-Example 2:
 
-Given input matrix =
-[
-  [ 5, 1, 9,11],
-  [ 2, 4, 8,10],
-  [13, 3, 6, 7],
-  [15,14,12,16]
-], 
-
-rotate the input matrix in-place such that it becomes:
-[
-  [15,13, 2, 5],
-  [14, 3, 4, 1],
-  [12, 6, 8, 9],
-  [16, 7,10,11]
-]
+Given word = "ABCCED", return true.
+Given word = "SEE", return true.
+Given word = "ABCB", return false.
 ```
-
 
 ## Solution
 
-順時針與逆時針旋轉圖。
+用DFS一個一個搜尋下個String index是否存在鄰居當中，記得要backtracking把拜訪過的紀錄移除，因為起始點不同。
 
-順時針：將上下row依次swap，並且針對[對角]的Node進行swap，關鍵在使用 i = 0, j = i + 1 的 double for loop
+- 注意條件判斷，容易出錯。
+- 使用 currentIndex == string.length() 來代表順利 traversal 結束，應該return true.
+- 因為 dfsHelper 不是 void Type，要考慮 return 值，丟入 dfs 當中的鄰居亦會產生 return value
+- 過去 visited 過的 char，如果離開的原本的起點，還會繼續被使用，所以要做backtracking處理
+- String.length() 以及 const int array.length 區別
 
-```
-  [1,2,3],
-  [4,5,6],
-  [7,8,9]
-
-  [7,8,9],
-  [4,5,6],
-  [1,2,3]
-
-  [7,4,9],
-  [8,5,6],
-  [1,2,3]
-
-  [7,4,1],
-  [8,5,6],
-  [9,2,3]
-
-  [7,4,1],
-  [8,5,2],
-  [9,6,3]
-```
 
 ```java
 class Solution {
-    public void rotate(int[][] matrix) {
-        int n = matrix.length;
-        // Rotating the top and last row by steps
-        for(int first = 0, last = n - 1; first < last; first++, last--) {
-            int[] temp = matrix[first];
-            matrix[first] = matrix[last];
-            matrix[last] = temp;
-        }
+    public boolean exist(char[][] board, String word) {
+        int row = board.length;
+        int col = board[0].length;
         
-        // Rotating the [0][1] [0][2] [1][1] ...
-        for(int r = 0; r < n; r++) {
-            for(int c = r + 1; c < n; c++) {
-                int temp = matrix[r][c];
-                matrix[r][c] = matrix[c][r];
-                matrix[c][r] = temp;
+        boolean[][] visited = new boolean[row][col];
+        
+        for(int r = 0; r < row; r++) {
+            for(int c = 0; c < col; c++) {
+                // 從第一個 Match 的字母開始做 dfs
+                if(word.charAt(0) == board[r][c] && Solution.dfsHelper(board, word, r, c, row, col, 0, visited)) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
+    
+    public static boolean dfsHelper(char[][] board, String word, 
+                                    int r, int c, int row, int col, 
+                                    int currentIndex, boolean[][] visited) {
+        // Base Case
+        if(currentIndex == word.length()) return true;        
+        
+        // Invalid Input
+        if(r < 0 || c < 0 || r >= row || c >= col || board[r][c] != word.charAt(currentIndex) || visited[r][c]) return false;
+
+        visited[r][c] = true;
+        
+        // Put the neighbors into the dfsHelper
+        if(
+        Solution.dfsHelper(board, word, r - 1, c, row, col, currentIndex + 1, visited) ||
+        Solution.dfsHelper(board, word, r + 1, c, row, col, currentIndex + 1, visited) ||
+        Solution.dfsHelper(board, word, r, c - 1, row, col, currentIndex + 1, visited) ||
+        Solution.dfsHelper(board, word, r, c + 1, row, col, currentIndex + 1, visited)) {
+            return true;
+        }
+
+        visited[r][c] = false;
+        return false;
     }
 }
 ```
