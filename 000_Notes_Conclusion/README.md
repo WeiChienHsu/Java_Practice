@@ -294,6 +294,17 @@ private void helper(TreeNode root, int sum, List<Integer> list, List<List<Intege
 ## Preorder Traversal
 
 ***
+## 字串 DFS 處理問題
+
+- [079 Word Seatch - String DFS](../079_Word_Search/)
+
+- 注意條件判斷，容易出錯。
+- 使用 currentIndex == string.length() 來代表順利 traversal 結束，應該return true.
+- 因為 dfsHelper 不是 void Type，要考慮 return 值，丟入 dfs 當中的鄰居亦會產生 return value
+- 過去 visited 過的 char，如果離開的原本的起點，還會繼續被使用，所以要做backtracking處理
+- String.length() 以及 const int array.length 區別
+
+***
 
 ## DP 類
 
@@ -351,6 +362,93 @@ class UnionFindSet {
 
 ***
 
+## Graph 特殊題
+
+順時針與逆時針旋轉圖。
+
+順時針：將上下row依次swap，並且針對[對角]的Node進行swap，關鍵在使用 i = 0, j = i + 1 的 double for loop
+
+```java
+/* Clockwise Rotate */
+public void rotate(int[][] matrix) {
+    if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return;
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    for(int first=0, last=rows-1; first<last; first++,last--) {
+        int[] tmp = matrix[first];
+        matrix[first] = matrix[last];
+        matrix[last] = tmp;
+    }
+    for(int i = 0; i < rows; i++){
+        for(int j = i+1; j < cols; j++){
+            int tmp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = tmp;
+        }
+    }
+}
+
+/* Counter-clockwise Rotate */
+public void antiRotate(int[][] matrix) {
+    if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return;
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    for(int first=0, last=cols-1; first<last; first++,last--) {
+        for(int i=0; i<matrix.length; i++) {
+            int tmp = matrix[i][first];
+            matrix[i][first] = matrix[i][last];
+            matrix[i][last] = tmp;
+        }
+    }
+    for(int i = 0; i < rows; i++){
+        for(int j = i+1; j < cols; j++){
+            int tmp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = tmp;
+        }
+    }
+}
+```
+
+***
+## DP 
+
+#### 基本思想与分治法类似，也是将待求解的问题 
+
+- 分解为若干个子问题（阶段） 
+- 按顺序求解子问题， 
+- 前一个（或前有限个，一般不超过三个）子问题的解，为后一子问题的求解提供了有用的信息。 
+- 在求解子问题时，需要求得各种可能的解。这些解是累计关系，是当前子问题的最终解。 
+- 依次解决各子问题，最后一个子问题的解就是初始问题的解。 
+
+动态规划的子问题可以用来判定结果的最短子问题，或是前后两个，或是前后三个，总之是有限个。 
+由于动态规划解决的问题多数有重叠子问题这个特点，为减少重复计算，对每一个子问题只解一次， 
+可将子问题及其输出保存在一个二维数组中。 
+
+#### 与分治法最大的差别是：
+
+适合于用动态规划法求解的问题，经分解后得到的子问题往往不是互相独立的， 
+即下一个子问题的求解是建立在上一个（几个）子问题的解的基础上进行求解。 
+
+
+### 动态规划过程 
+
+每次决策需要依赖于以前的状态，随即又产生新的状态。 
+每步都选择最优状态，但是其它状态也需要保留，以便为后面的决策提供依据。 
+一个决策序列就是在变化的状态中产生出来的，所以这种多阶段最优化决策解决问题的过程就称为动态规划。 
+
+[1、Best Time to Buy and Sell Stock -- LeetCode](http://blog.csdn.net/linhuanmars/article/details/23162793)
+
+[2、Best Time to Buy and Sell Stock II -- LeetCode](http://blog.csdn.net/linhuanmars/article/details/23164149)
+
+[3、Best Time to Buy and Sell Stock III -- LeetCode](http://blog.csdn.net/linhuanmars/article/details/23236995) 
+
+[4. Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown)
+
+
+
+***
+
 ## Example
 [example](./example.java)
 
@@ -359,6 +457,67 @@ class UnionFindSet {
 ***
 ## 必刷題
 
+#### 79 Word Search
+練習較多判斷條件的DFS以及String處理
+
 #### 130 Surrounded Regions
 練習 BFS(Queue) 與 DFS (Recursion || Stack) 解法
 
+#### 392 Is Subsequence (+ 792. Number of Matching Subsequences)
+練習從Two Pointer優化到BinarySearch的思維，小Input到大Input的Fellow-up Question
+
+***
+## Amazon 題目
+
+|No| Question | Acceptnce | Diffs | My Solution |
+|:-:|:-------:|:---------:|:------:|:---------:|
+|1 |Two Sum  |37.3% |Easy|
+|2 |Add Two Numbers| 28.5% |Medium|
+|3 |Longest Substring Without Repeating Characters| 24.6%| Medium|
+|5 |Longest Palindromic Substring |25.2% |Medium|
+|8 |String to Integer (atoi) | 14.0% |Medium|
+|15| 3Sum |21.8%| Medium|
+|17| Letter Combinations of a Phone Number |36.1% |Medium|
+|20| Valid Parentheses |33.9% |Easy|
+|21| Merge Two Sorted Lists  |40.5%| Easy|
+|23| Merge k Sorted Lists  |28.0%| Hard|
+|42| Trapping Rain Water | 37.5% |Hard|
+|48| Rotate Image  |41.2% |Medium|
+|49| Group Anagrams |37.8%| Medium|
+|73| Set Matrix Zeroes|  36.5% |Medium|
+|78| Subsets  |44.0%| Medium|
+|89| Gray Code |42.3%| Medium|
+|98| Validate Binary Search Tree | 24.0% |Medium|
+|102| Binary Tree Level Order Traversal |42.0%| Medium|
+|119| Pascal's Triangle II  |38.0% |Easy|
+|121| Best Time to Buy and Sell Stock |42.7%| Easy|
+|126| Word Ladder II | 14.8%| Hard|
+|127| Word Ladder |19.9%| Medium|
+|138| Copy List with Random Pointer |25.9% |Medium|
+|139| Word Break| 31.3% |Medium|
+|141| Linked List Cycle | 35.1% |Easy|
+|146| LRU Cache |19.5%| Hard|
+|155| Min Stack  |30.7% |Easy|
+|160| Intersection of Two Linked Lists |30.9% |Easy|
+|167| Two Sum II - Input array is sorted |47.3% |Easy|
+|189| Rotate Array  |25.2%| Easy|
+|199| Binary Tree Right Side View |42.2% |Medium|
+|200| Number of Islands |36.3% |Medium|
+|204| Count Primes| 26.6%| Easy|
+|206| Reverse Linked List| 46.6%| Easy|
+|215| Kth Largest Element in an Array |40.4%| Medium|
+|234| Palindrome Linked List |33.4%| Easy|
+|235| Lowest Common Ancestor of a Binary Search Tree |39.7% |Easy|
+|236| Lowest Common Ancestor of a Binary Tree |30.0%| Medium|
+|238| Product of Array Except Self | 50.2% |Medium|
+|239| Sliding Window Maximum  |34.1% |Hard|
+|240| Search a 2D Matrix II |39.1% |Medium|
+|242| Valid Anagram |47.3%| Easy|
+|297| Serialize and Deserialize Binary Tree |34.6%| Hard|
+|380| Insert Delete GetRandom O(1)| 39.8%| Medium|
+|387| First Unique Character in a String |47.2% |Easy|
+|535| Encode and Decode TinyURL |73.9%| Medium|
+|617| Merge Two Binary Trees |67.5% |Easy|
+|682| Baseball Game |58.1% |Easy|
+|746| Min Cost Climbing Stairs| 43.4% |Easy|
+|771| Jewels and Stones| | | 
