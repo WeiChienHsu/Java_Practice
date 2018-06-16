@@ -50,6 +50,12 @@ If there are lots of incoming S, say S1, S2, ... , Sk where k >= 1B, and you wan
 3. 利用 Binary Search 找到在List內比prevous Index 大的那個 index，如果沒有，Return -1
 4. 如果 Binary Search 出來的結果是 -1 ，直接return false，反之，更新previous Index value
 
+注意：這裡要用 <=， 因為可能出現目標string是同樣的數字，但如果沒有 = 他可能會一直找到跟前一個相同的數字。
+
+```java
+return list.get(end) <= previousIndex? -1 : list.get(start) > previousIndex? list.get(start) : list.get(end)
+```
+
 ```java
 class Solution {
     public boolean isSubsequence(String s, String t) {
@@ -93,7 +99,7 @@ class Solution {
                 start = mid;
             }
         }
-        return list.get(end) < previousIndex? -1 : list.get(start) > previousIndex? list.get(start) : list.get(end);
+        return list.get(end) <= previousIndex? -1 : list.get(start) > previousIndex? list.get(start) : list.get(end);
     }
 }
 ```
