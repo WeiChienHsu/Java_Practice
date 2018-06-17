@@ -96,3 +96,28 @@ for(char n : map.keySet()) {
 
 res.add(oldEnd - oldStart + 1);
 ```
+
+## Two Pointer Solution
+magine a bus moving forward, and imagine each char as a person yelling "I need to go that far!". If a newcomer yelled a further position, we extend our expected ending position to that position. Eventually, if we reached a position that satisfied everybody in the bus at the moment, we partition and clear the bus.
+
+```java
+class Solution {
+    public List<Integer> partitionLabels(String S) {
+        Integer[] positions = new Integer[26];
+        char[] chs = S.toCharArray ();
+        for (int i = 0; i < chs.length; i++)
+            positions[chs[i] - 'a'] = i;
+        List<Integer> resLs = new ArrayList<> ();
+        int pos = 0, end = 0, anchor = 0;
+        while (pos < chs.length) {
+            end = Math.max (positions[chs[pos] - 'a'], end);
+            if (pos == end) {
+                resLs.add (pos - anchor + 1);
+                anchor = pos + 1;
+            }
+            pos++;
+        }
+        return resLs;
+    }
+}
+```
