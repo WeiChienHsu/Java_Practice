@@ -466,6 +466,11 @@ public void antiRotate(int[][] matrix) {
 #### 392 Is Subsequence (+ 792. Number of Matching Subsequences)
 練習從Two Pointer優化到BinarySearch的思維，小Input到大Input的Fellow-up Question
 
+#### 406 Queue Reconstruction by Height
+練習自己寫一個 Linked List 結構以及Override compare Comparator的題目。
+
+
+
 ***
 ## Amazon 題目
 
