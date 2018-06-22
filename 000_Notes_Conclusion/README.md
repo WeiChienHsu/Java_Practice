@@ -446,6 +446,51 @@ public void antiRotate(int[][] matrix) {
 [4. Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown)
 
 
+***
+
+## Linked List
+
+### Reverse LinkedList
+
+使用 prev, cur 以及 每次操作前加入的 next 指針來反轉鍊錶。
+
+```java
+public static ListNode reverseLinkedList(ListNode root){
+    ListNode pre = null;
+    ListNode cur = root;
+    while(cur != null) {
+        ListNode next = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = next;
+    }
+    
+    return pre;     
+}
+```
+
+### Record Lenght of LinkedList
+
+While Loop
+
+```java
+ListNode node = root;
+int len = 0;
+while(node != null) {
+    len++;
+    node = node.next;
+}
+```
+
+簡化成For Loop
+
+```java
+int len = 0;
+for (ListNode node = root; node != null; node = node.next)
+    len++;
+```
+
+
 
 ***
 
@@ -469,7 +514,20 @@ public void antiRotate(int[][] matrix) {
 #### 406 Queue Reconstruction by Height
 練習自己寫一個 Linked List 結構以及Override compare Comparator的題目。
 
+#### 022 Generate Parentheses
+#### 017 Letter Combination of Phone Number
+練習應用類型的 DFS Combination 題目，有別於一般只處理單一 List 。
 
+#### 093 Restore IP Addresses
+練習切數字問題，以及判斷條件
+
+#### 445 Add Two Numbers II
+練習進位(carry)問題、反轉鍊錶(reverse LinkedList)、Stack操作（不改變input LinkedList)，相同時間複雜度，不同的trade-off。
+
+#### 043 Multiply Strings
+#### 415 Add Strings
+練習處理將String轉換成Integer(不使用Bulit-in Function)的運算。
+乘法原理是要處理每一位之間的運算與進位，加法原理只需要處理相同位數與進位的運算。
 
 ***
 ## Amazon 題目
