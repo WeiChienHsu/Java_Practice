@@ -61,6 +61,25 @@ return sb.toString();
 
 ```
 
+### String Switch & 找 Vowels
+
+非常好去辨別母音的方式，就是將母音放在一個String裡面，然後把char拿進去找，indexOf(char)，如果return -1 代表不在String裡面。
+
+如果要Switch String 裡面的 character ， 要使用 String string.toCharArray() 讓他變成一個 char[]。
+
+```java
+// In order to Switch character in String
+char[] str = s.toCharArray();
+char temp =  str[i]
+str[i] = str[j]
+str[j] = temp
+
+// Find the Vowel
+public static boolean isVowel(char c) {
+    return "aeiouAEIOU".indexOf(c) >= 0;
+}
+```
+
 ***
 
 ## Graph 類
@@ -532,55 +551,55 @@ for (ListNode node = root; node != null; node = node.next)
 ***
 ## Amazon 題目
 
-|No| Question | Acceptnce | Diffs | My Solution |
-|:-:|:-------:|:---------:|:------:|:---------:|
-|1 |Two Sum  |37.3% |Easy|
-|2 |Add Two Numbers| 28.5% |Medium|
-|3 |Longest Substring Without Repeating Characters| 24.6%| Medium|
-|5 |Longest Palindromic Substring |25.2% |Medium|
-|8 |String to Integer (atoi) | 14.0% |Medium|
-|15| 3Sum |21.8%| Medium|
-|17| Letter Combinations of a Phone Number |36.1% |Medium|
-|20| Valid Parentheses |33.9% |Easy|
-|21| Merge Two Sorted Lists  |40.5%| Easy|
-|23| Merge k Sorted Lists  |28.0%| Hard|
-|42| Trapping Rain Water | 37.5% |Hard|
-|48| Rotate Image  |41.2% |Medium|
-|49| Group Anagrams |37.8%| Medium|
-|73| Set Matrix Zeroes|  36.5% |Medium|
-|78| Subsets  |44.0%| Medium|
-|89| Gray Code |42.3%| Medium|
-|98| Validate Binary Search Tree | 24.0% |Medium|
-|102| Binary Tree Level Order Traversal |42.0%| Medium|
-|119| Pascal's Triangle II  |38.0% |Easy|
-|121| Best Time to Buy and Sell Stock |42.7%| Easy|
-|126| Word Ladder II | 14.8%| Hard|
-|127| Word Ladder |19.9%| Medium|
-|138| Copy List with Random Pointer |25.9% |Medium|
-|139| Word Break| 31.3% |Medium|
-|141| Linked List Cycle | 35.1% |Easy|
-|146| LRU Cache |19.5%| Hard|
-|155| Min Stack  |30.7% |Easy|
-|160| Intersection of Two Linked Lists |30.9% |Easy|
-|167| Two Sum II - Input array is sorted |47.3% |Easy|
-|189| Rotate Array  |25.2%| Easy|
-|199| Binary Tree Right Side View |42.2% |Medium|
-|200| Number of Islands |36.3% |Medium|
-|204| Count Primes| 26.6%| Easy|
-|206| Reverse Linked List| 46.6%| Easy|
-|215| Kth Largest Element in an Array |40.4%| Medium|
-|234| Palindrome Linked List |33.4%| Easy|
-|235| Lowest Common Ancestor of a Binary Search Tree |39.7% |Easy|
-|236| Lowest Common Ancestor of a Binary Tree |30.0%| Medium|
-|238| Product of Array Except Self | 50.2% |Medium|
-|239| Sliding Window Maximum  |34.1% |Hard|
-|240| Search a 2D Matrix II |39.1% |Medium|
-|242| Valid Anagram |47.3%| Easy|
-|297| Serialize and Deserialize Binary Tree |34.6%| Hard|
-|380| Insert Delete GetRandom O(1)| 39.8%| Medium|
-|387| First Unique Character in a String |47.2% |Easy|
-|535| Encode and Decode TinyURL |73.9%| Medium|
-|617| Merge Two Binary Trees |67.5% |Easy|
-|682| Baseball Game |58.1% |Easy|
-|746| Min Cost Climbing Stairs| 43.4% |Easy|
-|771| Jewels and Stones| | | 
+|No| Question | Acceptnce | Diffs | My Solution | Finish |
+|:-:|:-------:|:---------:|:------:|:---------:|:--:|
+|1 |Two Sum  |37.3% |Easy| |
+|2 |Add Two Numbers| 28.5% |Medium| |
+|3 |Longest Substring Without Repeating Characters| 24.6%| Medium| |
+|5 |Longest Palindromic Substring |25.2% |Medium| |
+|8 |String to Integer (atoi) | 14.0% |Medium| |
+|15| 3Sum |21.8%| Medium| |
+|17| Letter Combinations of a Phone Number |36.1% |Medium| |
+|20| Valid Parentheses |33.9% |Easy| |
+|21| Merge Two Sorted Lists  |40.5%| Easy| |
+|23| Merge k Sorted Lists  |28.0%| Hard| |
+|42| Trapping Rain Water | 37.5% |Hard| |
+|48| Rotate Image  |41.2% |Medium| |
+|49| Group Anagrams |37.8%| Medium| |
+|73| Set Matrix Zeroes|  36.5% |Medium| |
+|78| Subsets  |44.0%| Medium| |
+|89| Gray Code |42.3%| Medium| |
+|98| Validate Binary Search Tree | 24.0% |Medium| |
+|102| Binary Tree Level Order Traversal |42.0%| Medium| |
+|119| Pascal's Triangle II  |38.0% |Easy| |
+|121| Best Time to Buy and Sell Stock |42.7%| Easy| |
+|126| Word Ladder II | 14.8%| Hard| |
+|127| Word Ladder |19.9%| Medium| |
+|138| Copy List with Random Pointer |25.9% |Medium| |
+|139| Word Break| 31.3% |Medium| |
+|141| Linked List Cycle | 35.1% |Easy| |
+|146| LRU Cache |19.5%| Hard| |
+|155| Min Stack  |30.7% |Easy| |
+|160| Intersection of Two Linked Lists |30.9% |Easy| |
+|167| Two Sum II - Input array is sorted |47.3% |Easy| |
+|189| Rotate Array  |25.2%| Easy| V |
+|199| Binary Tree Right Side View |42.2% |Medium| |
+|200| Number of Islands |36.3% |Medium| |
+|204| Count Primes| 26.6%| Easy| |
+|206| Reverse Linked List| 46.6%| Easy| |
+|215| Kth Largest Element in an Array |40.4%| Medium| |
+|234| Palindrome Linked List |33.4%| Easy| |
+|235| Lowest Common Ancestor of a Binary Search Tree |39.7% |Easy| |
+|236| Lowest Common Ancestor of a Binary Tree |30.0%| Medium| |
+|238| Product of Array Except Self | 50.2% |Medium| |
+|239| Sliding Window Maximum  |34.1% |Hard| |
+|240| Search a 2D Matrix II |39.1% |Medium| |
+|242| Valid Anagram |47.3%| Easy| |
+|297| Serialize and Deserialize Binary Tree |34.6%| Hard| |
+|380| Insert Delete GetRandom O(1)| 39.8%| Medium| |
+|387| First Unique Character in a String |47.2% |Easy| |
+|535| Encode and Decode TinyURL |73.9%| Medium| |
+|617| Merge Two Binary Trees |67.5% |Easy| |
+|682| Baseball Game |58.1% |Easy| |
+|746| Min Cost Climbing Stairs| 43.4% |Easy| |
+|771| Jewels and Stones| | |  |
