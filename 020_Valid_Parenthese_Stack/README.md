@@ -38,3 +38,33 @@ if(ch == '{' || ch == '(' || ch == '[' ) {
 ```java
 return stack.isEmpty()
 ```
+
+## Solution
+
+```java
+class Solution {
+    public static boolean isValid(String s) {
+
+        Deque<Character> stack = new ArrayDeque<>();
+        for(int i = 0; i < s.length(); i++) {
+            if(isPre(s.charAt(i))) stack.offerLast(s.charAt(i));
+            if(isPost(s.charAt(i))) {
+                if(stack.isEmpty()) return false;
+                char peek = stack.pollLast();
+                if(s.charAt(i) == ')' && peek != '(') return false;
+                if(s.charAt(i) == ']' && peek != '[') return false;
+                if(s.charAt(i) == '}' && peek != '{') return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static boolean isPre(char c) {
+        return c == '(' || c == '[' || c == '{';
+    }
+
+    public static boolean isPost(char c) {
+        return c == ')' || c == ']' || c == '}';
+    }
+}
+```
