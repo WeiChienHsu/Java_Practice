@@ -303,24 +303,169 @@ public class maze {
 
 
 ***
+# 3 Sum Closest
 
+先排序過 input Array O(nlogn)
+
+如果input長度小於等於三，直接將數字加總 return 
+
+初始化一個 res = num[0] + nums[1] + nums[2] 使用前三個數字。
+
+遍歷一次整個Array，從第一個數字到倒數第三個數字，每次遍訪一個數字時，就將其後一位，以及最後一個位置放上兩個指針，將這三個指針指到的數字加總，當作該輪的 sum = nums[i] + nums[left] + nums[right]，將target - sum 與 target - res 的絕對值做比較，如果 sum 比 res 更靠近目標數的話，將sum 的數值賦予 res，並同時檢查是否等於target。
+
+檢查完差值後，我們要讓差值更小，如果 sum > target ，右指針左移數量變少，反之左指針右移。
+
+```java
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        int len = nums.length;
+        int res = 0;
+        
+        if(len <= 3) {
+            for(int n : nums) {
+                res += n;
+            }
+            return res;
+        }
+        
+        Arrays.sort(nums);
+        
+        res = nums[0] + nums[1] + nums[2];
+        
+        for(int i = 0; i < len - 2; i++) {
+            int left = i + 1;
+            int right = len - 1;
+            
+            while(left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if(Math.abs(target - sum) < Math.abs(target - res)) {
+                    res = sum;
+                    if(res == target) return res;
+                }
+                if(sum > target) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return res;   
+    }
+}
+```
+
+***
+# Round Robin Scheduling
+
+一个处理器要处理一堆request，一次只能处理一条，每次执行一个任务最多执行时间q，接着执行等待着的下一个任务。
+若前一个任务没执行完则放到队尾，等待下一次执行。
+假设只要有任务开始以后cpu是不会空闲的，也就是说cpu开始后如果空闲了就说明没有任务了，另外Robin Round最后返回值是float
+
+[我的詳解](https://github.com/WeiChienHsu/Java_Practice/tree/master/RoundRobin)
+
+```java
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class RoundRobin {
+    public static void main(String[] args) {
+        int[] arrTime = new int[]{0,1,3,5,6};
+        int[] exeTime = new int[]{5,3,6,1,4};
+        int quanTime = 3;
+
+        float averageWaitingTime = countAveWaitTime(arrTime, exeTime, quanTime);
+        System.out.println(averageWaitingTime);
+    }
+
+    public static float countAveWaitTime(int[] arrTime, int[] exeTime, int q) {
+        // Init current Time, waiting Time and processor pointer
+        if(arrTime == null || exeTime == null || arrTime.length != exeTime.length) return 0;
+
+        int curTime = 0, waitTime = 0, index = 0;
+        int length = arrTime.length;
+        Deque<process> queue = new ArrayDeque<>();
+
+        // While there are some processes in the queue
+        // haven't been handled or the processes have never been used
+        while(!queue.isEmpty() || index < length) {
+            // There are still have some processes in the Queue
+            if(!queue.isEmpty()) {
+                process curProcess = queue.pollFirst();
+                // Update the waiting Time when we are starting using a process
+                waitTime += curTime - curProcess.arrTime;
+                // Avoid the execution Time exceed the quan Time limitation
+                curTime += Math.min(curProcess.exeTime, q);
+
+                // Put those rest of processes which's arrival time has already exceed current Time
+                for(; index < length && arrTime[index] <= curTime; index++) {
+                    queue.offerLast(new process(arrTime[index], exeTime[index]));
+                }
+                // If the current processor didn't run to the end, put it back
+                // into Queue with new arrTime and exeTime
+                if (curProcess.exeTime > q) {
+                    queue.offerLast(new process(curTime, curProcess.exeTime - q));
+                }
+            }
+            // There is no process in the Queue but the index doesn't not point to the end
+            else {
+                queue.offerLast(new process(arrTime[index], exeTime[index]));
+                // Update only the current Time, no need to change the total waiting time
+                curTime = arrTime[index];
+                // Point to the next process
+                index++;
+            }
+        }
+        return (float) waitTime / length;
+    }
+}
+
+class process {
+    int arrTime;
+    int exeTime;
+    process(int arr, int exe) {
+        this.arrTime = arr;
+        this.exeTime = exe;
+    }
+}
+```
+
+
+***
+
+# findOptimalWeights
+
+
+***
+
+# LRU Cache count miss
+
+***
+
+# Rotate Matrix
+
+***
+
+# Sum tree
+
+***
+
+# number of valid parentheses
+
+
+***
+
+# BST minimum sum path
+
+
+***
+
+# Reverse Second Half of Linked List
+
+***
 # Maze
 
-
 ***
-
-# 3Sum Closest
-
-***
-
-
-***
-
-
-***
-
-
-***
+# Shorted job first
 
 
 ***
