@@ -27,13 +27,32 @@
 
 如果過程中，發現process queue已經空了，但還有沒處理的process(index不等於array長度)，要更新currentTime，並且把後面的process加入Queue中，繼續處理，此時不需要更新waiting Time，應為前面的Process都已經處理完畢。
 
+## Visualization
 
 ```
 |-- P1 --|-- P2 --|-- P3 --|- P1 -|- P4 -|-- P5 --|- P3 -|- P5 -|
 0        3        6        9      11     12       15     18     19
 ```
 
-## Solution
+```
+Avg. Waiting Time:
+P1 = 0 + (9 - 3) = 6
+P2 = (3 - 1) = 2
+P3 = (6 - 3) + (15 - 9) = 6
+P4 = (11 - 5) = 6
+P5 = (12 - 6) + (18 - 15) = 9
+Avg. WT = 5.8 sec
+
+Avg. Turn Around Time:
+P1 = 11 - 0 = 11
+P2 = 6 - 1 = 5
+P3 = 18 - 3 = 15
+P4 = 12 - 5 = 7
+P5 = 19 - 6 = 13
+Avg. TA = 10.2 sec
+```
+
+## Solution - Counting the Average Waiting Time
 
 一个处理器要处理一堆request，一次只能处理一条，每次执行一个任务最多执行时间q，接着执行等待着的下一个任务。若前一个任务没执行完则放到队尾，等待下一次执行。
 
@@ -60,18 +79,21 @@ while(queue 裡面還有 process，或是初始化時，還沒有處理任何pro
         
         2. 更新wait time（开始处理的时间-到达时间就是waitTime）
 
-        3. 更新curTime到下一节点或者过了q时间，或者当前process run完。（通过比较q和cur.exetime取小的那个）
+        3. 更新curTime到下一节点或者过了q时间，或者当前process run完。
+        （通过比较q和cur.exetime取小的那个）
            
         4. 利用index指針，把这个过程中有可能arrive的新的process加入
           （判断条件，arrive time小于新的时间点并且index在范围内，同时更新index）
         
-        5. 如果 cur.exeTime > q 代表會有剩下沒執行完的，要更新一個在Queue的裡面，用(currentTime)當起始時間, (exeTime - q) 當結束時間
+        5. 如果 cur.exeTime > q 代表會有剩下沒執行完的，要更新一個在Queue的裡面，
+        用(currentTime)當起始時間, (exeTime - q) 當結束時間
 
     }
 
-    //出现queue裡面沒有process情况有两种可能：
-    //1. 初始情况 
-    //2. 之前的process都已经run完，新的process的arrival time还没有到。所以只需要更新arrival time，不需要更新waitTime。
+    // 出现queue裡面沒有process情况有两种可能：
+    // 1. 初始情况 
+    // 2. 之前的process都已经run完，新的process的arrival time还没有到。
+    // 所以只需要更新arrival time，不需要更新waitTime。
 
     如果（queue里面没有process）{
         1. 把index process放入queue
@@ -146,4 +168,56 @@ class process {
         this.exeTime = exe;
     }
 }
+```
+
+
+## Solution - additional: Counting the average Turn Around Time
+
+Turn Around Time 的更新時間，是在已經處理 current Time 之後，因為我們必須要得到 process 結束後的時間，反之，waiting time 計算的，是我們從process arrived 之後等待到開始使用process的時間。
+
+```java
+public static float countAveTurnAroundTime(int[] arrTime, int[] exeTime, int q) {
+        // Init current Time, waiting Time and processor pointer
+        if(arrTime == null || exeTime == null || arrTime.length != exeTime.length) return 0;
+
+        int curTime = 0, turnAroundTime = 0, index = 0;
+        int length = arrTime.length;
+        Deque<process> queue = new ArrayDeque<>();
+
+        // While there are some processes in the queue
+        // haven't been handled or the processes have never been used
+        while(!queue.isEmpty() || index < length) {
+            // There are still have some processes in the Queue
+            if(!queue.isEmpty()) {
+                process curProcess = queue.pollFirst();
+
+                // Avoid the execution Time exceed the quan Time limitation
+                curTime += Math.min(curProcess.exeTime, q);
+
+                // Update the turn around time by different between current time and arrival time
+                turnAroundTime += (curTime - curProcess.arrTime);
+
+
+                // Put those rest of processes which's arrival time has already exceed current Time
+                for(; index < length && arrTime[index] <= curTime; index++) {
+                    queue.offerLast(new process(arrTime[index], exeTime[index]));
+                }
+                // If the current processor didn't run to the end, put it back
+                // into Queue with new arrTime and exeTime
+                if (curProcess.exeTime > q) {
+                    queue.offerLast(new process(curTime, curProcess.exeTime - q));
+                }
+            }
+            // There is no process in the Queue but the index doesn't not point to the end
+            else {
+                queue.offerLast(new process(arrTime[index], exeTime[index]));
+                // Update only the current Time, no need to change the total turn over time
+                curTime = arrTime[index];
+                // Point to the next process
+                index++;
+            }
+        }
+        return (float) turnAroundTime / length;
+    }
+
 ```
