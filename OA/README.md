@@ -11,7 +11,6 @@
 [Sum Tree](#sum-tree)
 [number of valid parentheses](#number-of-valid-parentheses)
 [BST minimum sum path](#bst-minimum-sum-path)
-[Maze](#maze)
 [Shorted job first](#shorted-job-first)
 
 
@@ -204,12 +203,15 @@ public class maze {
 
 
 ```java
-    public static boolean bfsFindTheTargetWithHelperFunction(int[][] matrix) {
-        int row = matrix.length;
-        if(row == 0) return false;
-        int col = matrix[0].length;
+   public static boolean bfsFindTheTargetWithHelperFunction(int[][] matrix) {
 
+        // Valid Input Check
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+        // When Start point is a wll
         if(matrix[0][0] == 0) return false;
+
+        int row = matrix.length;
+        int col = matrix[0].length;
 
         boolean[][] visited = new boolean[row][col];
         // Pass the position of row and col
@@ -222,27 +224,29 @@ public class maze {
             int curRow = currentNode[0];
             int curCol = currentNode[1];
 
-            if(matrix[curRow][curCol] == 9) return true;
             visited[curRow][curCol] = true;
+            // If meet the destination
+            if(matrix[curRow][curCol] == 9) return true;
 
             // helper variables
-            int[][] directions = new int[][]{{1, 0}, {0, 1}};
-
+            int[][] directions = new int[][]{{1, 0}, {0, 1},{-1, 0},{0, -1}};
             for(int[] dir : directions) {
                 int newRow = curRow + dir[0];
                 int newCol = curCol + dir[1];
-                if(newRow < row && newCol < col &&
+
+                if(newRow >= 0 && newCol >= 0 &&
+                   newRow < row && newCol < col &&
                    matrix[newRow][newCol] != 0 && !visited[newRow][newCol]) {
                     queue.offerLast(new int[]{newRow, newCol});
                     visited[newRow][newCol] = true;
                 }
             }
         }
-
         return false;
     }
+```
 
-
+```java
     public static boolean bfsFindTheTarget(int[][] matrix) {
         int row = matrix.length;
         if(row == 0) return false;
@@ -672,6 +676,29 @@ public static void rotateMatrix(int[][] matrix, int flag) {
 
 # number of valid parentheses
 
+檢查括號的題目，使用 Stack 來檢查，回傳直接回傳 length / 2
+
+```java
+    public static int validParenthesesNumber(String s) {
+        if(s == null || s.length() == 0) return 0;
+        Deque<Character> stack = new ArrayDeque<>();
+
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == '(') {
+                stack.offerFirst(s.charAt(i));
+                continue;
+            }
+
+            if(s.charAt(i) == ')') {
+                if(stack.isEmpty()) return -1;
+                stack.pollFirst();
+            }
+        }
+
+        return stack.isEmpty() ? s.length() / 2 : -1;
+    }
+}
+```
 
 ***
 
@@ -809,9 +836,102 @@ class ListNode {
 ***
 
 
-# Maze
-
 ***
 # Shorted job first
 
 ***
+# Window Minimum
+
+给了一个ArrayList：4, 2, 12, 11, -5，窗口size为2，返回的ArrayList为：2, 2, 11, -5。这里窗口size是一个参数。
+
+```java
+public class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        
+        if (nums == null || k <= 0) {
+            return new int[0];  
+        }
+        int n = nums.length; 
+        int[] r = new int[n-k+1];
+        int ri = 0;
+        // store index
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < nums.length; i++) {
+            // remove numbers out of range k
+            while (!q.isEmpty() && q.peek() < i - k + 1) {
+                q.poll();
+            }
+            // remove larger numbers in k range as they are useless
+            while (!q.isEmpty() && nums[q.peekLast()] > nums[i]) {
+                q.pollLast();
+            }
+            // q contains index... r contains content
+            q.offer(i);
+            if (i >= k - 1) {
+                r[ri++] = nums[q.peek()];
+            }
+        }
+        return r;
+        
+    }
+}
+```
+
+
+***
+
+## SubTree
+subtree里返回的是-1和1，而不是false和true，用迭代的同学特别注意！不能写if(isSameTree(root1, root2)||isSubTree(root1.left, roots)||isSubtree(root1.right, root2))了，因为三个function都返回int!!
+
+```java
+public class Subtree {
+    public boolean isSubTree(TreeNode T1, TreeNode T2) {
+        if (T2 == null) return true;
+        if (T1 == null) return false;
+        return (isSameTree(T1,T2) || isSubTree(T1.left, T2) || isSubTree(T1.right, T2));
+    }
+    public boolean isSameTree(TreeNode T1, TreeNode T2) {
+        if (T1 == null && T2 == null)
+            return true;
+        if (T1 == null || T2 == null)
+            return false;
+        if (T1.val != T2.val)
+            return false;
+        return (isSameTree(T1.left, T2.left) && isSameTree(T1.right, T2.right));
+    }
+}
+```
+
+***
+# Overlap Rectangle
+不太懂解釋。
+
+```java
+// Overlap Rectangle
+// Rect 1: top-left(A, B), bottom-right(C, D)
+// Rect 2: top-left(E, F), bottom-right(G, H)
+public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+   int innerL = Math.max(A, E);
+   int innerR = Math.max(innerL, Math.min(C, G));
+   int innerT = Math.max(B, F);
+   int innerB = Math.max(innerT, Math.min(D, H));
+   return (C - A) * (B - D) - (innerR - innerL) * (innerT - innerB) + (G -E) * (F - H);
+}
+给两个长方形的topLeft和bottomRight坐标, 判断这两个长方形是否重叠
+
+Rectangle Overlap。这题和leetcode 算相交面积的区别：它帮你定义好两个类，一个叫Point，一个叫Rectangle，Rectangle包括左上右下两个Point, Point包括x, y的值， 这种细节并不影响程序，总之一句判断直接通过了全部20多个case.
+
+// Returns true if two rectangles (l1, r1) and (l2, r2) overlap
+bool doOverlap(Point l1, Point r1, Point l2, Point r2)
+{
+    // If one rectangle is on left side of other
+    if (l1.x > r2.x || l2.x > r1.x)
+        return false;
+ 
+    // If one rectangle is above other
+    if (l1.y < r2.y || l2.y < r1.y)
+        return false;
+ 
+    return true;
+}
+```
