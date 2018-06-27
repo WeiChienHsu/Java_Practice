@@ -1,3 +1,20 @@
+# OA 練習
+
+[Search a 2D Matrix](#search-a-2d-matrix)
+[Simple Maze](#simple-maze)
+[3 Sum Closest](#3-sum-closest)
+[Round Robin Scheduling](#round-robin-scheduling)
+[Find Optimal Weights](#find-optimal-weights)
+[LRU Cache count miss](#lru-cache-count-miss)
+[Reverse Second Half of Linked List](#reverse-second-half-of-linked-list)
+[Rotate Matrix](#rotate-matrix)
+[Sum Tree](#sum-tree)
+[number of valid parentheses](#number-of-valid-parentheses)
+[BST minimum sum path](#bst-minimum-sum-path)
+[Maze](#maze)
+[Shorted job first](#shorted-job-first)
+
+
 # Search a 2D Matrix
 
 ## 當 Matrix 的row是 sorted Array ， col 也是從大到小
@@ -303,6 +320,7 @@ public class maze {
 
 
 ***
+
 # 3 Sum Closest
 
 先排序過 input Array O(nlogn)
@@ -432,16 +450,219 @@ class process {
 
 ***
 
-# findOptimalWeights
+# Find Optimal Weights
 
+```java
+public class findOptWeight {
+    public static void main(String[] args) {
+        double capacity = 35;
+        double[] weights = {10, 24, 30, 9, 19, 23, 7};
 
+        findOptWeights(capacity, weights);
+
+    }
+    
+    public static void findOptWeights(double capacity, double[] weights) {
+        double maxWei = Integer.MIN_VALUE;
+        double maxSmall = 0;
+        double maxLarge = 0;
+
+        Arrays.sort(weights);
+
+        int i = 0;
+        int j = weights.length-1;
+        while (i < j) {
+            if ((weights[i] + weights[j]) < capacity) {
+                if (weights[i] + weights[j] > maxWei) {
+                    maxWei = weights[i] + weights[j];
+                    maxSmall = weights[i];
+                    maxLarge = weights[j];
+                }
+                i += 1;
+            } else if (weights[i] + weights[j] == capacity) {
+                maxSmall = weights[i];
+                maxLarge = weights[j];
+                maxWei = capacity;
+                break;
+            } else {
+                j -= 1;
+            }
+        }
+        System.out.println("The maximum weights is " + maxWei + ", are " + maxSmall + " and " + maxLarge);
+    }
+}
+```
 ***
 
 # LRU Cache count miss
 
+[我的詳解](https://github.com/WeiChienHsu/Java_Practice/tree/master/146_LRU_Cache)
+
+```java
+class LRUCache {
+
+    // Map with a Key and Value points to our Double LinkedList
+    private HashMap<Integer, Node> map;
+    private int capacity;
+    private Node head;
+    private Node tail;
+
+    // Init the LRUCache Instance
+    public LRUCache(int capacity) {
+        map = new HashMap<>();
+        this.capacity = capacity;
+        this.head = null;
+        this.tail = null;
+    }
+
+    public int get(int key) {
+        Node node = map.get(key);
+
+        if(node == null) {
+            return -1;
+        }
+
+        // If exist check if the node is in the tail
+        // If it was not in the tail, we need to update it's position
+        if(node != tail) {
+
+            // If it was in the head, move head to the next one
+            if(node == head) {
+                head = head.next;
+            } else {
+                // Remove the Node from current position O(1)
+                node.pre.next = node.next;
+                node.next.pre = node.pre;
+            }
+            // Update the new Tail to this node
+            tail.next = node;
+            node.pre = tail;
+            node.next = null;
+            tail = node;
+        }
+
+        return node.value;
+    }
+
+    /*
+     * The New Insert Node will be on the tail and the least one will on the head
+     */
+    public void put(int key, int value) {
+        // To see if key has already existed in the map
+        Node node = map.get(key);
+
+        // Key was in the Map
+        if(node != null) {
+            // If key existed -> Update
+            node.value = value;
+            // If node was not in the tail (Update it to the tail)
+            if(node != tail) {
+                // Change the position of our updated Node
+                if(node == head) {
+                    // If it was in the head, move head to the next one
+                    head = head.next;
+                } else {
+                    // Remove the Node from current position O(1)
+                    node.pre.next = node.next;
+                    node.next.pre = node.pre;
+                }
+
+                // Update the Tail Node to point to our just changed Node
+                // and Update the tail to our last Node
+                tail.next = node;
+                node.pre = tail;
+                node.next = null;
+                tail = node;
+            }
+        }
+        else {
+            // If not exist, check capacity and insert the key and value
+            Node newNode = new Node(key, value);
+            // If capacity is 0 means its full
+            if(capacity == 0) {
+                // Remove first element in the List (Head pointed to)
+                Node temp = head;
+                head = head.next;
+                map.remove(temp.key);
+                capacity++;
+            }
+            // If there is no any node in the list
+            if(head == null && tail == null) {
+                head = newNode;
+            }
+            else {
+                // Update a new Node next to the current Tail Node
+                tail.next = newNode;
+                newNode.pre = tail;
+                newNode.next = null;
+            }
+            // Update the Tail to point to the current last Node
+            tail = newNode;
+            map.put(key, newNode);
+            capacity--;
+        }
+    }
+}
+
+class Node {
+    int key;
+    int value;
+    Node next;
+    Node pre;
+    public Node(int key, int value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+```
+
 ***
 
 # Rotate Matrix
+
+先把上下的 row 依次交換，奇數中間的那一行不需要處理。
+
+順時針，簡單，(i,j) (j,i) 交換， i 從0開始遞增到 < row - 1， j 從 i 開始遞增，到 < col
+逆時針，較困難，(i,j) (row - 1 - j, col - 1 - i) 交換， i 從0開始遞增到 < row - 1， j 也從 0 開始，遞增到 < col - i - 1
+
+直接畫出一個 4 X 4 Matrix 來分析交換的方式
+
+```java
+public static void rotateMatrix(int[][] matrix, int flag) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        // Swap the Row from the top and the end
+        for(int i = 0; i < row / 2; i++) {
+            int[] temp = matrix[i];
+            matrix[i] = matrix[row - i - 1];
+            matrix[row - i - 1] = temp;
+        }
+
+        if(flag == 0) {
+            // Clockwise
+            // swap the Matrix[i][j] and Matrix[j][i]
+            for(int i = 0; i < row - 1; i++) {
+                for(int j = i + 1; j < col; j++) {
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[j][i];
+                    matrix[j][i] = temp;
+                }
+            }
+
+        } else if(flag == 1) {
+            // Counter-Clockwise
+            // swap the Matrix[i][j] and Matrix[row - 1 - i][col - 1 - j]
+            for(int i = 0; i < row - 1; i++) {
+                for(int j = 0; j < col - i - 1; j++) {
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[row - 1 - j][col - 1 - i];
+                    matrix[row - 1 - j][col - 1 - i] = temp;
+                }
+            }
+        }
+    }
+```
 
 ***
 
@@ -456,16 +677,141 @@ class process {
 
 # BST minimum sum path
 
+不一定是左邊的和，因為也許 BST 的右邊只有一個點，左邊有很多個數字。
+
+- 使用 Recursion 解，判斷左右是否為 null 。
+
+```java
+public class bstMin {
+    public static void main(String[] args) {
+        TreeNode bst = buildTree();
+        System.out.println(findMinPath(bst));
+    }
+
+    public static int findMinPath(TreeNode root) {
+        if(root == null) return 0;
+        if(root.left == null && root.right != null) {
+            return root.val + findMinPath(root.right);
+        }
+
+        if(root.left != null && root.right == null) {
+            return root.val + findMinPath(root.left);
+        }
+
+        return Math.min(findMinPath(root.left), findMinPath(root.right)) + root.val;
+    }
+
+    public static TreeNode buildTree() {
+        TreeNode root = new TreeNode(6);
+        root.right = new TreeNode(7);
+        root.right.right = null;
+        root.right.left = null;
+        root.left = new TreeNode(5);
+        root.left.right = null;
+        root.left.left = new TreeNode(4);
+        root.left.left.left = new TreeNode(3);
+        root.left.left.right = new TreeNode(5);
+        return root;
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    public TreeNode(int val) {
+        this.val = val;
+    }
+}
+```
+
 
 ***
 
 # Reverse Second Half of Linked List
 
+使用快慢指針＋翻轉鏈表的模板(While外層 Pre, Cur 與 While內層ListNode next)
+判斷條件是 fast.next != null && fast.next.next != null
+
+因為題目要求奇數的中間點也需要反轉，所以我們在算中間值的時候，要加入一個前方的dummy node。
+
+```java
+public class reverseLinkedList {
+    public static void main(String[] args) {
+        int[] sample1 = new int[]{1,2,3,4,5,6};
+        printListNode(reverseHalfList(buildListNode(sample1)));
+    }
+
+    public static ListNode reverseHalfList(ListNode head) {
+
+        // Since when we met odd length, we still need to reverse the middle one
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+
+        ListNode slow = dummy;
+        ListNode fast = dummy;
+
+        while(fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        slow.next = reverseListNode(slow.next);
+
+        return dummy.next;
+
+    }
+
+    public static ListNode reverseListNode(ListNode head) {
+        ListNode pre = null;
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+
+    public static ListNode buildListNode(int [] nums) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        for(int i = 0; i < nums.length; i++) {
+            cur.next = new ListNode(nums[i]);
+            cur = cur.next;
+        }
+        return dummy.next;
+    }
+
+    public static void printListNode(ListNode head) {
+        while(head.next != null) {
+            System.out.print(head.val);
+            System.out.print(" -> ");
+            head = head.next;
+        }
+        System.out.print(head.val);
+    }
+
+
+}
+
+class ListNode {
+    ListNode next;
+    int val;
+    public ListNode(int val) {
+        this.val = val;
+    }
+}
+
+
+```
 ***
+
+
 # Maze
 
 ***
 # Shorted job first
-
 
 ***
