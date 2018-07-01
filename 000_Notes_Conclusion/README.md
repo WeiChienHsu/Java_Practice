@@ -552,8 +552,8 @@ for (ListNode node = root; node != null; node = node.next)
 練習 Collections.sort() 改寫，並瞭解 Arrays.sort 與 Collections.sort (前者ArrayList, 後者 int[]) 的差異，處理 BinarySearch 的額外要求。
 
 ***
-## Amazon 題目
 
+## Amazon 題目
 |No| Question | Acceptnce | Diffs | My Solution | Finish |
 |:-:|:-------:|:---------:|:------:|:---------:|:--:|
 |1 |Two Sum  |37.3% |Easy| |
