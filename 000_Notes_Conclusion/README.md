@@ -553,7 +553,7 @@ for (ListNode node = root; node != null; node = node.next)
 
 ***
 
-## Amazon 題目
+## A company 題目
 |No| Question | Acceptnce | Diffs | My Solution | Finish |
 |:-:|:-------:|:---------:|:------:|:---------:|:--:|
 |1 |Two Sum  |37.3% |Easy| |
