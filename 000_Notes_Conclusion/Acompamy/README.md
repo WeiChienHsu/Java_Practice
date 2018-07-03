@@ -80,7 +80,17 @@ class Solution {
 
 ## Problem Analysis
 
+We have two linked lists represented to the single number, and we would like to sum them up. In addition, it will be presented in another linkedlist
+
+- Deal with the Carry (5+6 = 11) -> 1 -> 1 in another level
+- Treaves the whole linkedlist nodes by nodes and get their value of sum
+- Check if the sum is larger than 9, i'll change the carry to 1 so could be used in sum.
+- While there is one of the linkedlist meet the end, I'll just look at single linked list.
+- Use a dummy node to make those behavior in a while loop and return the dummy.next.
+
 ## Algorithm Analysis
+
+O(n) time comlexity!
 
 ## Time Complexity Analysis
 Used three single while loop cause O(3n) time complexity with additional dummy ListNode O(n)
@@ -145,14 +155,95 @@ class Solution {
 # 3 Longest Substring Without Repeating Characters
 
 ## Problem Analysis
+Given a long stringa and We need to find the longest substrg (which have no duplicated character inside the string).
 
 ## Algorithm Analysis
 
+I used a HashMap to record the current index and in the meanwhile I would like to store the character that I've visited before.
+
+So, we need two pointer to record the len. By doing so, the i means the pointer travse the string and the j pointer is the LEFT-MOST one.
+
+How could I get the value of J? Use the MAP! since the map has record the left recently apprear character so when we meet the same one which is in the map, j will equal to the value of the Max one between j or map.get(character) + 1.
+
+So when we meet the same character, update the left poiner(j)
+
+and wheh we are traversing the string, we need to update two things, one is the recently appear character in the map and the max Lenght with the substring!
+
 ## Time Complexity Analysis
+
+time complexity : O(n) An additional space(Map) : O (n)
 
 ## Code
 
+```java
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s.length() == 0) return 0;
+        int maxLen = Integer.MIN_VALUE;
+        
+        Map<Character, Integer> map = new HashMap<>();
+        
+        for(int i = 0, j = 0; i < s.length(); i++) {
+            /* Meet the same character */
+            if(map.containsKey(s.charAt(i))) {
+                /* Update the Left Most index */
+                j = Math.max(j, map.get(s.charAt(i)) + 1);
+            }
+            /* Update the current index of Character */
+            map.put(s.charAt(i), i);
+            /* Upadte the current max length*/
+            maxLen = Math.max(maxLen, i - j + 1);
+        }
+        
+        return maxLen;
+    }
+}
+```
+
 ## Fellow up
+
+### Longest Substring with At Most Two Distinct Characters
+
+To find a longest substring which contains "at most" two distinct characters
+
+aaabbabacc -> aaabbab is the longest one
+
+Used a Map to record last seen index of specific character, and a leftMost pointer to point to the left window, update the max Length when we move i to the next character.
+
+If we have more than two characters in the map (Which mean there is a third character), we need to find the leftMost and used the current i and left pointer to get the current MAX length.
+
+
+```java
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if(s.length() == 0) return 0;
+        int leftMost = 0;
+        int maxLen = Integer.MIN_VALUE;
+        Map<Character, Integer> map = new HashMap<>();
+        
+        for(int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), i);
+            /* If meet the third characters */
+            if(map.size() > 2) {
+                int indexToRemove = i;
+                /* Find the leftMost and remove the farest character out of the map */
+                for(int v: map.values()) {
+                    indexToRemove = Math.min(indexToRemove, v);
+                }
+                
+                /* Remove the Character from map and Update the LeftMost */
+                map.remove(s.charAt(indexToRemove));
+                leftMost = indexToRemove + 1;
+            }
+            
+            /* Update the current Max Length */
+            maxLen = Math.max(maxLen, i - leftMost + 1);
+        }
+        return maxLen;
+    }
+}
+```
+
 
 ***
 
