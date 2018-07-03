@@ -249,6 +249,8 @@ class Solution {
 
 # 5 Longest Palindromic Substring
 
+
+
 ## Problem Analysis
 
 ## Algorithm Analysis
@@ -256,6 +258,39 @@ class Solution {
 ## Time Complexity Analysis
 
 ## Code
+
+```java
+class Solution {
+    public String longestPalindrome(String s) {
+        int len = s.length();
+        int leftLongest = 0;
+        int rightLongest = 0;
+        /* stored the boundry relationship with palindrome */
+        boolean[][] isPalindrome = new boolean[len][len];
+        
+        /* Two pointer for the left and right window */
+        for(int right = 1; right < len; right++) {
+            for(int left = 0; left < right; left++ ) {
+                
+                /* See if the inner word is palindrome or if the right and left len smaller than 2 */
+                boolean isInnerWordPalindrome = isPalindrome[left + 1][right - 1] || right - left <= 2;
+                
+                /* Check if the current characeter is the same and the ineer also Palindrome */
+                if(s.charAt(left) == s.charAt(right) && isInnerWordPalindrome) {
+                    isPalindrome[left][right] = true;
+                    
+                    /* Update the current leftLongest and rightLongest */
+                    if(right - left > rightLongest - leftLongest) {
+                        rightLongest = right;
+                        leftLongest = left;
+                    }
+                }
+            }
+        }
+        return s.substring(leftLongest, rightLongest + 1);
+    }
+}
+```
 
 ## Fellow up
 
