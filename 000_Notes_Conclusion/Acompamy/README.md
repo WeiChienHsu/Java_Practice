@@ -1,13 +1,9 @@
 # A company 
 
 [1 Two Sum](#1-two-sum)
-
 [2 Add Tow Numbers](#2-add-two-numbers)
-
 [3 Longest Substring Without Repeating Characters](#3-longest-substring-without-repeating-characters)
-
 [5 Longest Palindromic Substring](#5-longest-palindromic-substring)
-
 [8 String to Integer](#8-string-to-integer)
 
 
@@ -249,13 +245,30 @@ class Solution {
 
 # 5 Longest Palindromic Substring
 
+Need to find the longest palindromic substring in the given string
 
+(We could find the left and right boundry and use .substring method to return the result)
 
 ## Problem Analysis
 
+Need a boolean to record the relationship between left and right boundry 
+
+If the innerWords is Palinfromic, we only need to check the outside two pointer (If they are the same characters) and update the new left and right
+
 ## Algorithm Analysis
 
+Given a leftLongest and rightLongest integer to track the longest Len
+
+Used a left and right two pointer to loop through our string, rihgt from 1 outside and left from 0 to right inside.
+
+Used a variable isInnerParlidrom to check left + 1 and right - 1, if left and right are nearby each other, then we skip this step
+
+Check the characters ar left and right -> If they are the same and inner word is palidorm as well. Means that we could update the boolean and longest Left and Right.
+
+
 ## Time Complexity Analysis
+
+Two pointer in the nested for loop -> O(n^2) and used an additional boolean 2D array -> O(n)
 
 ## Code
 
@@ -294,9 +307,115 @@ class Solution {
 
 ## Fellow up
 
+If we want to make 2 to k , just need to chagne the size() condition
+
+but if we want a more efficient algorithm：
+
+The basic idea is to traverse all the palindromes with its pivot range from the first char of string s to the last char of string s (consider both even length and odd length situation). Use StringBuilder to minimize the space complexity. 
+
+```java
+public class Solution {
+StringBuilder longest = new StringBuilder("");
+
+public String longestPalindrome(String s) {
+    if (s.length() <= 1) return s;
+    
+    for (int i = 0; i < s.length(); i++) {
+        expand(s, longest, i, i); //odd
+        expand(s, longest, i, i + 1); //even
+    }
+    
+    return longest.toString();
+}
+
+private void expand(String s, StringBuilder longest, int i, int j) {
+    while (i >= 0 && j < s.length()) {
+        if (s.charAt(i) == s.charAt(j)) {
+            if (j - i + 1 > longest.length()) {
+                longest.delete(0, longest.length());
+                longest.append(s.substring(i, j + 1));
+            }
+            i--;
+            j++;
+        }
+        else
+            break;
+    }
+}
+
+```
+
 ***
 
 # 8 String to Integer
+
+## Problem Analysis
+
+- First not whitespace could not be characters
+- The string could not just include whitespace
+- If the string is empty, just return 0
+- Need to consider the sign -> Return signe * total
+- Need to consider the MAX_VALUE and MIN_VALUE (If current total * 10 + digit will pass the MAX_VALUE)
+- Deal with the largest (earliest) digit and * 10 + digit
+
+## Algorithm Analysis
+
+- Need to understand the conditions!
+
+## Time Complexity Analysis
+- O(n) time complexity
+
+## Code
+
+```java
+class Solution {
+    public int myAtoi(String str) {
+        int index = 0, sign = 1, sum = 0;
+        
+        /* Deal with empty str */
+        if(str.length() == 0) return 0;
+        
+        /* Remove the white space */
+        while(index < str.length() && str.charAt(index) == ' ') {
+            index++;
+        }
+        
+        /* Check if the whole string are whitespaces */
+        if(index == str.length()) return 0;
+        
+        /* Check the first character */
+        if(str.charAt(index) >= 'a' && str.charAt(index) <= 'z') return 0;
+        
+        /* Get the Sign */
+        if(str.charAt(index) == '+' || str.charAt(index) == '-' ) {
+            sign = str.charAt(index) == '+' ? 1 : -1;
+            index++;
+        }
+        
+        /* Convert to the actual integer and make sure it won't overflow */
+        while(index < str.length()) {
+            int digit = str.charAt(index) - '0';
+            
+            /* Make sure to dismiss the rest of string which is not digits*/
+            if(digit < 0 || digit > 9) break;
+            
+            /* sum * 10 > MAX VALUE || sum * 10 + digit > MAX VALUE */
+            if(Integer.MAX_VALUE / 10 < sum || Integer.MAX_VALUE / 10 == sum && Integer.MAX_VALUE % 10 < digit) {
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+            
+            sum = sum * 10 + digit;
+            index++;
+        }
+        return sum * sign;
+    }
+}
+```
+
+
+***
+
+# 15 3Sum
 
 ## Problem Analysis
 
@@ -309,3 +428,73 @@ class Solution {
 ## Fellow up
 
 ***
+
+# 17 Letter Combinations of a Phone Number
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 20 Valid Parentheses
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 21 Merge Two Sorted Lists 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up 
+### 23 Merge k Sorted Lists
+
+***
+
+# 42 Trapping Rain Water 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 48 Rotate Image
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
