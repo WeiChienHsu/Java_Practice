@@ -611,13 +611,85 @@ public class Solution {
 
 ## Problem Analysis
 
+Get the combination ! -> DFS + backtracking
+
 ## Algorithm Analysis
+
+BackTracking Algorithm + DFS Helper
+
+dfsHelper: original String(to go through digits), result array, combination in StringBuilder(Save space), indexOfDigit (the pointer for the digits)
+
+In the dfsHelper: base case is when indexOfDigit is equal the length of originl String which means we have already went through whole digits. Add the current combination (temp result) into the result.
+
+The feature of combination is to recored the index of currentString from the for loop. Since each digit represented a signal string which has three charaters so we use a for loop to implement the backtracking algorithm. Add the specifc character at i in the current String into combination and put those variables into next DFS (with indexOfDigit + 1) which mean to pass the next digit in original string. After passing the dfsHelper when we meet the base case and return back to this level, remove the last character in the combination to the next i + 1 loop.
 
 ## Time Complexity Analysis
 
+The time complexity of this should be 3^n, where n is the number of digits. For each digit you have 3 possible characters (excluding 9), and then for each subsequent digit, you get another 3 more possible characters per character of the previous digit.
+
+O(N^3) if we use third for loop to solve
+opt: O(N^2) : Backtracking
+
 ## Code
 
-## Fellow up
+```java
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if(digits.length() == 0) return result;
+        StringBuilder combination = new StringBuilder();
+        dfsHelper(digits, 0, result, combination);
+        return result;
+    }
+    
+    /* a -> ad -> a -> ae -> a -> af -> a -> b -> bd -> b -> bf -> .... -> c */
+    public void dfsHelper(String digits, int indexOfDigits, List<String> result, StringBuilder combination) {
+        if(indexOfDigits == digits.length()) {
+            result.add(combination.toString());
+            return;
+        }
+        
+        /* get the current String by using the arugment of indexOfDigits to go through the next digit in the inpit */
+        /* ex. 2 for  "abc" -> 3 for "def"  */
+        String currentString = getString(digits.charAt(indexOfDigits));
+        
+            /* Get the first word and second word and third word in different level */
+            /* Put the word into the StringBuilder and give it for the next handler */
+            /* ex. "abc" chose "a" and put it in the dfs helper with index + 1, later, in "def" chose 'd' for next character*/
+            /* a -> b -> c  d -> e -> f */
+        
+        for(int i = 0; i < currentString.length(); i++) {
+            combination.append(currentString.charAt(i));
+            dfsHelper(digits, indexOfDigits + 1, result, combination);
+            /* Backtracking - Remove the laste character in the StringBuilder */
+            combination.deleteCharAt(combination.length() - 1);
+        }
+    }
+    
+    public String getString(char num) {
+        switch (num) {
+            case '2':
+                return "abc";
+            case '3':
+                return "def";
+            case '4':
+                return "ghi";
+            case '5':
+                return "jkl";
+            case '6':
+                return "mno";
+            case '7':
+                return "pqrs";
+            case '8':
+                return "tuv";
+            case '9':
+                return "wxyz";
+        }
+        return "";
+    }
+}
+```
+
 
 ***
 
@@ -625,8 +697,13 @@ public class Solution {
 
 ## Problem Analysis
 
+Stack problem
+
 ## Algorithm Analysis
 
+the front one store into a Stack and when we meet the back one, check if there is the pair in our Stack peek (poll out to check), need to take care of one specific situation when the first meet is on the back, Stack could not be empty!
+
+Return Stack.isEmpty() to check if all front are being matched.
 
 ## Time Complexity Analysis
 O(n)
@@ -709,15 +786,71 @@ class Solution {
 
 ## Problem Analysis
 
+Merege K Sorted Lists
+
 ## Algorithm Analysis
+
+Actually, this is the fellow up problem of merge two sorted arrays.
+
+Used a dummy node to point to the first list, and keep merging the rest of the array with dummy.next and return the value to duumy.next as well.
 
 ## Time Complexity Analysis
 
+O(N)
+
 ## Code
 
-## Fellow up
-
-
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        int len = lists.length;
+        if(len == 0) return null;
+        
+        ListNode dummy = new ListNode(0);
+        dummy.next = lists[0];
+        
+        for(int i = 1; i < len; i++) {
+            dummy.next = mergeTwoLists(dummy.next, lists[i]);
+        }
+        
+        
+        return dummy.next;
+    }
+    
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while(l1 != null && l2 != null) {
+            if(l1.val > l2.val) {
+                cur.next = new ListNode(l2.val);
+                l2 = l2.next;
+            } else {
+                cur.next = new ListNode(l1.val);
+                l1 = l1.next;
+            }
+            cur = cur.next;
+        }
+        
+        if(l1 != null) {
+            cur.next = l1;
+        }
+        
+        if(l2 != null) {
+            cur.next = l2;
+        }
+        
+        return dummy.next;
+    }
+}
+```
 ***
 
 # 42 Trapping Rain Water 
@@ -738,6 +871,69 @@ class Solution {
 
 ## Problem Analysis
 
+- Tricky Solution
+
+## Algorithm Analysis
+
+```
+Switch Up and Down 
+
+for i = 1 to i < row
+  for j = 0 to j < r
+Switch matrix[r][c] and matric[c][r]
+```
+
+## Time Complexity Analysis
+
+O(n * m)
+
+## Code
+
+```java
+/* Clockwise Rotate */
+public void rotate(int[][] matrix) {
+    if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return;
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    for(int first=0, last=rows-1; first<last; first++,last--) {
+        int[] tmp = matrix[first];
+        matrix[first] = matrix[last];
+        matrix[last] = tmp;
+    }
+    for(int i = 0; i < rows; i++){
+        for(int j = i+1; j < cols; j++){
+            int tmp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = tmp;
+        }
+    }
+}
+
+/* Counter-clockwise Rotate */
+public void antiRotate(int[][] matrix) {
+    if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return;
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    for(int first=0, last=cols-1; first<last; first++,last--) {
+        for(int i=0; i<matrix.length; i++) {
+            int tmp = matrix[i][first];
+            matrix[i][first] = matrix[i][last];
+            matrix[i][last] = tmp;
+        }
+    }
+    for(int i = 0; i < rows; i++){
+        for(int j = i+1; j < cols; j++){
+            int tmp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = tmp;
+        }
+    }
+}
+```
+# 49| Group Anagrams
+
+## Problem Analysis
+
 ## Algorithm Analysis
 
 ## Time Complexity Analysis
@@ -746,10 +942,227 @@ class Solution {
 
 ## Fellow up
 
+***
 
+# 73| Set Matrix Zeroes
 
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+O(M*N)
+
+## Code
+
+```java
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int row = matrix.length;
+        if(row == 0) return;
+        int col = matrix[0].length;
+        if(col == 0) return;
+        
+        List<int[]> meetZeroes = new ArrayList<>();
+        
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(matrix[i][j] == 0) meetZeroes.add(new int[]{i,j}); 
+            }
+        }
+        
+        for(int k = 0; k < meetZeroes.size(); k++) {
+            int[] zeroPos = meetZeroes.get(k);
+            makeRowZeroes(matrix, zeroPos[0]);
+            makeColZeroes(matrix, zeroPos[1]);
+        }
+    }
+    
+    public void makeRowZeroes(int[][] matrix, int row) {
+        for(int i = 0; i < matrix[0].length; i++) {
+            matrix[row][i] = 0;
+        }
+    }
+    
+    public void makeColZeroes(int[][] matrix, int col) {
+        for(int i = 0; i < matrix.length; i++) {
+            matrix[i][col] = 0;
+        }
+    }
+}
+```
+
+## Fellow up - Optimization
+
+Stored the Status about have Zero or not in the fiset Col and first Row.
+
+Then, loop through again the rest of the marix (i = 1 to row and j = 1 to col), if meet it [i][0] ot [0][j] is 0 -> chagne it's value to 0
+
+Lately, change the first row and first col into 0 if needed.
+
+```java
+public void setZeroes(int[][] matrix) {
+    boolean fr = false,fc = false;
+    for(int i = 0; i < matrix.length; i++) {
+        for(int j = 0; j < matrix[0].length; j++) {
+            if(matrix[i][j] == 0) {
+                if(i == 0) fr = true;
+                if(j == 0) fc = true;
+                matrix[0][j] = 0;
+                matrix[i][0] = 0;
+            }
+        }
+    }
+    for(int i = 1; i < matrix.length; i++) {
+        for(int j = 1; j < matrix[0].length; j++) {
+            if(matrix[i][0] == 0 || matrix[0][j] == 0) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+    if(fr) {
+        for(int j = 0; j < matrix[0].length; j++) {
+            matrix[0][j] = 0;
+        }
+    }
+    if(fc) {
+        for(int i = 0; i < matrix.length; i++) {
+            matrix[i][0] = 0;
+        }
+    }
+}
+    // Use first row and first column as markers. 
+    // if matrix[i][j] = 0, mark respected row and col marker = 0;  
+    // indicatingthat later this respective row and col 
+    // must be marked 0;
+    
+    // And because you are altering first row and collumn, 
+    // you need to  have two variables to track their own status. 
+    // So, for ex, if any one of the first row is 0, fr = 0, 
+    // and at the end set all first row to 0;
+```
 
 ***
+
+# 78| Subsets  
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 89| Gray Code 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 98| Validate Binary Search Tree 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 121| Best Time to Buy and Sell Stock 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 126| Word Ladder II 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 127| Word Ladder
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 138| Copy List with Random Pointer
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 139| Word Break| 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+***
+
+
+
+
+
+
 
 # 102 Binary Tree Level Order Traversal
 
