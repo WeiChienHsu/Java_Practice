@@ -568,9 +568,9 @@ for (ListNode node = root; node != null; node = node.next)
 |23| Merge k Sorted Lists  |28.0%| Hard| |V|
 |42| Trapping Rain Water | 37.5% |Hard| |
 |48| Rotate Image  |41.2% |Medium| | V|
-|49| Group Anagrams |37.8%| Medium| |
-|73| Set Matrix Zeroes|  36.5% |Medium| |
-|78| Subsets  |44.0%| Medium| |
+|49| Group Anagrams |37.8%| Medium| | V|
+|73| Set Matrix Zeroes|  36.5% |Medium| |V|
+|78| Subsets  |44.0%| Medium| Important | V |
 |89| Gray Code |42.3%| Medium| |
 |98| Validate Binary Search Tree | 24.0% |Medium| |
 |102| Binary Tree Level Order Traversal |42.0%| Medium| | V|
@@ -585,7 +585,7 @@ for (ListNode node = root; node != null; node = node.next)
 |155| Min Stack  |30.7% |Easy| |
 |160| Intersection of Two Linked Lists |30.9% |Easy| |
 |167| Two Sum II - Input array is sorted |47.3% |Easy| |
-|189| Rotate Array  |25.2%| Easy| V |
+|189| Rotate Array  |25.2%| Easy| | V |
 |199| Binary Tree Right Side View |42.2% |Medium| |
 |200| Number of Islands |36.3% |Medium| |
 |204| Count Primes| 26.6%| Easy| |

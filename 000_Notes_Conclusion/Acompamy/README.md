@@ -934,13 +934,40 @@ public void antiRotate(int[][] matrix) {
 
 ## Problem Analysis
 
+- Check the duplicated we could think about using a Map.
+
+- If order doesn't matter why not just sort it to figure the answer.
+
+- What we should store in the Map
+
 ## Algorithm Analysis
 
+Switch String into a Character Array and sort that array to get a key String. Used that keyString to recoginzed if the string is same as previous one. If the string has existed in the Map, just add that one into the List<String> in the Map.
+
 ## Time Complexity Analysis
+O(nlogn) additional O(n)
 
 ## Code
+```java
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for(int i = 0; i < strs.length; i++) {
+            char[] c = strs[i].toCharArray();
+            Arrays.sort(c);
+            String keyStr = String.valueOf(c);
+            
+            /* Chekch if the key String has already exisited in the Map */
+            if(!map.containsKey(keyStr)) {
+                map.put(keyStr, new ArrayList<String>());
+            }
+            map.get(keyStr).add(strs[i]);
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
+}
+```
 
-## Fellow up
 
 ***
 
@@ -1048,13 +1075,180 @@ public void setZeroes(int[][] matrix) {
 
 ## Problem Analysis
 
+
+
 ## Algorithm Analysis
 
+```
+ 1 -> 2 -> 3
+ | \   \
+ 12 13 23
+ |
+ 123
+```
 ## Time Complexity Analysis
+
+O(2^n)
 
 ## Code
 
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> tempList = new ArrayList<>();
+        // Arrays.sort(nums);
+        dfsHelper(nums, res, tempList, 0);
+        return res;
+    }
+    
+    public void dfsHelper(int[] nums, List<List<Integer>> res, List<Integer> tempList, int startIndex) {
+        res.add(new ArrayList<Integer>(tempList));
+        for(int i = startIndex; i < nums.length; i++) {
+            tempList.add(nums[i]);
+            dfsHelper(nums, res, tempList, i + 1);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+
+```
+
 ## Fellow up
+
+### Subset II (Contains duplicates)
+
+```java
+
+public List<List<Integer>> subsetsWithDup(int[] nums) {
+    List<List<Integer>> list = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(list, new ArrayList<>(), nums, 0);
+    return list;
+}
+
+private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
+
+    list.add(new ArrayList<>(tempList)); /* Add current temp List into the result */
+    for(int i = start; i < nums.length; i++){
+        if(i > start && nums[i] == nums[i-1]) continue;  /* Skip the duplicated */
+        tempList.add(nums[i]);
+        backtrack(list, tempList, nums, i + 1); 
+        tempList.remove(tempList.size() - 1);
+        /* new Start point will be the current index + 1 */
+    }
+} 
+```
+
+### Permutations
+
+[Permutations](https://leetcode.com/problems/permutations/)
+
+```java
+public List<List<Integer>> permute(int[] nums) {
+   List<List<Integer>> list = new ArrayList<>();
+   // Arrays.sort(nums); // not necessary
+   backtrack(list, new ArrayList<>(), nums);
+   return list;
+}
+
+private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums){
+   if(tempList.size() == nums.length){
+      list.add(new ArrayList<>(tempList));
+   } else{
+      for(int i = 0; i < nums.length; i++){ 
+         if(tempList.contains(nums[i])) continue; // element already exists, skip
+         tempList.add(nums[i]);
+         backtrack(list, tempList, nums);
+         tempList.remove(tempList.size() - 1);
+      }
+   }
+} 
+```
+
+### Permutations (Contains duplicate)
+
+[Permutations II (contains duplicates)](https://leetcode.com/problems/permutations-ii/)
+
+```java
+public List<List<Integer>> permuteUnique(int[] nums) {
+    List<List<Integer>> list = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(list, new ArrayList<>(), nums, new boolean[nums.length]);
+    return list;
+}
+
+private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, boolean [] used){
+    if(tempList.size() == nums.length){
+        list.add(new ArrayList<>(tempList));
+    } else{
+        for(int i = 0; i < nums.length; i++){
+            if(used[i] || i > 0 && nums[i] == nums[i-1] && !used[i - 1]) continue;
+            used[i] = true; 
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, used);
+            used[i] = false; 
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+
+```
+
+### Combination Sum
+
+```java
+public List<List<Integer>> combinationSum(int[] nums, int target) {
+    List<List<Integer>> list = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(list, new ArrayList<>(), nums, target, 0);
+    return list;
+}
+
+private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
+    if(remain < 0) return;
+    else if(remain == 0) list.add(new ArrayList<>(tempList));
+    else{ 
+        for(int i = start; i < nums.length; i++){
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, remain - nums[i], i); // not i + 1 because we can reuse same elements
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+```
+
+### Combinatino Sum II (Cant reuse same element)
+
+```java
+public List<List<Integer>> combinationSum2(int[] nums, int target) {
+    List<List<Integer>> list = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(list, new ArrayList<>(), nums, target, 0);
+    return list;
+    
+}
+
+private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
+    if(remain < 0) return;
+    else if(remain == 0) list.add(new ArrayList<>(tempList));
+    else{
+        for(int i = start; i < nums.length; i++){
+            if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, remain - nums[i], i + 1);
+            tempList.remove(tempList.size() - 1); 
+        }
+    }
+} 
+```
+
+### Palindrome Partitioning
+
+
+
+
+
 
 ***
 
