@@ -5,6 +5,7 @@
 [3 Longest Substring Without Repeating Characters](#3-longest-substring-without-repeating-characters)
 [5 Longest Palindromic Substring](#5-longest-palindromic-substring)
 [8 String to Integer](#8-string-to-integer)
+[15 3 Sum](#15-3-sum)
 
 
 # 1 Two Sum
@@ -493,7 +494,7 @@ class Solution {
 }
 ```
 
-- Version 2: Check if there is a duplicated number when their in an answer List be added into result.
+- Version 2: Check if there is a duplicated number when their in an answer List be added into result. (更有效率)
 
 ```java
 class Solution {
@@ -523,7 +524,86 @@ class Solution {
 
 ### 16 3 Sum Closest
 
-### 18 4 Sum
+```java
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int len = nums.length;
+        /* Init the result as first three elements */
+        int result = nums[0] + nums[1] + nums[2];
+        
+        for(int i = 0; i < len - 2; i++) {
+            int start = i + 1;
+            int end = len - 1;
+            
+            while(start < end) {
+                /* get the current sum */
+                int sum = nums[i] + nums[start] + nums[end];
+                if(sum == target) return target;
+                
+                /* Modify two pointers */
+                if(sum < target) {
+                   start ++;
+                } else {
+                    end --;
+                }
+                
+                /* Compare with the result to see if the current sum is the cloest*/
+                if(Math.abs(target - sum) < Math.abs(target - result)) {
+                    result = sum;
+                }
+            }
+
+        }
+        return result;
+    }
+}
+```
+
+### 18 K Sum
+
+
+```java
+public class Solution {
+    /**
+     * @param A: an integer array.
+     * @param k: a positive integer (k <= length(A))
+     * @param target: a integer
+     * @return an integer
+     */
+    public int kSum(int A[], int k, int target) {
+
+        if (A == null || A.length == 0) {
+            return 0;
+        }
+
+        int n = A.length;
+        // state
+        // f[i][j][t] take j numbers from the first i numbers, how many combinations' sum is t
+        int[][][] f = new int[n + 1][k + 1][target + 1];
+
+        // initialize
+        for (int i = 0; i <= n; i++) {
+            f[i][0][0] = 1;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= k && j <= i; j++) {
+                for (int t = 1; t <= target; t++) {
+                    f[i][j][t] = f[i - 1][j][t];
+                    /* 如果目前的 t >= A[i - 1] */
+                    /* f(i,j,t) = f(i-1,j,t) + f(i-1,j-1,t) - A[i - 1] */
+                    if (t >= A[i - 1]) {
+                        f[i][j][t] = f[i - 1][j][t] + f[i - 1][j - 1][t - A[i - 1]];
+                    }
+                }
+            }
+        }
+
+        return f[n][k][target];
+    }
+}
+```
 
 ***
 
@@ -550,12 +630,80 @@ class Solution {
 ## Time Complexity Analysis
 
 ## Code
-
-## Fellow up
+```java
+class Solution {
+    public boolean isValid(String s) {
+        if(s.length() == 0) return true;
+        Deque<Character> stack = new ArrayDeque<>();
+        for(int i = 0; i < s.length(); i++) {
+            char curChar = s.charAt(i);
+            if(curChar == '{' || curChar == '[' || curChar == '(') {
+                /* Meet the front and push into the Stack*/
+                stack.offerFirst(curChar);
+            } else {
+                /* Meet the back and check in the Stack */
+                if(stack.isEmpty()) return false;
+                char peekChar = stack.pollFirst();
+                if(curChar == '}' && peekChar != '{') return false;
+                else if(curChar == ')' && peekChar != '(') return false;
+                else if(curChar == ']' && peekChar != '[') return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+}
+```
 
 ***
 
 # 21 Merge Two Sorted Lists 
+
+## Problem Analysis
+
+Comparing with both l1 and l2, and then add the rest of l1 or l2 into main linkedlist
+
+## Algorithm Analysis
+
+Used a dummy node and cur pointer to solve the problem
+
+## Time Complexity Analysis
+
+Time complexity = O(n)
+
+## Code
+
+```java
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while(l1 != null && l2 != null) {
+            if(l1.val > l2.val) {
+                cur.next = new ListNode(l2.val);
+                l2 = l2.next;
+            } else {
+                cur.next = new ListNode(l1.val);
+                l1 = l1.next;
+            }
+            cur = cur.next;
+        }
+        
+        if(l1 != null) {
+            cur.next = l1;
+        }
+        
+        if(l2 != null) {
+            cur.next = l2;
+        }
+        
+        return dummy.next;
+    }
+}
+```
+
+
+# 23 Merge k Sorted Lists
+
 
 ## Problem Analysis
 
@@ -565,8 +713,8 @@ class Solution {
 
 ## Code
 
-## Fellow up 
-### 23 Merge k Sorted Lists
+## Fellow up
+
 
 ***
 

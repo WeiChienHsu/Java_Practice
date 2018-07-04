@@ -562,8 +562,8 @@ for (ListNode node = root; node != null; node = node.next)
 |5 |Longest Palindromic Substring |25.2% |Medium| |V|
 |8 |String to Integer (atoi) | 14.0% |Medium| | V|
 |15| 3Sum |21.8%| Medium| |V|
+|17| Letter Combinations of a Phone Number |36.1% |Medium| | V |
 
-|17| Letter Combinations of a Phone Number |36.1% |Medium| |
 |20| Valid Parentheses |33.9% |Easy| |
 |21| Merge Two Sorted Lists  |40.5%| Easy| |
 |23| Merge k Sorted Lists  |28.0%| Hard| |
