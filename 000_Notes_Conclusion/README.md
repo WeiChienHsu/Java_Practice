@@ -564,20 +564,22 @@ for (ListNode node = root; node != null; node = node.next)
 |15| 3Sum |21.8%| Medium| |V|
 |17| Letter Combinations of a Phone Number |36.1% |Medium| | V |
 
-|20| Valid Parentheses |33.9% |Easy| |
-|21| Merge Two Sorted Lists  |40.5%| Easy| |
+|20| Valid Parentheses |33.9% |Easy| | V |
+|21| Merge Two Sorted Lists  |40.5%| Easy| | V|
 |23| Merge k Sorted Lists  |28.0%| Hard| |
 |42| Trapping Rain Water | 37.5% |Hard| |
 |48| Rotate Image  |41.2% |Medium| |
 |49| Group Anagrams |37.8%| Medium| |
 |73| Set Matrix Zeroes|  36.5% |Medium| |
+
 |78| Subsets  |44.0%| Medium| |
 |89| Gray Code |42.3%| Medium| |
 |98| Validate Binary Search Tree | 24.0% |Medium| |
-|102| Binary Tree Level Order Traversal |42.0%| Medium| |
+|102| Binary Tree Level Order Traversal |42.0%| Medium| | V|
 |119| Pascal's Triangle II  |38.0% |Easy| |
 |121| Best Time to Buy and Sell Stock |42.7%| Easy| |
 |126| Word Ladder II | 14.8%| Hard| |
+
 |127| Word Ladder |19.9%| Medium| |
 |138| Copy List with Random Pointer |25.9% |Medium| |
 |139| Word Break| 31.3% |Medium| |
@@ -588,7 +590,9 @@ for (ListNode node = root; node != null; node = node.next)
 |167| Two Sum II - Input array is sorted |47.3% |Easy| |
 |189| Rotate Array  |25.2%| Easy| V |
 |199| Binary Tree Right Side View |42.2% |Medium| |
+
 |200| Number of Islands |36.3% |Medium| |
+
 |204| Count Primes| 26.6%| Easy| |
 |206| Reverse Linked List| 46.6%| Easy| |
 |215| Kth Largest Element in an Array |40.4%| Medium| |

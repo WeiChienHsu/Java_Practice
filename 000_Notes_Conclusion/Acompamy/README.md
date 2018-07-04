@@ -627,7 +627,9 @@ public class Solution {
 
 ## Algorithm Analysis
 
+
 ## Time Complexity Analysis
+O(n)
 
 ## Code
 ```java
@@ -744,3 +746,48 @@ class Solution {
 
 ## Fellow up
 
+
+
+
+***
+
+# 102 Binary Tree Level Order Traversal
+
+## Problem Analysis
+
+We need to print the Node in Tree by a Level Order Traversal way
+
+## Algorithm Analysis
+
+Used A Queue! push each leavel and record it. After recording single node, check if it's left and right exist, if exist push then into the queue for next level in their order. While queue is empty means we had already traversed the whole tree. 
+
+## Time Complexity Analysis
+
+O(N) 
+
+## Code
+
+```java
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(root == null) return res;
+        
+        Deque<TreeNode> queue = new ArrayDeque<>();
+        queue.offerLast(root);
+        
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            for(int i = 0; i < size; i++) {
+                TreeNode cur = queue.pollFirst();
+                list.add(cur.val);
+                if(cur.left != null) queue.offerLast(cur.left);
+                if(cur.right != null) queue.offerLast(cur.right);
+            }
+            res.add(new ArrayList<>(list));
+        }
+        return res;
+    }
+}
+```
