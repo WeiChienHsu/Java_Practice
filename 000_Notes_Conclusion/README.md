@@ -560,8 +560,9 @@ for (ListNode node = root; node != null; node = node.next)
 |2 |Add Two Numbers| 28.5% |Medium| |V |
 |3 |Longest Substring Without Repeating Characters| 24.6%| Medium| |V|
 |5 |Longest Palindromic Substring |25.2% |Medium| |V|
-|8 |String to Integer (atoi) | 14.0% |Medium| |
-|15| 3Sum |21.8%| Medium| |
+|8 |String to Integer (atoi) | 14.0% |Medium| | V|
+|15| 3Sum |21.8%| Medium| |V|
+
 |17| Letter Combinations of a Phone Number |36.1% |Medium| |
 |20| Valid Parentheses |33.9% |Easy| |
 |21| Merge Two Sorted Lists  |40.5%| Easy| |

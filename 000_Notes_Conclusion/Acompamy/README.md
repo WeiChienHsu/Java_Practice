@@ -419,13 +419,111 @@ class Solution {
 
 ## Problem Analysis
 
+Firstly, we need to ask some problems about the conditions.
+
+- Is the answer has a duplicated number? (If no, need to deal with the duplicated number in the original array)
+
+- Is the original array has been sorted? (If no, sorting an array take O(nlogn) time complexity)
+
+- Is the original array only have unique number? (If no, again, need to consider how to dedupliactd -> use while loop to find next not same value)
+
+
 ## Algorithm Analysis
+
+Used a for loop to go through each number from i = 0 to i < len - 2.
+
+(Need to deal with the duplicated number -> i == 0 || nums[i] != nums[i-1])
+
+The rest of the number seems to be the 2 sum problem!
+
+Similaryly, we used a start and end pointer to find the sum is equal to target or larger or less than target.
+
+
+Then, deal with the duplicated number in the rest of numbers
+
+```
+if(nums[start] == nums[currentStart] && start < end) start ++
+if(nums[end] == nums[currentEnd] && start < end) end--.
+```
 
 ## Time Complexity Analysis
 
+O(n^2) + O(nlogn) time complexity and O(1) space complexity
+
 ## Code
+- Version 1: Didn't deal with the rest of number when meet the target, put it into the rest of while loop
+
+```java
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+      
+        Arrays.sort(nums);
+        
+        for(int i = 0; i < nums.length - 2; i++) {
+            if(i == 0 || nums[i] > nums[i - 1]) {
+                int start = i + 1;
+                int end = nums.length - 1;
+                
+                while(start < end) {
+                    if(nums[i] + nums[start] + nums[end] == 0) {
+                        res.add(Arrays.asList(nums[i], nums[start], nums[end]));
+                    } 
+                    
+                    /* nums[i] + nums[start] + nums[end] < 0 */
+                    if(nums[i] + nums[start] + nums[end] < 0) {
+                        int currentStart = start;
+                        while(nums[start] == nums[currentStart] && start < end) {
+                            start++;
+                        }
+                    }
+                    /* num[i] + nums[start] + nums[end] >= 0 */
+                    /* Even we had found the target still need to try the rest of numbers*/
+                    else {
+                        int currentEnd = end;
+                        while(nums[end] == nums[currentEnd] && start < end) {
+                            end--;
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+- Version 2: Check if there is a duplicated number when their in an answer List be added into result.
+
+```java
+class Solution {
+    public List<List<Integer>> threeSum(int[] num) {
+        Arrays.sort(num);
+        List<List<Integer>> res = new LinkedList<>(); 
+        for (int i = 0; i < num.length-2; i++) {
+            if (i == 0 || (i > 0 && num[i] != num[i-1])) {
+                int lo = i+1, hi = num.length-1, sum = 0 - num[i];
+                while (lo < hi) {
+                    if (num[lo] + num[hi] == sum) {
+                        res.add(Arrays.asList(num[i], num[lo], num[hi]));
+                        while (lo < hi && num[lo] == num[lo+1]) lo++;
+                        while (lo < hi && num[hi] == num[hi-1]) hi--;
+                        lo++; hi--;
+                    } else if (num[lo] + num[hi] < sum) lo++;
+                    else hi--;
+               }
+            }
+        }
+        return res;
+    }
+}
+```
 
 ## Fellow up
+
+### 16 3 Sum Closest
+
+### 18 4 Sum
 
 ***
 
