@@ -2349,7 +2349,112 @@ private void shuffle(int a[]) {
 
 ***
 
-# 234| Palindrome Linked List |33.4%
+# 234| Palindrome Linked List 
+
+## Problem Analysis
+
+## Algorithm Analysis
+Used Fast and Slow pointer to find the middle point in the linked list.
+
+Revers the rest of middle point(Slow pointer pointed to), and used two dummy nodes to point to their head for comparing their values.
+
+Let the middle position points to null.
+
+The reverse method will automaticaly let the reversed linked list point to pre = null.
+
+```
+1 -> 2 -> 3 -> 2 -> 1
+s
+f
+
+     s
+          f
+          s
+                    f
+
+D1 -> 1 -> 2 -> 3 -> null
+
+D2 -> 1 -> 2 -> null
+
+```
+
+## Code
+
+```java
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null) return true;
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode dummy1 = new ListNode(0);
+        ListNode dummy2 = new ListNode(0);
+        dummy1.next = head;
+        
+        while(fast != null && fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        /* dummy2 connect to the reversed one D1 -> 1 -> 2 -> null */
+        dummy2.next = reverse(slow.next);
+        /* dummy1 connect to the original one end on null D2 -> 1 -> 2 -> 3 -> null*/
+        slow.next = null;
+        
+        /* Compare two linked list 1 -> 2  */
+        while(dummy1 != null && dummy2 != null) {
+            if(dummy1.val != dummy2.val) return false;
+            dummy1 = dummy1.next;
+            dummy2 = dummy2.next;
+        }
+        
+        return true;
+    }
+    
+    public ListNode reverse(ListNode head) {
+        ListNode pre = null;
+        ListNode cur = head;
+        while(cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+}
+```
+
+***
+
+
+# 235 Lowest Common Ancestor of a Binary Search Tree
+
+## Algorithm Analysis
+
+Use the speicl characteristics of BST, if two node are both smaller, move root to left, on the other hand, if two nodes are both larger, move root to the right. Or, if the root was between two nodes, return root itself!
+
+## Time Complexity Analysis
+
+O(height of Tree)
+
+## Code
+```java
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        while(root != null) {
+            if(root.val > p.val && root.val > q.val) root = root.left;
+            else if(root.val < p.val && root.val < q.val) root = root.right;
+            else return root;
+        }
+        return root;
+    }
+}
+
+```
+
+***
+
+# 236| Lowest Common Ancestor of a Binary Tree
 
 ## Problem Analysis
 
@@ -2362,5 +2467,184 @@ private void shuffle(int a[]) {
 ## Fellow up
 
 
+***
+
+# 238| Product of Array Except Self
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
 
 
+***
+
+# 239| Sliding Window Maximum
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 240| Search a 2D Matrix II
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 242| Valid Anagram
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 297| Serialize and Deserialize Binary Tree 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 380| Insert Delete GetRandom O(1)
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 387| First Unique Character in a String
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 535| Encode and Decode TinyURL
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 617| Merge Two Binary Trees
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 682| Baseball Game
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 746| Min Cost Climbing Stairs
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***
+
+# 771| Jewels and Stones
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+***

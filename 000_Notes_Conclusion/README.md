@@ -592,9 +592,9 @@ for (ListNode node = root; node != null; node = node.next)
 |200| Number of Islands |36.3% |Medium| | V|
 |204| Count Primes| 26.6%| Easy| |V|
 |206| Reverse Linked List| 46.6%| Easy| | V|
-|215| Kth Largest Element in an Array |40.4%| Medium| |
-|234| Palindrome Linked List |33.4%| Easy| |
-|235| Lowest Common Ancestor of a Binary Search Tree |39.7% |Easy| |
+|215| Kth Largest Element in an Array |40.4%| Medium| | V|
+|234| Palindrome Linked List |33.4%| Easy| | V|
+|235| Lowest Common Ancestor of a Binary Search Tree |39.7% |Easy| | V|
 |236| Lowest Common Ancestor of a Binary Tree |30.0%| Medium| |
 |238| Product of Array Except Self | 50.2% |Medium| |
 |239| Sliding Window Maximum  |34.1% |Hard| |
