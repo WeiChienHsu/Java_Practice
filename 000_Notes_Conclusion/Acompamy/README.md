@@ -1339,13 +1339,73 @@ class Solution {
 
 # 121| Best Time to Buy and Sell Stock 
 
+[Youtube](https://www.youtube.com/watch?v=8pVhUpF1INw)
+
 ## Problem Analysis
 
-## Algorithm Analysis
+Need to find a max_profit = max{price[j] - price[i]} (n - 1 > j > i > 0)
+
+Buy: price[i] -> min{princ[k]} k <= i
+Sell: princ[j] -> max{princ[k]} k >= j
+
+## Algorithm Analysis - DP
+
+Find the min Price so far to i-th day save in the L array
+Find the max Profit so far by the max of price[j] - L[j] or P[j - 1].
+
+Return P[n - 1]
 
 ## Time Complexity Analysis
 
+O(n) time complexity, O(n) space -> O(1)
+
 ## Code
+
+- DP: O(N) space
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        if(n < 2) return 0;
+        
+        int[] low_price = new int[n];
+        int[] high_profit = new int[n];
+        low_price[0] = prices[0];
+        high_profit[0] = 0;
+        
+        for(int i = 1; i < n; i++) {
+            low_price[i] = Math.min(prices[i], low_price[i - 1]);
+            high_profit[i] = Math.max(high_profit[i - 1], prices[i] - low_price[i]);
+        }
+        
+        return high_profit[n - 1];
+        
+    }
+}
+```
+
+- DP: O(1) space
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        if(n < 2) return 0;
+        
+        int[] high_profit = new int[n];
+        high_profit[0] = 0;
+        
+        for(int i = 1; i < n; i++) {
+            /* Update the max profit by choosing last highest profit or current price - last min price */
+            high_profit[i] = Math.max(high_profit[i - 1], prices[i] - Math.min(prices[i], prices[i - 1]));
+            /* Update the min price so far to i */
+            prices[i] = Math.min(prices[i], prices[i - 1]);
+        }
+        return high_profit[n - 1];   
+    }
+}
+```
 
 ## Fellow up
 
@@ -1441,15 +1501,108 @@ public class Solution {
 
 ***
 
-# 139| Word Break| 
+# 139| Word Break
 
 ## Problem Analysis
 
-## Algorithm Analysis
+We need to find a breaking point for the substring and record that state then go through the whole string to see the result.
 
-## Time Complexity Analysis
+### DFS Solution (Recursion + Memorized)
 
-## Code
+- Improved from the Brute Force.
+
+- Used a memory set to record the previous substring false (for example, substring cut on specific index would be found in the dictionar). Check from the first index and use a for loop form index + 1 to get the substring, check this substring, if this substring was not in the dict, go for the next i, if yes, put it's rest of the substring in to the dfsHelper to see the result.
+
+- If the for loop end, there is not Substring inside the dict, mark that index as fales and return a false.
+
+```java
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        
+        /* Set is much easier to find existed String*/
+        Set<String> dict = new HashSet<>();
+        for(String str : wordDict) {
+            dict.add(str);
+        }
+        
+        /* Record those substring which could not be found in the dict */
+        Set<Integer> memory = new HashSet<>();
+        
+        return canBreak(s, 0, dict, memory);
+    }
+    
+    public boolean canBreak(String s, int index, Set<String> dict, Set<Integer> memory) {
+        /* Base Case */
+        if(index == s.length()) return true;
+        
+        /* Check if current index is in the memory */
+        if(memory.contains(index)) return false;
+        
+        for(int i = index + 1; i <= s.length() ; i++) {
+
+            String subString = s.substring(index, i);
+            
+            /* Check left substring and put right substring into dfs helper function */
+            if(dict.contains(subString) && canBreak(s, i, dict, memory)) {
+                return true;
+            }
+        }
+        
+        /* Couldn not be found in the dict */
+        memory.add(index);
+        return false;
+    }
+}
+```
+
+### DP Solution
+
+For example, we got s = abcdfeg and diction {abc, de, fg}.
+
+Used a dp to record previous state of wheter that substring could be found in the dictionary.
+
+- State = boolean[n+1] : Recornd the substring with lengh = i could or could not be found
+
+- Init = dp[0] = true
+- Fucntion : [i] = from j = i to j = 1, .substring(i - j, i) to see if this substring was in the dict -> by seeing boolean[i - j]
+- Return dp[n]
+
+Take abcde for example, when j = 3, substring(3, 5) de is in the dict, then check if substring(0, 3) which is abc in the dict by looking into boolean[3].
+
+
+O(N^2)
+
+```java
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if(s == null || wordDict == null) return false;
+        HashSet<String> dict = new HashSet<String>();
+        for(String str : wordDict) {
+            dict.add(str);
+        }
+        
+        boolean[] breakable = new boolean[s.length() + 1];
+        breakable[0] = true;
+            
+        for(int i = 0; i <= s.length(); i++) {
+            for(int j = i; j > 0; j--) {
+                /* Get the substring from i - j to i*/
+                String subString = s.substring(i - j, i);
+                /* check if the current substring is in the dict */
+                if(dict.contains(subString)) {
+                    /* if the previous strings is breakable */
+                    if(breakable[i - j] == true) {
+                        /* mark the current substring + previous substring as true */
+                        breakable[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return breakable[s.length()];
+    }
+}
+```
 
 ## Fellow up
 
@@ -1457,7 +1610,7 @@ public class Solution {
 
 ***
 
-## 151 Reverse Words in a String
+# 151 Reverse Words in a String
 
 ## Problem Analysis
 
