@@ -580,12 +580,12 @@ for (ListNode node = root; node != null; node = node.next)
 |127| Word Ladder |19.9%| Medium| |
 |138| Copy List with Random Pointer |25.9% |Medium| | V|
 |139| Word Break| 31.3% |Medium| | V|
-|141| Linked List Cycle | 35.1% |Easy| |
+|141| Linked List Cycle | 35.1% |Easy| | V|
 |146| LRU Cache |19.5%| Hard| |
 |151| Reverse Words in a String | 20% | Medium | | V | 
 |155| Min Stack  |30.7% |Easy| | V|
 |160| Intersection of Two Linked Lists |30.9% |Easy| | V |
-|167| Two Sum II - Input array is sorted |47.3% |Easy| |
+|167| Two Sum II - Input array is sorted |47.3% |Easy| | V |
 |186| Reverse Words in String II | 20.0 % | Medium | | V |
 |189| Rotate Array  |25.2%| Easy| | V |
 |199| Binary Tree Right Side View |42.2% |Medium| | V |

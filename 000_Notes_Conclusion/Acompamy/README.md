@@ -1662,15 +1662,29 @@ class Solution {
 
 # 141| Linked List Cycle
 
-## Problem Analysis
-
 ## Algorithm Analysis
 
-## Time Complexity Analysis
+- Fast and Slow pointer
+- If there is a loop, they will meet each other in the future
+- If fast pointer meet the null, mean there is no loop.
 
 ## Code
-
-## Fellow up
+```java
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) return true;
+        }
+        
+        return false;
+    }
+}
+```
 
 ***
 
