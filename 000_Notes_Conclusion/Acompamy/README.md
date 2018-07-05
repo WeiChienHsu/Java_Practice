@@ -2016,11 +2016,114 @@ class Solution {
 
 ## Problem Analysis
 
+DFS
+
 ## Algorithm Analysis
+
+DFS Problem, traverse whole matrix, if found "1", put it into DFS helper funciton.
+
+Dfs helper function : Change current value to "0" and reaverse the surrond index if there is another 1 and put it into Dfs Helper function. (Check validation and value inside the dfs function)
+
+Try not to change the input value by using another boolean array to record the visited
 
 ## Time Complexity Analysis
 
+O(row * column)
+
 ## Code
+
+- Modify the input array 
+
+```java
+class Solution {
+    public int numIslands(char[][] grid) {
+        int count = 0;
+        Deque<int[]> queue = new ArrayDeque<>();
+        int row = grid.length;
+        if(row == 0) return 0;
+        int col = grid[0].length;
+        
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(grid[i][j] == '1') {
+                    count++;
+                    dfsHelper(grid, i, j, row, col);
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+    public void dfsHelper(char[][] grid, int r, int c, int row, int col) {
+        /* Directions helper array */
+        int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        
+        /* Change the current land to sea */
+        grid[r][c] = '0';
+        
+        /* Traverse the land's surrounded lan */
+        for(int[] dir : directions) {
+            int newRow = r + dir[0];
+            int newCol = c + dir[1];
+            /* check validation and if the nearby is '1' */
+            if(newRow >= 0 && newRow < row && newCol >= 0 && newCol < col && grid[newRow][newCol] == '1') {
+                dfsHelper(grid, newRow, newCol, row, col);
+            }
+        }
+        
+    } 
+}
+```
+
+- Used another space
+
+```java
+class Solution {
+    public int numIslands(char[][] grid) {
+        int count = 0;
+        Deque<int[]> queue = new ArrayDeque<>();
+        
+        int row = grid.length;
+        if(row == 0) return 0;
+        int col = grid[0].length;
+        
+        boolean[][] visited = new boolean[row][col]; /* Default fales */
+        
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(grid[i][j] == '1' && !visited[i][j]) {
+                    count++;
+                    dfsHelper(grid, i, j, row, col, visited);
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+    public void dfsHelper(char[][] grid, int r, int c, int row, int col, boolean[][] visited) {
+        /* Directions helper array */
+        int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        
+        /* Change the current land to sea */
+        visited[r][c] = true;
+        
+        
+        /* Traverse the land's surrounded lan */
+        for(int[] dir : directions) {
+            int newRow = r + dir[0];
+            int newCol = c + dir[1];
+            /* check validation and if the nearby is '1' */
+            if(newRow >= 0 && newRow < row && newCol >= 0 && newCol < col 
+               && grid[newRow][newCol] == '1' && !visited[newRow][newCol]) {
+                dfsHelper(grid, newRow, newCol, row, col, visited);
+            }
+        }
+        
+    } 
+}
+```
 
 ## Fellow up
 
@@ -2030,13 +2133,45 @@ class Solution {
 
 ## Problem Analysis
 
+We could not chech every number since it will take O(n^2) time complexity when the input is larget, need to go through every number from 2 to n.
+
+
 ## Algorithm Analysis
+
+Stored the futrue state by the current prime number.
+
+init a boolean array isNotPrime default to false, boolean[n + 1], index stands for the number.
+
+Used i from 2 (Which is prime number), if isNotPrime[i] is true, we mark all number i time j from 2 to ... i * j < n as true(which means that number is not Prime).
+
 
 ## Time Complexity Analysis
 
+O(N) time complexity and O(N) space
+
 ## Code
 
-## Fellow up
+```java
+class Solution {
+    public int countPrimes(int n) {
+        /* Dp- mark future numbers as not Prime by the prime number */
+        
+        boolean[] isNotPrime = new boolean[n + 1]; /* Default false -> isPrime */
+        int count = 0;
+        for(int i = 2; i < n; i++) {
+            if(!isNotPrime[i]) { /* i isPrime */
+                count ++;
+                /* mark all i * j as not Prime -> true */
+                for(int j = 2; j * i < n; j++) {
+                    isNotPrime[j * i] = true;
+                }
+            }
+        }
+        return count;
+
+    }
+}
+```
 
 ***
 

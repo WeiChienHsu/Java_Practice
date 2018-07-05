@@ -579,7 +579,7 @@ for (ListNode node = root; node != null; node = node.next)
 |126| Word Ladder II | 14.8%| Hard| |
 |127| Word Ladder |19.9%| Medium| |
 |138| Copy List with Random Pointer |25.9% |Medium| | V|
-|139| Word Break| 31.3% |Medium| |
+|139| Word Break| 31.3% |Medium| | V|
 |141| Linked List Cycle | 35.1% |Easy| |
 |146| LRU Cache |19.5%| Hard| |
 |151| Reverse Words in a String | 20% | Medium | | V | 
@@ -588,9 +588,9 @@ for (ListNode node = root; node != null; node = node.next)
 |167| Two Sum II - Input array is sorted |47.3% |Easy| |
 |186| Reverse Words in String II | 20.0 % | Medium | | V |
 |189| Rotate Array  |25.2%| Easy| | V |
-|199| Binary Tree Right Side View |42.2% |Medium| |
-|200| Number of Islands |36.3% |Medium| |
-|204| Count Primes| 26.6%| Easy| |
+|199| Binary Tree Right Side View |42.2% |Medium| | V |
+|200| Number of Islands |36.3% |Medium| | V|
+|204| Count Primes| 26.6%| Easy| |V|
 |206| Reverse Linked List| 46.6%| Easy| | V|
 |215| Kth Largest Element in an Array |40.4%| Medium| |
 |234| Palindrome Linked List |33.4%| Easy| |
