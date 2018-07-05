@@ -1075,6 +1075,7 @@ public void setZeroes(int[][] matrix) {
 
 ## Problem Analysis
 
+Backtracking - Used the number from first to the last, when we go through the first number, in the dfs, we need a for loop to deal with the rest of its number, and add a signle number into the tempList, put tempList and current index + 1 (which mean 2 as start point) into the next Level.
 
 
 ## Algorithm Analysis
@@ -1114,7 +1115,26 @@ class Solution {
 
 ```
 
+- Not using Backtracking
+
+```java
+public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
+        for(int n : nums){
+            int size = result.size();
+            for(int i=0; i<size; i++){
+                List<Integer> subset = new ArrayList<>(result.get(i));
+                subset.add(n);
+                result.add(subset);
+            }
+        }
+        return result;
+    }
+```
+
 ## Fellow up
+
 
 ### Subset II (Contains duplicates)
 
@@ -1243,12 +1263,6 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 } 
 ```
 
-### Palindrome Partitioning
-
-
-
-
-
 
 ***
 
@@ -1277,6 +1291,49 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 ## Code
 
 ## Fellow up
+
+***
+
+# 119 Pascal's Triangle 
+
+## Problem Analysis
+
+Find the rule in pascal's triangle 
+
+Dp Problem -> Save the previous result for the future result
+
+## Algorithm Analysis
+
+Add 1 int the head of result.
+
+From the second to the last - 1, number of i will be the value of sum i and i + 1.
+
+## Time Complexity Analysis
+
+O(rowIndex) -> O(n)
+
+## Code
+
+```java
+class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> res = new ArrayList<>();
+        
+        while(rowIndex >= 0) {
+            /* Add 1 in the "head" of result list */
+            res.add(0, 1);
+            
+            /* from the second element, modify it's value by adding number on i and i + 1 */
+            for(int i = 1; i < res.size() - 1; i++) {
+                res.set(i, res.get(i) + res.get(i + 1));
+            }
+            rowIndex --;
+        }
+        
+        return res;
+    }
+}
+```
 
 ***
 
@@ -1326,13 +1383,61 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 
 ## Problem Analysis
 
+Copy whole Linked List with next and random pointers.
+
 ## Algorithm Analysis
+
+Used a Map to store relationship between old Node and new Node.
+
+Loop Thorugh linked list once to record those old and new Nodes.
+
+Used a dummy node to point the the head of new node.
+
+In a while loop, use the head poiner to get new Node from map.
+
+1. connect with next. (We get a whole new lists)
+2. connect with random. (Might have a new Node or not)
+3. Move the head forward until it meet the null
+
 
 ## Time Complexity Analysis
 
-## Code
+O(2n)
 
-## Fellow up
+## Code
+```java
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        
+        if(head == null) return null;
+        
+        Map<RandomListNode, RandomListNode> map = new HashMap<>();
+        
+        /* Copy all the nodes into the Map <oldNode, newNode> */
+        RandomListNode cur = head;
+        while(cur != null) {
+            map.put(cur, new RandomListNode(cur.label));
+            cur = cur.next;
+        }
+        
+        /* Connect the next and random with newNode */
+        RandomListNode dummy = new RandomListNode(0);
+        dummy.next = map.get(head);
+        
+        while(head != null) {
+            /* connect the current new Node with next/random newNode 
+            by mapping with old next/random oldNode */
+            
+            map.get(head).next = map.get(head.next);
+            map.get(head).random = map.get(head.random);
+            head = head.next;
+        }
+        
+        return dummy.next;
+  
+    }
+}
+```
 
 ***
 
@@ -1348,14 +1453,83 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 
 ## Fellow up
 
+
+
 ***
 
+## 151 Reverse Words in a String
+
+## Problem Analysis
+
+Split the single word and rebuilt it in a reversed order
+
+## Algorithm Analysis
+
+- regular expression: + means at least 1 so in this case " +" means at least one space
+- Used String.split() and String.trim().
+- Used a StringBuilder.append() and StringBuilder.toString()
+
+## Time Complexity Analysis
+
+O(n) time and O(n) space
+
+## Code
+```java
+public String reverseWords(String s) {
+    String[] sArr = s.trim().split(" +");
+    StringBuilder sb = new StringBuilder();
+    for(int i = sArr.length - 1; i >= 0; i--) {
+        sb.append(sArr[i].trim());
+        sb.append(" ");
+    }
+    return sb.toString().trim();
+}
+```
+
+## Fellow up
+
+### Reverse Words in String II
+
+Given a char array and reverse the string word by word.
+
+- A word is defined as a sequence of non-space characters.
+- The input string does not contain leading or trailing spaces.
+- The words are always separated by a single space.
+
+```java
+class Solution {
+    public void reverseWords(char[] str) {
+        /* Reverse whole char Array */
+        reverse(str, 0, str.length - 1);
+        
+        int currentStart = 0;
+        int currentEnd = str.length - 1;
+        
+        /* Reverse single word except last word */
+        for(int i = 0; i < str.length; i++) {
+            if(str[i] == ' ' && i > 0) {
+                currentEnd = i - 1;
+                reverse(str, currentStart, currentEnd);
+                currentStart = i + 1;
+            }
+        }
+        
+        /* Reverse last word */
+        reverse(str, currentStart, str.length - 1);
+    }
+    /* Reverse Helper */
+    public void reverse(char[] str, int start, int end) {
+        while(start < end) {
+            char temp = str[start];
+            str[start++] = str[end];
+            str[end--] = temp;
+        }
+    }
+}
+```
+
+
 ***
-
-
-
-
-
 
 
 # 102 Binary Tree Level Order Traversal
