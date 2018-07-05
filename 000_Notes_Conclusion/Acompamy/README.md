@@ -1292,6 +1292,50 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 
 ## Fellow up
 
+*** 
+
+# 102 Binary Tree Level Order Traversal
+
+## Problem Analysis
+
+We need to print the Node in Tree by a Level Order Traversal way
+
+## Algorithm Analysis
+
+Used A Queue! push each leavel and record it. After recording single node, check if it's left and right exist, if exist push then into the queue for next level in their order. While queue is empty means we had already traversed the whole tree. 
+
+## Time Complexity Analysis
+
+O(N) 
+
+## Code
+
+```java
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(root == null) return res;
+        
+        Deque<TreeNode> queue = new ArrayDeque<>();
+        queue.offerLast(root);
+        
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            for(int i = 0; i < size; i++) {
+                TreeNode cur = queue.pollFirst();
+                list.add(cur.val);
+                if(cur.left != null) queue.offerLast(cur.left);
+                if(cur.right != null) queue.offerLast(cur.right);
+            }
+            res.add(new ArrayList<>(list));
+        }
+        return res;
+    }
+}
+```
+
+
 ***
 
 # 119 Pascal's Triangle 
@@ -1501,6 +1545,10 @@ public class Solution {
 
 ***
 
+
+
+
+
 # 139| Word Break
 
 ## Problem Analysis
@@ -1608,6 +1656,39 @@ class Solution {
 
 
 
+
+
+***
+
+# 141| Linked List Cycle
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 146 LRU Cache
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+
+
 ***
 
 # 151 Reverse Words in a String
@@ -1684,44 +1765,307 @@ class Solution {
 
 ***
 
-
-# 102 Binary Tree Level Order Traversal
+# 155 Min Stack
 
 ## Problem Analysis
 
-We need to print the Node in Tree by a Level Order Traversal way
+Used a Linked List Structure to create a min Stack class
 
 ## Algorithm Analysis
 
-Used A Queue! push each leavel and record it. After recording single node, check if it's left and right exist, if exist push then into the queue for next level in their order. While queue is empty means we had already traversed the whole tree. 
+init a head pointer a first.
+
+In the Node class, we need to record the current Min value and node's val.
+
+Push -> Check if there is already have node connected with HEAD pointer, if no, point Head to the new Node, if yes, create a new node with it's min value compare with the peek and connect to head. Then, use Head to point that new Node.
+
+Pop -> if head != null, move head forward
+
+Top -> Return the value of head
+
+getMin -> Return the current Min of head
+
+## Code
+
+```java
+class MinStack {
+    
+    private Node head;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        /* no need to do anything when constructing */
+    }
+    
+    public void push(int x) {
+        if(head == null) {
+            head = new Node(x, x);
+        } else {
+            Node newNode = new Node(x, Math.min(x, head.curMin));
+            newNode.next = head;
+            head = newNode;
+        }
+    }
+    
+    public void pop() {
+        if(head != null) {
+            head = head.next;
+        }
+    }
+    
+    public int top() {
+        return head.val;
+    }
+    
+    public int getMin() {
+        return head.curMin;
+    }
+}
+
+class Node {
+    int val;
+    int curMin;
+    Node next;
+    public Node(int val, int curMin) {
+        this.val = val;
+        this.curMin = curMin;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
+
+```
+
+## Fellow up
+
+***
+
+# 160 Intersection of Two Linked Lists
+
+## Algorithm Analysis
+
+Find the different between two original linked lists and move forward that steps to make them have same distance with the end.
+
+Modify the longer one and move them in the same path to find the same node.
 
 ## Time Complexity Analysis
 
-O(N) 
+O(2n)
+
+## Code
+```java
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode curA = headA;
+        ListNode curB = headB;
+        int diff = 0;
+        
+        if(headA == null || headB == null) return null;
+        
+        /* Find the different between lA and lB */
+        while(curA.next != null && curB.next != null) {
+            curA = curA.next;
+            curB = curB.next;
+        }
+        
+        /* Finish the rest of Node and move forward the same steps for the head */
+        while (curA != null && curA.next != null) {
+            headA = headA.next;
+            curA = curA.next;
+        }
+        
+        while (curB != null && curB.next != null) {
+            headB = headB.next;
+            curB = curB.next;
+        }
+        
+        /* headA and headB now have same distance to the end */
+        /* Move headA and headB together until they meet the same node or return null*/
+        while(headA != headB && headA != null & headB != null) {
+            headA = headA.next;
+            headB = headB.next;
+        }
+        
+        return headA == headB ? headA : null;
+        
+    }
+}
+```
+
+***
+
+# 167| Two Sum II - Input array is sorted
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 189| Rotate Array 
+
+## Problem Analysis
+
+Find the new Array's first element and put the rest of number in to the new Array from the given array by k.
+
+Try to do it in-place with O(1) extra space:
+
+Reverse the 0 -> k - 1 number and reverse the k -> end number and reverse whole array.
+
+## Time Complexity Analysis
+
+O(n) time complexity O(n) Space -> O(1) Space
+
+## Code
+- O(N) space
+```java
+class Solution {
+    public void rotate(int[] nums, int k) {
+        k = k % nums.length; 
+        int[] newArr = new int[nums.length];
+        int count = 0;
+        
+        for(int i = nums.length - k; i < nums.length; i++) {
+            newArr[count++] = nums[i];
+        }
+        
+        for(int j = 0; j < nums.length - k; j++) {
+            newArr[count++] = nums[j];
+        }
+        
+        for(int c = 0; c < nums.length; c++) {
+            nums[c] = newArr[c];
+        }
+    }
+}
+```
+
+- O(1) space
+
+```java
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int len = nums.length;
+        k = k % nums.length; 
+        reverse(nums, 0, len - 1 - k);
+        reverse(nums, len - k, len - 1);
+        reverse(nums, 0, len - 1);
+        
+    }
+    
+    public void reverse(int[] nums, int start, int end) {
+        while(start < end) {
+            int temp = nums[start];
+            nums[start++] = nums[end];
+            nums[end--] = temp;
+        }
+    }
+}
+```
+
+## Fellow up
+
+***
+
+# |199| Binary Tree Right Side View |
+
+## Algorithm Analysis
+
+Level Traversal and record the last Node.
 
 ## Code
 
 ```java
 class Solution {
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<>();
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
         if(root == null) return res;
-        
         Deque<TreeNode> queue = new ArrayDeque<>();
         queue.offerLast(root);
-        
         while(!queue.isEmpty()) {
             int size = queue.size();
-            List<Integer> list = new ArrayList<>();
+            TreeNode currentNode = null;
             for(int i = 0; i < size; i++) {
-                TreeNode cur = queue.pollFirst();
-                list.add(cur.val);
-                if(cur.left != null) queue.offerLast(cur.left);
-                if(cur.right != null) queue.offerLast(cur.right);
+                currentNode = queue.pollFirst();
+                if(currentNode.left != null) queue.offerLast(currentNode.left);
+                if(currentNode.right != null) queue.offerLast(currentNode.right);
             }
-            res.add(new ArrayList<>(list));
+            res.add(currentNode.val);
         }
         return res;
     }
 }
 ```
+
+***
+
+# 200| Number of Islands
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 204| Count Primes
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 215| Kth Largest Element in an Array 
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+***
+
+# 234| Palindrome Linked List |33.4%
+
+## Problem Analysis
+
+## Algorithm Analysis
+
+## Time Complexity Analysis
+
+## Code
+
+## Fellow up
+
+
+
+

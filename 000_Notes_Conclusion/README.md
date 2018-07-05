@@ -575,7 +575,7 @@ for (ListNode node = root; node != null; node = node.next)
 |98| Validate Binary Search Tree | 24.0% |Medium| |
 |102| Binary Tree Level Order Traversal |42.0%| Medium| | V|
 |119| Pascal's Triangle II  |38.0% |Easy| | V|
-|121| Best Time to Buy and Sell Stock |42.7%| Easy| |
+|121| Best Time to Buy and Sell Stock |42.7%| Easy| | V|
 |126| Word Ladder II | 14.8%| Hard| |
 |127| Word Ladder |19.9%| Medium| |
 |138| Copy List with Random Pointer |25.9% |Medium| | V|
@@ -583,8 +583,8 @@ for (ListNode node = root; node != null; node = node.next)
 |141| Linked List Cycle | 35.1% |Easy| |
 |146| LRU Cache |19.5%| Hard| |
 |151| Reverse Words in a String | 20% | Medium | | V | 
-|155| Min Stack  |30.7% |Easy| |
-|160| Intersection of Two Linked Lists |30.9% |Easy| |
+|155| Min Stack  |30.7% |Easy| | V|
+|160| Intersection of Two Linked Lists |30.9% |Easy| | V |
 |167| Two Sum II - Input array is sorted |47.3% |Easy| |
 |186| Reverse Words in String II | 20.0 % | Medium | | V |
 |189| Rotate Array  |25.2%| Easy| | V |
