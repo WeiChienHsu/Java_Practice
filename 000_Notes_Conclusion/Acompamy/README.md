@@ -2938,9 +2938,9 @@ class Node {
 
 # Time Complexy Cheat Sheet
 
-|Data Structure | Time Complexity                                                           | Space Complexity |
+|Data Structure | Time Complexity| | | | | | | |                                            | Space Complexity |
 |:-------------:|:-------------------------------------------------------------------------:|:----------------:|
-|               |Average                              |   Worst                             | Worst            |
+|               |Average|        |           |        | Worst |        |           |        | Worst            |
 |               |Access | Search | Insertion | Delete |Access | Search | Insertion | Delete |                  |
 | Array         | O(1)  | O(n)   | O(n)      | O(n)   | O(1)  | O(n)   | O(n)      | O(n)   | O(n)             |
 | Array         | O(1)  | O(n)   | O(n)      | O(n)   | O(1)  | O(n)   | O(n)      | O(n)   | O(n)             |
