@@ -553,6 +553,8 @@ for (ListNode node = root; node != null; node = node.next)
 
 ***
 
+***
+
 ## A company 題目
 |No| Question | Acceptnce | Diffs | My Solution | Finish |
 |:-:|:-------:|:---------:|:------:|:---------:|:--:|
