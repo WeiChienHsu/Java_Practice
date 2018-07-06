@@ -595,14 +595,14 @@ for (ListNode node = root; node != null; node = node.next)
 |215| Kth Largest Element in an Array |40.4%| Medium| | V|
 |234| Palindrome Linked List |33.4%| Easy| | V|
 |235| Lowest Common Ancestor of a Binary Search Tree |39.7% |Easy| | V|
-|236| Lowest Common Ancestor of a Binary Tree |30.0%| Medium| |
-|238| Product of Array Except Self | 50.2% |Medium| |
+|236| Lowest Common Ancestor of a Binary Tree |30.0%| Medium| | V|
+|238| Product of Array Except Self | 50.2% |Medium| |V|
 |239| Sliding Window Maximum  |34.1% |Hard| |
-|240| Search a 2D Matrix II |39.1% |Medium| |
-|242| Valid Anagram |47.3%| Easy| |
+|240| Search a 2D Matrix II |39.1% |Medium| |V|
+|242| Valid Anagram |47.3%| Easy| | V|
 |297| Serialize and Deserialize Binary Tree |34.6%| Hard| |
 |380| Insert Delete GetRandom O(1)| 39.8%| Medium| |
-|387| First Unique Character in a String |47.2% |Easy| |
+|387| First Unique Character in a String |47.2% |Easy| | V|
 |535| Encode and Decode TinyURL |73.9%| Medium| |
 |617| Merge Two Binary Trees |67.5% |Easy| |
 |682| Baseball Game |58.1% |Easy| |

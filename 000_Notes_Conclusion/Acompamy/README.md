@@ -2543,15 +2543,74 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 # 238| Product of Array Except Self
 
-## Problem Analysis
 
 ## Algorithm Analysis
 
+Record the product from left without itself in an array fromLeft.
+Record the product from right without itself in an array fromRight.
+
+````
+   1        2       3       4
+l  1        1*1     1*1*2   1*1*2*3
+r  1*4*3*2  1*4*3   1*4     1
+````
+
 ## Time Complexity Analysis
+
+Time O(n) Space O(n)
 
 ## Code
 
-## Fellow up
+```java
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int len = nums.length;
+        int[] fromLeft = new int[len];
+        int[] fromRight = new int[len];
+        int[] result = new int[len];
+        
+        fromLeft[0] = 1;
+        
+        for(int i = 0; i < len - 1; i++) {
+            fromLeft[i + 1] = fromLeft[i] * nums[i];
+        }
+        
+        fromRight[len - 1] = 1;
+        
+        for(int j = len - 1; j > 0; j--) {
+            fromRight[j - 1] = fromRight[j] * nums[j];
+        }
+        
+        for(int i = 0; i < len; i++) {
+            result[i] = fromLeft[i] * fromRight[i];
+        }
+        
+        return result;
+    }
+}
+```
+
+## Fellow up - Optimization
+
+Could you solve it with constant space complexity? (The output array does not count as extra space for the purpose of space complexity analysis.)
+
+```java
+public int[] productExceptSelf(int[] nums) {
+    int n = nums.length;
+    int[] res = new int[n];
+    res[0] = 1;
+    for (int i = 1; i < n; i++) {
+        res[i] = res[i - 1] * nums[i - 1];
+    }
+    int right = 1;
+    for (int i = n - 1; i >= 0; i--) {
+        res[i] *= right;
+        right *= nums[i];
+    }
+    return res;
+}
+```
 
 
 ***
@@ -2581,8 +2640,118 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ## Code
 
+- DFS 
+
+```java
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+        int row = matrix.length;
+        int col = matrix[0].length;
+        return dfsHelper(matrix, 0, col - 1, row, col, target);
+    }
+    
+    public boolean dfsHelper(int[][] matrix, int r, int c, int row, int col, int target) {
+        if(r < 0 || r >= row || c < 0 || c >= col) {
+            return false;
+        } else if(matrix[r][c] == target) {
+            return true;
+        } else if(matrix[r][c] > target) {
+            return dfsHelper(matrix, r, c - 1, row, col, target);
+        } else if(matrix[r][c] < target) {
+            return dfsHelper(matrix, r + 1, c, row, col, target);
+        }
+        return false;
+    }
+}
+```
+
 ## Fellow up
 
+- No DFS
+
+```java
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row = matrix.length;
+        if(row == 0) return false;
+        int col = matrix[0].length;
+        
+        /* Start from (0, col - 1) */
+        
+        int r = 0;
+        int c = col - 1;
+        
+        while(r >= 0 && r < row && c >= 0 && c < col) {
+            if(matrix[r][c] == target) {
+                return true;
+            } else if(matrix[r][c] > target){
+                /* move left */
+                c--;
+            } else {
+                /* move down */
+                r++;
+            }
+        }
+        return false;
+    }
+}
+```
+
+## Fellow - Divide and Conquer
+
+[傳統解法](https://github.com/WeiChienHsu/Java_Practice/tree/master/OA#%E5%82%B3%E7%B5%B1%E8%A7%A3%E6%B3%95--%E6%B2%92%E6%9C%89%E7%89%B9%E6%AE%8A%E8%A6%8F%E5%BE%8B%E6%99%82%E7%94%A8divide-and-conquer)
+
+```java
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int[] upperLeft = new int[]{0, 0};
+        int[] lowerRight = new int[]{row - 1, col - 1};
+        return searchMatrix(matrix, upperLeft, lowerRight, target);
+    }
+    
+    public boolean searchMatrix(int[][] matrix, int[] upperLeft, int[] lowerRight, int target) {
+        
+        // If the current point is invalid
+        if(upperLeft[0] > lowerRight[0] || upperLeft[1] > lowerRight[1] 
+           || upperLeft[1] >= matrix[0].length || lowerRight[1] >= matrix[0].length) {
+            return false;
+        }
+        
+        // If there is only one point in this matrix
+        if(upperLeft[0] - lowerRight[0] == 0 && upperLeft[1] - lowerRight[1] == 0) {
+            return matrix[upperLeft[0]][upperLeft[1]] == target;
+        }
+        
+        // Capture the middle Row and Col
+        int rowMid = (upperLeft[0] + lowerRight[0]) / 2;
+        int colMid = (upperLeft[1] + lowerRight[1]) / 2;
+        
+        // If Center < target, discard zone 1 (Which are all smaller than center)
+        // If Center > targer, discard zone 4 (Which are all larger than center)
+        // Zone1: upperLeft, {rowMid, colMid}
+        // Zone2: {upperLeft[0], colMid + 1}, {rowMid, lowerRight[1]}
+        // Zone3: {rowMid + 1, upperLeft[1]}, {lowerLeft[0], colMid}
+        // Zone4: {rowMid + 1, colMid + 1}, lowerRight
+        
+        if(matrix[rowMid][colMid] < target) {
+            return searchMatrix(matrix, new int[]{upperLeft[0], colMid+1}, new int[]{rowMid, lowerRight[1]}, target)
+				|| searchMatrix(matrix, new int[]{rowMid+1, upperLeft[1]}, new int[]{lowerRight[0], colMid}, target)
+				|| searchMatrix(matrix, new int[]{rowMid+1, colMid+1}, lowerRight, target);
+        } else if(matrix[rowMid][colMid] > target) {
+            return searchMatrix(matrix, upperLeft, new int[]{rowMid, colMid}, target)
+				|| searchMatrix(matrix, new int[]{upperLeft[0],colMid+1}, new int[]{rowMid, lowerRight[1]}, target)
+				|| searchMatrix(matrix, new int[]{rowMid+1,upperLeft[1]}, new int[]{lowerRight[0], colMid}, target);  
+        } else {
+            return true;
+        }
+    }
+}
+
+```
 
 ***
 
@@ -2590,14 +2759,55 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ## Problem Analysis
 
+Find if the String consists by the same characters
+
 ## Algorithm Analysis
 
+Store all character in String s into Map, and use String t to decrement the Value in the Map by Character.
+
+If there is value out of 0, return false.
+
 ## Time Complexity Analysis
+O(NlogN) Time and additional Space O(N) -> try to opt in O(N) (using map)
 
 ## Code
 
-## Fellow up
+```java
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        char[] charS = s.toCharArray();
+        char[] charT = t.toCharArray();
+        Arrays.sort(charS);
+        Arrays.sort(charT);
+        
+        return String.valueOf(charS).equals(String.valueOf(charT));
+    }
+}
+```
 
+## Fellow up - O(N) time complexity
+
+```java
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        
+        for(int j = 0; j < t.length(); j++) {
+            if(!map.containsKey(t.charAt(j))) return false;
+            map.put(t.charAt(j), map.get(t.charAt(j)) - 1);
+        }
+        
+        for(int val : map.values()) {
+            if(val != 0) return false;
+        }
+        
+        return true;
+    }
+}
+```
 
 ***
 
@@ -2637,11 +2847,72 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ## Algorithm Analysis
 
-## Time Complexity Analysis
-
 ## Code
 
+- Map put and search -> O(N)
+- IndexOf seatch in String -> O(N)
+
+```java
+class Solution {
+    public int firstUniqChar(String s) {
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        for(int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        
+        for(Character c : map.keySet()) {
+            if(map.get(c) == 1) return s.indexOf(c);
+        }
+        return -1;
+    }
+}
+
+```
+
 ## Fellow up
+
+- Remove the indexOf method
+
+```java
+class Solution {
+    public int firstUniqChar(String s) {
+        /* Save character and integer */
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            /* If in the map, change index to -1*/
+            if(map.containsKey(c)) {
+                map.put(c, -1);
+            } else {
+                map.put(c, i);
+            }
+        }
+        
+        for(char c : map.keySet()) {
+            if(map.get(c) != -1) return map.get(c);
+        }
+        
+        return -1;
+    }
+}
+```
+
+## Fellow - Used an array to save the frequency 
+
+```java
+public class Solution {
+    public int firstUniqChar(String s) {
+        int freq [] = new int[26];
+        for(int i = 0; i < s.length(); i ++)
+            freq [s.charAt(i) - 'a'] ++;
+        for(int i = 0; i < s.length(); i ++)
+            if(freq [s.charAt(i) - 'a'] == 1)
+                return i;
+        return -1;
+    }
+}
+```
 
 
 ***
