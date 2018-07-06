@@ -553,6 +553,24 @@ for (ListNode node = root; node != null; node = node.next)
 
 ***
 
+# Time Complexy Cheat Sheet
+
+|Data Structure | Time  |        |           |        |       |        |           |        |           Space  |
+|:-------------:|:-----:|:------:|:---------:|:------:|:-----:|:------:|:---------:|:------:|:----------------:|
+|               |Average|        |           |        | Worst |        |           |        | Worst            |
+|               |Indexing | Search | Insertion | Delete |Indexing | Search | Insertion | Delete |                  |
+| Basic Array   | O(1)  | O(n)   |     -      | -  | O(1)  | O(n)   | -      | -          | O(n)             |
+| Dynimic Array | O(1)  | O(n)   | O(n)      | O(n)   | O(1)  | O(n)   | O(n)      | O(n)   | O(n)             |
+| Stack         | O(n)  | O(n)   | O(1)      | O(1)   | O(n)  | O(n)   | O(1)      | O(1)   | O(n)             |
+| Queue         | O(n)  | O(n)   | O(1)      | O(1)   | O(n)  | O(n)   | O(1)      | O(1)   | O(n)             |
+|Single LinkedList| O(n)  | O(n)   | O(1)      | O(1)   | O(n)  | O(n)   | O(1)      | O(1)   | O(n)             |
+|Double LinkedList| O(n)  | O(n)   | O(1)      | O(1)   | O(n)  | O(n)   | O(1)      | O(1)   | O(n)             |
+| Hash Table    | N/A  | O(1)   | O(1)      | O(1)   | N/A  | O(n)   | O(n)      | O(n)   | O(n)             |
+| BST           | O(logN)  | O(logN)    | O(logN)  | O(logN) | O(n)  | O(n)   | O(n)      | O(n)   | O(n)    |
+| Red Black Tree| O(logN)  | O(logN) | O(logN) | O(logN)  | O(logN)  | O(logN) | O(logN) | O(logN)   | O(n)      |
+| AVL Tree      | O(logN)  | O(logN) | O(logN) | O(logN)  | O(logN)  | O(logN) | O(logN) | O(logN)   | O(n)      |
+
+
 ***
 
 ## A company 題目
@@ -578,8 +596,8 @@ for (ListNode node = root; node != null; node = node.next)
 |102| Binary Tree Level Order Traversal |42.0%| Medium| | V|
 |119| Pascal's Triangle II  |38.0% |Easy| | V|
 |121| Best Time to Buy and Sell Stock |42.7%| Easy| | V|
-|126| Word Ladder II | 14.8%| Hard| |
-|127| Word Ladder |19.9%| Medium| |
+|126| Word Ladder II | 14.8%| Hard| | V|
+|127| Word Ladder |19.9%| Medium| | V|
 |138| Copy List with Random Pointer |25.9% |Medium| | V|
 |139| Word Break| 31.3% |Medium| | V|
 |141| Linked List Cycle | 35.1% |Easy| | V|
@@ -603,10 +621,9 @@ for (ListNode node = root; node != null; node = node.next)
 |240| Search a 2D Matrix II |39.1% |Medium| |V|
 |242| Valid Anagram |47.3%| Easy| | V|
 |297| Serialize and Deserialize Binary Tree |34.6%| Hard| |
-|380| Insert Delete GetRandom O(1)| 39.8%| Medium| |
+|380| Insert Delete GetRandom O(1)| 39.8%| Medium| | V |
 |387| First Unique Character in a String |47.2% |Easy| | V|
 |535| Encode and Decode TinyURL |73.9%| Medium| |
-|617| Merge Two Binary Trees |67.5% |Easy| |
-|682| Baseball Game |58.1% |Easy| |
-|746| Min Cost Climbing Stairs| 43.4% |Easy| |
-|771| Jewels and Stones| | |  |
+|617| Merge Two Binary Trees |67.5% |Easy| | V|
+|682| Baseball Game |58.1% |Easy| | 
+|746| Min Cost Climbing Stairs| 43.4% |Easy| | V|

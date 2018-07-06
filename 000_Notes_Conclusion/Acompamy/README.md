@@ -1465,7 +1465,108 @@ class Solution {
 
 ## Code
 
-## Fellow up
+```java
+  public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+    // hash set for both ends
+    Set<String> set1 = new HashSet<String>();
+    Set<String> set2 = new HashSet<String>();
+    
+    // initial words in both ends
+    set1.add(start);
+    set2.add(end);
+    
+    // we use a map to help construct the final result
+    Map<String, List<String>> map = new HashMap<String, List<String>>();
+    
+    // build the map
+    helper(dict, set1, set2, map, false);
+    
+    List<List<String>> res = new ArrayList<List<String>>();
+    List<String> sol = new ArrayList<String>(Arrays.asList(start));
+    
+    // recursively build the final result
+    generateList(start, end, map, sol, res);
+    
+    return res;
+  }
+  
+  boolean helper(Set<String> dict, Set<String> set1, Set<String> set2, Map<String, List<String>> map, boolean flip) {
+    if (set1.isEmpty()) {
+      return false;
+    }
+    
+    if (set1.size() > set2.size()) {
+      return helper(dict, set2, set1, map, !flip);
+    }
+    
+    // remove words on current both ends from the dict
+    dict.removeAll(set1);
+    dict.removeAll(set2);
+    
+    // as we only need the shortest paths
+    // we use a boolean value help early termination
+    boolean done = false;
+    
+    // set for the next level
+    Set<String> set = new HashSet<String>();
+    
+    // for each string in end 1
+    for (String str : set1) {
+      for (int i = 0; i < str.length(); i++) {
+        char[] chars = str.toCharArray();
+        
+        // change one character for every position
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+          chars[i] = ch;
+          
+          String word = new String(chars);
+          
+          // make sure we construct the tree in the correct direction
+          String key = flip ? word : str;
+          String val = flip ? str : word;
+              
+          List<String> list = map.containsKey(key) ? map.get(key) : new ArrayList<String>();
+              
+          if (set2.contains(word)) {
+            done = true;
+            
+            list.add(val);
+            map.put(key, list);
+          } 
+          
+          if (!done && dict.contains(word)) {
+            set.add(word);
+            
+            list.add(val);
+            map.put(key, list);
+          }
+        }
+      }
+    }
+    
+    // early terminate if done is true
+    return done || helper(dict, set2, set, map, !flip);
+  }
+  
+  void generateList(String start, String end, Map<String, List<String>> map, List<String> sol, List<List<String>> res) {
+    if (start.equals(end)) {
+      res.add(new ArrayList<String>(sol));
+      return;
+    }
+    
+    // need this check in case the diff between start and end happens to be one
+    // e.g "a", "c", {"a", "b", "c"}
+    if (!map.containsKey(start)) {
+      return;
+    }
+    
+    for (String word : map.get(start)) {
+      sol.add(word);
+      generateList(word, end, map, sol, res);
+      sol.remove(sol.size() - 1);
+    }
+  }
+  ```
 
 ***
 
@@ -1473,11 +1574,83 @@ class Solution {
 
 ## Problem Analysis
 
+- Like a BFS Level Traversal problem, need to try every possible words of the current Words.
+
 ## Algorithm Analysis
+
+Used a visited Set to record the Path (Word could not be used for twice)
+
+Used a dict Set to search for wordList : O(n) -> O(1)
+
+Used a Queue to record next possible words. 
+
+Start form the begin Word, put it into the Queue, and use a Queue to do the level traversal, for loop in the size of queue, and chcek if the current word equals to the end word.
+
+How to do the bfs? Used a double for loop to swtich words in the all possible positions in the String and skip the duplicated one. Then, check if this new word is both in the word list and not been used before.
+
+If this is a possible word, push it into the queue and marked as used!
+
+Before each level, we increment or steps rocorder. If met the end word, return that recorder. Else, in the end return 0.
 
 ## Time Complexity Analysis
 
 ## Code
+
+```java
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        /* Set to record our used words */
+        Set<String> used = new HashSet<>();
+        /* Set to store the wordList */
+        Set<String> dict = new HashSet<>();
+        for(String str : wordList) {
+            dict.add(str);
+        }
+        /* Queue the handle the level processing of word converted */
+        Deque<String> queue = new ArrayDeque<>();
+        queue.offerLast(beginWord);
+        used.add(beginWord);
+        
+        /* Check if the end word is in the wordList */
+        if(!dict.contains(endWord)) return 0;
+        
+        int steps = 0;
+        
+        /* Level Traverse the Queue */
+        while(!queue.isEmpty()) {
+            steps ++;
+            int size = queue.size();
+            for(int i = 0; i < size; i++) {
+                String currentWord = queue.pollFirst();
+
+                if(currentWord.equals(endWord)) return steps;
+                /* bfsHelper funciton helps to convert all possible word */
+                bfsHelper(currentWord, endWord, used, dict, queue);
+            }
+        }
+        
+        /* There is no way to convert to the endWord */
+        return 0;
+    }
+    
+    public void bfsHelper(String currentWord, String endWord, Set<String> used, Set<String>dict, Deque<String> queue) {
+        for(int i = 0; i < currentWord.length(); i++) {
+            char[] currentCharArray = currentWord.toCharArray();
+            /* change mulitple characters and different position */
+            for(char c = 'a'; c <= 'z'; c++) {
+                if(currentWord.charAt(i) == c) continue;
+                currentCharArray[i] = c;
+                String word = String.valueOf(currentCharArray);
+                
+                if(dict.contains(word) && !used.contains(word)) {
+                    queue.offerLast(word);
+                    used.add(word);
+                }
+            }
+        }
+    }
+}
+```
 
 ## Fellow up
 
@@ -3043,6 +3216,43 @@ public class Solution {
 
 ## Fellow up
 
+***
+
+# 538| Convert BST to Greater Tree
+
+## Problem Analysis
+
+Meet the tree problems, thought about how to traverse this tree.
+
+In this problem, we need to visit right and then deal with the root, then deal with the left child. Since the BST root.right > root > root.left.
+
+## Algorithm Analysis
+
+DFS helper funciton to pass the right sum variable(use an array) and child of tree. In each dfs, change the value of current node (+ right sum) and change the value of right sum (+ current Value)
+
+
+## Code
+
+```java
+class Solution {
+    public TreeNode convertBST(TreeNode root) {
+        int[] rightSum = new int[]{0};
+        convert(root, rightSum);
+        return root;
+    }
+    
+    public void convert(TreeNode root, int[] rightSum) {
+        if(root == null) return;
+        convert(root.right, rightSum);
+        root.val += rightSum[0];
+        rightSum[0] = root.val;
+        convert(root.left, rightSum);
+    }
+}
+```
+
+
+
 
 ***
 
@@ -3050,13 +3260,24 @@ public class Solution {
 
 ## Problem Analysis
 
-## Algorithm Analysis
+PreOrder traverse to sum up the nodes.
 
-## Time Complexity Analysis
+Need to check if root == null, t1 == null, t2 == null then could call root.left, t1.left, t2.right etc.
 
 ## Code
 
-## Fellow up
+```java
+class Solution {
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        /* Both of the roots are null */
+        if(t1 == null && t2 == null) return null;
+        TreeNode root = new TreeNode ((t1 == null ? 0 : t1.val) + (t2 == null ? 0 : t2.val));
+        root.left = mergeTrees(t1 == null ? null : t1.left, t2 == null ? null : t2.left);
+        root.right = mergeTrees(t1 == null ? null : t1.right, t2 == null ? null : t2.right);
+        return root;
+    }
+}
+```
 
 
 ***
@@ -3085,6 +3306,27 @@ public class Solution {
 ## Time Complexity Analysis
 
 ## Code
+
+```java
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        int len = cost.length;
+        int[] dp = new int[len];
+        
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        
+        for(int i = 0; i < len - 2; i++) {
+            dp[i + 1] = Math.min(dp[i + 1], dp[i] + cost[i + 1]);
+            dp[i + 2] = Math.min(dp[i + 2], dp[i] + cost[i + 2]);
+        }
+        
+        return Math.min(dp[len - 1], dp[len - 2]);
+    }
+}
+```
 
 ## Fellow up
 
