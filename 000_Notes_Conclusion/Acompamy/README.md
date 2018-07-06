@@ -2460,12 +2460,84 @@ class Solution {
 
 ## Algorithm Analysis
 
+1. Find q and p in the tree. 
+2. Record those path when you're traversing the tree.
+3. Used Stack to traverse if child != null record child and parent in the Map.
+4. if child != null push it into the stack
+5. Used the Map we collected and a Set to record which parent node we now are going to visit.
+6. From p to root, record all visited node.
+7. From q to root, if there is a node in the path has already been put in the set, means this node is the LCA, stop traverse, return q.
+
+```
+Map<Child, Parent> -> Counld use this map to find back the Parent
+```
+
 ## Time Complexity Analysis
 
-## Code
+## Code - Iteration
 
-## Fellow up
+```java
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        /* Child - Parent Map */
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        /* Set to record path */
+        Set<TreeNode> path = new HashSet<>();
+        /* Stack to help traversing */
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        
+        /* Init the stack and parent-child map */
+        stack.offerLast(root);
+        parent.put(root, null);
+        
+        /* Find the p and q */
+        while(!parent.containsKey(p) || !parent.containsKey(q)) {
+            TreeNode node = stack.pollLast();
+            /* Chekch node's two children and put them into Stack and Map */
+            if(node.left != null) {
+                stack.offerLast(node.left);
+                parent.put(node.left, node);
+            }
+            
+            if(node.right != null) {
+                stack.offerLast(node.right);
+                parent.put(node.right, node);
+            }
+        }
+        
+        /* Found q and p and put them into map */
+        
+        /* Start from q to the root and record the path */
+        while(q != null) {
+            /* Add q into our path */
+            path.add(q);
+            /* Move forward to q's parent to try */
+            q = parent.get(q);
+        }
+        
+        /* Start from p and see if set has existed it's parent */
+        while(!path.contains(p)) {
+            /* Look up to see if there is a same node appeared */
+            p = parent.get(p);
+        }
+        
+        return p;
+    }
+}
 
+```
+
+## Fellow up - Recursion
+
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if(root == null) return null;
+    if(root == p || root == q) return root;
+    TreeNode left = lowestCommonAncestor(root.left, p, q);
+    TreeNode right = lowestCommonAncestor(root.right, p, q);
+    return left != null && right != null ? root : left == null ? right : left; 
+}
+```
 
 ***
 
