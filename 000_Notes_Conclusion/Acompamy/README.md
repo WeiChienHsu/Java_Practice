@@ -3347,3 +3347,37 @@ class Solution {
 
 
 ***
+
+# Customer Obsession
+
+### Leaders start with the customer and work backwards. They work vigorously to earn and keep customer trust. 
+
+- Walk us through a time when you helped a customer through a difficult process and what that looked like.
+
+- Who was your most difficult customer?
+
+- Give me an example of a time when you did not meet a client’s expectation. What happened, and how did you attempt to rectify the situation?
+
+- When you’re working with a large number of customers, it’s tricky to deliver excellent service to them all. How do you go about prioritizing your customers’ needs?
+
+- Tell the story of the last time you had to apologize to someone.
+
+
+# Ownership
+
+### They think long term and don’t sacrifice long-term value for short-term results. They never say “that’s not my job". 
+
+- Tell me about a time when you had to leave a task unfinished.
+
+- Tell me about a time when you had to work on a project with unclear responsibilities.
+
+
+# Invent and Simplify
+
+### Leaders expect and require innovation and invention from their teams and always find ways to simplify. As we do new things, we accept that we may be misunderstood for long periods of time.
+
+Tell me a time when you created an innovative product.
+
+Tell me about a time when you gave a simple solution to a complex problem.
+
+Tell me about a time when you invented something.
