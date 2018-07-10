@@ -8,6 +8,7 @@
 [15 3 Sum](#15-3-sum)
 
 
+
 # 1 Two Sum
 
 ## Problem Analysis
@@ -172,6 +173,8 @@ time complexity : O(n) An additional space(Map) : O (n)
 
 ## Code
 
+記得，每次遇到重複時，是要更新起點 j ，而不是直接更新最大長度，應該在每次更新 Map 的時候，同時更新最大長度。
+
 ```java
 class Solution {
     public int lengthOfLongestSubstring(String s) {
@@ -270,6 +273,8 @@ Check the characters ar left and right -> If they are the same and inner word is
 ## Time Complexity Analysis
 
 Two pointer in the nested for loop -> O(n^2) and used an additional boolean 2D array -> O(n)
+
+因為要回傳最長的 Result ， 所以必須要有 rightLongest 和 leftLongest 來記錄邊界，不段的檢測 inner 是不是 palindrome ，如果內部是，或是左右差距小於等於二，直接更新目前左右指標位置也是 palindrom。
 
 ## Code
 
@@ -418,6 +423,10 @@ class Solution {
 
 # 15 3Sum
 
+當找到 nums[i] + nums[start] + nums[end] 之後，結果加入 list 中 (Arrays.asList())，
+
+要先檢查 start end 下個結果有沒有 duplicated，然後在移動 start ++ end -- 不然會是死循環。
+
 ## Problem Analysis
 
 Firstly, we need to ask some problems about the conditions.
@@ -430,6 +439,7 @@ Firstly, we need to ask some problems about the conditions.
 
 
 ## Algorithm Analysis
+
 
 Used a for loop to go through each number from i = 0 to i < len - 2.
 
@@ -449,7 +459,7 @@ if(nums[end] == nums[currentEnd] && start < end) end--.
 
 ## Time Complexity Analysis
 
-O(n^2) + O(nlogn) time complexity and O(1) space complexity
+O(n^2) time complexity and O(1) space complexity
 
 ## Code
 - Version 1: Didn't deal with the rest of number when meet the target, put it into the rest of while loop
@@ -498,24 +508,44 @@ class Solution {
 
 ```java
 class Solution {
-    public List<List<Integer>> threeSum(int[] num) {
-        Arrays.sort(num);
-        List<List<Integer>> res = new LinkedList<>(); 
-        for (int i = 0; i < num.length-2; i++) {
-            if (i == 0 || (i > 0 && num[i] != num[i-1])) {
-                int lo = i+1, hi = num.length-1, sum = 0 - num[i];
-                while (lo < hi) {
-                    if (num[lo] + num[hi] == sum) {
-                        res.add(Arrays.asList(num[i], num[lo], num[hi]));
-                        while (lo < hi && num[lo] == num[lo+1]) lo++;
-                        while (lo < hi && num[hi] == num[hi-1]) hi--;
-                        lo++; hi--;
-                    } else if (num[lo] + num[hi] < sum) lo++;
-                    else hi--;
-               }
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        
+        for(int i = 0; i < nums.length - 2; i ++) {
+            /* Deduplicated */
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+            
+            int curNumber = nums[i];
+            /* Find the target - curnumber */
+            int start = i + 1;
+            int end = nums.length - 1;
+            
+            while(start < end) {
+                if(curNumber + nums[start] + nums[end] == 0) {
+                    /* Found the result, add into list */
+                    result.add(Arrays.asList(nums[i], nums[start], nums[end]));
+                    
+                    /* Deduplicated */
+                    while(start < end && nums[start] == nums[start + 1]) start++;
+                    while(start < end && nums[end] == nums[end - 1]) end--;
+                    
+                    /* Move forward to next pair */
+                    start ++;
+                    end --;
+                        
+                } 
+                else if(curNumber + nums[start] + nums[end] > 0) {
+                    /* Result is too large */
+                    end --;
+                } 
+                else {
+                    /* Result is too small */
+                    start ++;
+                }
             }
         }
-        return res;
+        return result;
     }
 }
 ```
