@@ -74,7 +74,15 @@
 
 [380 Insert Delete GetRandom O(1)](#380-insert-delete-getrandom-O-(-1-))
 
+[535 Encode and Decode TinyURL](#535-encode-and-decode-tinyurl)
 
+[538 Convert BST to Greater Tree](#538-convert-bst-to-greater-tree)
+
+[617 Merge Two Binary Trees](#617-merge-two-binary-trees)
+
+[746 Min Cost Climbing Stairs](#746-min-cost-climbing-stairs)
+
+[819 Most Common Word](819-most-common-word)
 
 [Search a 2D Matrix](#search-a-2d-matrix)
 
@@ -3270,7 +3278,7 @@ class Solution {
 
 ***
 
-# 297| Serialize and Deserialize Binary Tree 
+# 297 Serialize and Deserialize Binary Tree 
 
 ## Problem Analysis
 
@@ -3279,6 +3287,47 @@ class Solution {
 ## Time Complexity Analysis
 
 ## Code
+
+```java
+public class Codec {
+    private static final String spliter = ",";
+    private static final String NN = "X";
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        buildString(root, sb);
+        return sb.toString();
+    }
+
+    private void buildString(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append(NN).append(spliter);
+        } else {
+            sb.append(node.val).append(spliter);
+            buildString(node.left, sb);
+            buildString(node.right,sb);
+        }
+    }
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        Deque<String> nodes = new LinkedList<>();
+        nodes.addAll(Arrays.asList(data.split(spliter)));
+        return buildTree(nodes);
+    }
+    
+    private TreeNode buildTree(Deque<String> nodes) {
+        String val = nodes.remove();
+        if (val.equals(NN)) return null;
+        else {
+            TreeNode node = new TreeNode(Integer.valueOf(val));
+            node.left = buildTree(nodes);
+            node.right = buildTree(nodes);
+            return node;
+        }
+    }
+}
+```
 
 ## Fellow up
 
@@ -3396,7 +3445,7 @@ class Node {
 ***
 
 
-# 387| First Unique Character in a String
+# 387 First Unique Character in a String
 
 先用 LinledHashMap 的方式紀錄出現次數，然後 loop through Map
 
@@ -3478,21 +3527,34 @@ public class Solution {
 
 ***
 
-# 535| Encode and Decode TinyURL
-
-## Problem Analysis
-
-## Algorithm Analysis
-
-## Time Complexity Analysis
+# 535 Encode and Decode TinyURL
 
 ## Code
 
-## Fellow up
+```java
+public class Codec {
+    List<String> urls = new ArrayList<String>();
+    // Encodes a URL to a shortened URL.
+    public String encode(String longUrl) {
+        urls.add(longUrl);
+        return String.valueOf(urls.size()-1);
+    }
+
+    // Decodes a shortened URL to its original URL.
+    public String decode(String shortUrl) {
+        int index = Integer.valueOf(shortUrl);
+        return (index<urls.size())?urls.get(index):"";
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(url));
+```
 
 ***
 
-# 538| Convert BST to Greater Tree
+# 538 Convert BST to Greater Tree
 
 ## Problem Analysis
 
@@ -3530,7 +3592,7 @@ class Solution {
 
 ***
 
-# 617| Merge Two Binary Trees
+# 617 Merge Two Binary Trees
 
 ## Problem Analysis
 
@@ -3607,15 +3669,42 @@ class Solution {
 
 ***
 
-# 771| Jewels and Stones
-
-## Problem Analysis
-
-## Algorithm Analysis
-
-## Time Complexity Analysis
+# 819 Most Common Word
 
 ## Code
+
+```java
+class Solution {
+    public String mostCommonWord(String paragraph, String[] banned) {
+        String[] strs = paragraph.replaceAll("[!?',;.]","").toLowerCase().split(" ");
+        String result = "";
+        int maxFreq = 0;
+        
+        Map<String, Integer> map = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        
+        for(String str : strs) {
+            map.put(str, map.getOrDefault(str, 0) + 1);
+        }
+        
+        for(String str : banned) {
+            set.add(str);
+        }
+        
+        for(String key : map.keySet()) {
+            System.out.println(key);
+            if(map.get(key) > maxFreq && !set.contains(key)) {
+                maxFreq = map.get(key);
+                result = key;
+                
+            }
+        }
+        
+        return result;
+        
+    }
+}
+```
 
 ## Fellow up
 
