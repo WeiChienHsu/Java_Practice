@@ -1,13 +1,50 @@
 # A company 
 
 [1 Two Sum](#1-two-sum)
+
 [2 Add Tow Numbers](#2-add-two-numbers)
+
 [3 Longest Substring Without Repeating Characters](#3-longest-substring-without-repeating-characters)
+
 [5 Longest Palindromic Substring](#5-longest-palindromic-substring)
+
 [8 String to Integer](#8-string-to-integer)
+
 [15 3 Sum](#15-3-sum)
 
+[17 Letter Combinations of a Phone Number](#17-letter-combinations-of-a-phone-number)
 
+[20 Valid Parentheses](#20-valid-parentheses)
+
+[21 Merge Two Sorted Lists ](#21-merge-two-sorted-lists)
+
+[23 Merge k Sorted Lists](#23-merge-k-sorted-lists)
+
+[42 Trapping Rain Water ](#42-trapping-rain-water)
+
+[48 Rotate Image](#48-rotate-image)
+
+[49 Group Anagrams](#49-group-anagrams)
+
+[73 Set Matrix Zeroes](#73-set-matrix-zeroes)
+
+[78 Subsets Permutations](#78-subsets-permutations)
+
+[89 Gray Code ](#89-gray-code)
+
+[102 Binary Tree Level Order Traversal](#102-binary-tree-level-order-traversal)
+
+[119 Pascal's Triangle](119-pascal's-triangle)
+
+[127 Word Ladder](127-word-ladder)
+
+[141 Linked List Cycle](#141-linked-list-cycle)
+
+[146 LRU Cache](#146-lru-cache)
+
+[151 Reverse Words in a String](#151-reverse-words-in-a-string)
+
+[155 Min Stack](#155-min-stack)
 
 # 1 Two Sum
 
@@ -639,6 +676,16 @@ public class Solution {
 
 # 17 Letter Combinations of a Phone Number
 
+要找 Combination 使用 DFS + backtracking
+
+DFS function 裡面，要放著 INPUT digits ，每次抓一個英文字母，然後遍歷他對應的 String ， currentIndex，result， combination (StringBuilder)
+
+Base Case: 當 cobination 長度與 digits 相同時。
+
+每次操作就拿出對應的 String，用for loop 便利過所有String內的字母。
+
+在For loop 裡面操作 add, dfs, remove，每丟到下一層的時候， index + 1
+
 ## Problem Analysis
 
 Get the combination ! -> DFS + backtracking
@@ -810,6 +857,27 @@ class Solution {
 }
 ```
 
+```java
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while(l1 != null || l2 != null) {
+            if((l1 != null ? l1.val : Integer.MAX_VALUE) > (l2 != null ? l2.val : Integer.MAX_VALUE )) {
+                cur.next = new ListNode(l2.val);
+                cur = cur.next;
+                l2 = l2.next;
+            } else {
+                cur.next = new ListNode(l1.val);
+                cur = cur.next;
+                l1 = l1.next;
+            }
+        }
+        return dummy.next;
+    }
+}
+```
+
 
 # 23 Merge k Sorted Lists
 
@@ -885,15 +953,39 @@ class Solution {
 
 # 42 Trapping Rain Water 
 
-## Problem Analysis
-
-## Algorithm Analysis
-
-## Time Complexity Analysis
-
 ## Code
 
-## Fellow up
+```java
+class Solution {
+    public int trap(int[] A) {
+        if (A.length < 3) return 0;
+
+        int ans = 0;
+        int l = 0, r = A.length - 1;
+
+        // find the left and right edge which can hold water
+        while (l < r && A[l] <= A[l + 1]) l++;
+        while (l < r && A[r] <= A[r - 1]) r--;
+
+        while (l < r) {
+            int left = A[l];
+            int right = A[r];
+            if (left <= right) {
+                // add volum until an edge larger than the left edge
+                while (l < r && left >= A[++l]) {
+                    ans += left - A[l];
+                }
+            } else {
+                // add volum until an edge larger than the right volum
+                while (l < r && A[--r] <= right) {
+                    ans += right - A[r];
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
 
 ***
 
@@ -960,7 +1052,7 @@ public void antiRotate(int[][] matrix) {
     }
 }
 ```
-# 49| Group Anagrams
+# 49 Group Anagrams
 
 ## Problem Analysis
 
@@ -1001,7 +1093,7 @@ class Solution {
 
 ***
 
-# 73| Set Matrix Zeroes
+# 73 Set Matrix Zeroes
 
 ## Problem Analysis
 
@@ -1101,7 +1193,7 @@ public void setZeroes(int[][] matrix) {
 
 ***
 
-# 78| Subsets  
+# 78 Subsets Permutations
 
 ## Problem Analysis
 
@@ -1296,31 +1388,27 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 
 ***
 
-# 89| Gray Code 
+# 89 Gray Code 
 
-## Problem Analysis
-
-## Algorithm Analysis
-
-## Time Complexity Analysis
 
 ## Code
-
-## Fellow up
+```java
+class Solution {
+    public List<Integer> grayCode(int n) {
+        List<Integer> rs=new ArrayList<Integer>();
+        rs.add(0);
+        for(int i=0;i<n;i++){
+            int size=rs.size();
+            for(int k=size-1;k>=0;k--)
+                rs.add(rs.get(k) | 1<<i);
+        }
+        return rs;
+    }
+}
+```
 
 ***
 
-# 98| Validate Binary Search Tree 
-
-## Problem Analysis
-
-## Algorithm Analysis
-
-## Time Complexity Analysis
-
-## Code
-
-## Fellow up
 
 *** 
 
@@ -1411,7 +1499,7 @@ class Solution {
 
 ***
 
-# 121| Best Time to Buy and Sell Stock 
+# 121 Best Time to Buy and Sell Stock 
 
 [Youtube](https://www.youtube.com/watch?v=8pVhUpF1INw)
 
@@ -1485,7 +1573,7 @@ class Solution {
 
 ***
 
-# 126| Word Ladder II 
+# 126 Word Ladder II 
 
 ## Problem Analysis
 
@@ -1600,7 +1688,7 @@ class Solution {
 
 ***
 
-# 127| Word Ladder
+# 127 Word Ladder
 
 ## Problem Analysis
 
@@ -1687,6 +1775,11 @@ class Solution {
 ***
 
 # 138| Copy List with Random Pointer
+
+記得 while loop 內的 xxx != null -> xxx 要 xxx = xxx.next 不然會有無限循環
+
+map.get(head).next = map.get(head.next)
+map.get(head).random = map.get(head.random)
 
 ## Problem Analysis
 
@@ -1863,7 +1956,7 @@ class Solution {
 
 ***
 
-# 141| Linked List Cycle
+# 141 Linked List Cycle
 
 ## Algorithm Analysis
 
@@ -2060,7 +2153,45 @@ class Node {
 
 ```
 
-## Fellow up
+## Fellow up - Used Two Stack
+```java
+class MinStack {
+
+    private Deque<Integer> stack1;
+    private Deque<Integer> stack2;
+    
+    
+    /** initialize your data structure here. */
+    public MinStack() {
+        stack1 = new ArrayDeque<>();
+        stack2 = new ArrayDeque<>();
+    }
+    
+    public void push(int x) {
+        stack1.offerFirst(x);
+        if(stack2.isEmpty() || x <= getMin()) stack2.offerFirst(x);
+    }
+    
+    public void pop() {
+        if(top() == getMin()) stack2.pollFirst();
+        stack1.pollFirst();
+    }
+    
+    public int top() {
+        return stack1.peek();
+    }
+    
+    public int getMin() {
+        return stack2.peek();
+    }
+}
+```
+
+## Fellow up - Used One Stack
+```java
+
+
+```
 
 ***
 
