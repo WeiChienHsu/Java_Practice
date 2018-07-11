@@ -2639,6 +2639,10 @@ class Solution {
 
 # 215 Kth Largest Element in an Array 
 
+N log N -> Sorted -> find nums.length - K
+
+N log K -> Put into priorityQueue and keep pq size == k
+
 ## Problem Analysis
 
 We could sort the array and find the N - k number
