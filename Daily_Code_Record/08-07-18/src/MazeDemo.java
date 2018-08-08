@@ -24,7 +24,6 @@ public class MazeDemo {
         int count = 0;
 
         queue.offerFirst(1);
-        count ++;
 
         while(!queue.isEmpty()) {
             int currentNode = queue.pollLast();
