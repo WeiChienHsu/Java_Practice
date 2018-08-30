@@ -17,11 +17,6 @@ class Solution {
         if(root == null) return false;
         if(set.contains(target - root.val)) return true;
         set.add(root.val);
-        return helper(root.right, set, target) || helper(root.left, set, target);
-        
-        
+        return helper(root.right, set, target) || helper(root.left, set, target);  
     } 
-    
-
-    
 }
