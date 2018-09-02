@@ -35,6 +35,9 @@ class Solution {
                       /* Return the less freq */
                       return o2.freq - o1.freq;
                   }
+                  /* The same implementaion of my solution */
+                  // return o1.freq == o2.freq ? o1.name.compareTo(o2.name) : o2.freq - o1.freq;
+              
               }
       });
       
