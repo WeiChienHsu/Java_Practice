@@ -51,3 +51,9 @@ public class CompareToExample{
   System.out.println(s1.compareTo(s5));//2 because "h" is 2 times greater than "f"  
 }}  
 ```
+
+## ReplaceAll
+
+```java
+String[] strs = paragraph.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ");
+```
