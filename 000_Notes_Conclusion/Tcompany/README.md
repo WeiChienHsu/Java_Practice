@@ -1,6 +1,5 @@
 # Solution
 
-
 ## Primes In Subtree
 
 ```java
@@ -48,6 +47,7 @@ private  static List<Integer> primeQ(int n, List<Integer> first, List<Integer> 
         for(int query : queries) res.add(primCount[query]);
         return  res;
     }
+
     private static boolean isPrime(int n) {
         if(n == 1) return false;
         if (n <= 3) return true;
