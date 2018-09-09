@@ -57,3 +57,11 @@ public class CompareToExample{
 ```java
 String[] strs = paragraph.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ");
 ```
+
+
+## StringBuilder
+- append(String or char)
+- insert(int index)
+- reverse()
+- toString()
+- new String(sb.toString());
