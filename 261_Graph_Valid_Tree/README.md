@@ -84,10 +84,12 @@ public boolean validTree(int n, int[][] edges) {
             map.get(edges[i][1]).add(edges[i][0]);
         }
         boolean[] visited = new boolean[n];
+
         if (findCircle(0, -1, map, visited)) {
             // check if there is loop
             return false;
         }
+
         // check if every node is included
         for (boolean isVisited : visited) {
             if (!isVisited) {
@@ -103,6 +105,7 @@ public boolean validTree(int n, int[][] edges) {
             return true;
         }
         visited[curr] = true;
+        
         for (int next : map.get(curr)) {
             if (next != prev && findCircle(next, curr, map, visited)) {
                 return true;
