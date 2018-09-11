@@ -4677,3 +4677,218 @@ class Movie {
     }
 }
 ```
+
+***
+
+# OA1 - Debugging
+
+### Array Sort
+- Descending Order : 改變 Condition 內的 '>'
+ 
+```java
+public static int[] sortArray(int arr[]) {
+    int i, max, location, j, temp, len = arr.length;
+    for(int i = 0; i < len; i++) {
+        max = arr[i];
+        location = i;
+        for(j = i; j < len; j++) {
+            if(max < arr[j]) {
+                max = arr[j];
+                location = j;
+            }
+        }
+        temp = arr[i];
+        arr[i] = arr[location];
+        arr[locatin] = temp
+    }
+    return arr;
+}
+```
+- Descending Order: 改面 Condition 內的 '<' & Remove useless variable declaration.
+
+```java
+public static int[] sortArray(int arr[]) {
+    int len = arr.length;
+    int i, j, temp;
+    for(i = 0; i < len - 1; i++) {
+        for(j = i; j < len; j++) {
+            if(arr[i] < arr[j]) {
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    return arr;
+}
+```
+
+## Digital Count
+
+- Create a temp variable to avoid changine of original num.
+
+```java
+
+publlic static int coundDigits(int num) {
+    int count = 0; 
+    int temp = num;
+    while(temp != 0) {
+        temp = temp / 10;
+        count ++;
+    }
+    return (num % count);
+}
+```
+
+## Replace array value
+
+- Change '<=' to '<' 
+
+```java
+public static int[] replaceValues(int arr[]) {
+    int i, j, len = arr.length;
+    if(len % 2 == 0) {
+        /* Even */
+        for( i = 0; i < len; i++)
+            arr[i] = 0;
+    }
+    else {
+        /* Odd */
+        for( j = 0; j < len; j++)
+            arr[j] = 1;
+    }
+    return arr;
+}
+
+```
+
+## Reverse Array
+
+- len += 1 -> len -= 1
+
+```java
+public static int[] reverseArray(int arr[]) {
+    int i, temp, originalLen = arr.length;
+    int len = originalLen;
+    for( i = 0; i < originalLen / 2; i++) {
+        temp = arr[len - 1];
+        arr[len - 1] = arr[i];
+        arr[i] = temp;
+        len -= 1;
+    }
+    return arr;
+}
+```
+- Remove len += 1 and modify arr[len -1 - i] = arr[i]
+
+```java
+public static int[] reverseArray(int arr[]) {
+    int i, temp, originalLen = arr.length;
+    int len = originalLen;
+    for( i = 0; i < originalLen / 2; i++) {
+        temp = arr[len - 1];
+        arr[len - 1 - i] = arr[i];
+        arr[i] = temp;
+    }
+    return arr;
+}
+```
+
+## Remove Element
+
+- i++ -> i + 1
+
+```java
+public static int[] removeElement(int arr[], int index) {
+    int i, j, len = arr.length;
+    if(index < len) {
+        for(i = index; i < len - 1; i++) {
+            arr[i] = arr[i+1];
+        }
+
+        int rarr[] = new int[len - 1];
+        for(i = 0; i < len - 1; i++)
+            rarr[i] = arr[i];
+        return rarr;
+    }
+    else {
+        /* Out of boundry */
+        return arr;
+    }
+}
+
+```
+
+## Print EvenOddPattern
+
+- Add {} on the for loops
+
+```java
+public static void printPattern(int num) {
+    int i , print = 0;
+    if(num % 2 == 0) {
+        print = 0;
+        for(i = 0; i < num; i++) {
+            System.out.print(print + " ");
+            print += 2;
+        } 
+    } else {
+        print = 1;
+        for(i = 0; i < num; i++) {
+            System.out.print(print + " ");
+            print += 2;
+        }
+    }
+}
+```
+
+## Mamchester code 
+- result = (a[i] == a[i-1]) to result = (a[i] != a[i- 1])
+- output[i] = result ? 1 : 0;
+
+## SumArray
+- sum = arr[i] -> sum += arr[i]
+
+## PrintPattern2
+
+- Move out the declaration of char ch from for loop
+- Modify ch++ to print++
+
+```java
+public static void print2(int row) {
+    for(int i = 0; i < row; i++) {
+        char ch = 'a';
+        char print = ch;
+        for(int j = 0; j <= i; j++) {
+            System.out.print((print++))
+        }
+    }
+}
+```
+
+## Insertion Sort
+
+- Change those '<' to '>'
+
+```java
+public static void insertionSort(int[] arr) {
+    int n = arr.length;
+    for(int i = 1; i < n; i++) {
+        if(arr[i - 1] > arr[i]) {
+            int temp = arr[i];
+            int j = i;
+            while(j > 0 && arr[j - 1] > temp) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = temp;
+        }
+    }
+}
+
+```
+
+## checkGrade
+- (x >= 70) || (x < 80) -> &&
+
+##
