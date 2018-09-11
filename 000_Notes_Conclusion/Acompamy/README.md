@@ -4891,4 +4891,84 @@ public static void insertionSort(int[] arr) {
 ## checkGrade
 - (x >= 70) || (x < 80) -> &&
 
-##
+***
+
+# Alph Table
+
+```
+A B C D E
+1 2 3 4 5
+
+F G H I J
+6 7 8 9 10
+
+K  L  M  N  O
+11 12 13 14 15
+
+P  Q  R  S  T
+16 17 18 19 20
+
+U  V  W  X  Y
+21 22 23 24 25
+
+Z
+26
+```
+
+## Example - Regular
+
+- QPS : TSV -> IHK : LKN
+- DJ:WQ -> FK: UP
+- EAGLE : FZHKF -> THANKS : UGBMLR
+- FASTER : HCUVGT -> SLOWER :UNQYGT
+- 985 : 874 -> 763 : 652
+- 865 : 532 -> 976 : 643
+- ADBC : EHFG -> ILJK : MPNO
+- JOHN : LSNV -> MARK : OEXS
+- COMPUTER : PMOCRETU -> TELEVISION : VELETNOISI
+- A17R : D12P -> G7N : J2L
+- VALIANT : UBKJZOS -> TRANSCEND : SSZORDDOC
+- COMPUTER : GKQLYPIN  -> SENATE : WARWXA（奇数+4偶数-4）
+- KPQR : LRTV -> DGHY : EIKC
+- STICK : RSHBK -> REPLY : QDOKX
+- EAGLE : FZHKF -> THANKS : UGNLMR
+- ACFJ : CEHL -> PRUY : RTWA 
+- 27 : 24 -> 64 : 60
+- MQD : KRK -> SWM : QXT(NCF)
+- AD5 : ED9 （A + D = 5, E + D = 9）
+
+
+## Example - Exclusive
+
+- BGL : DIN -> MRW : HLR
+- PRS : TVX ->  FIK : LME （前三项均为递增）􀴭􀭑 16 18 19 20 22 24 6 9 11 12 13 5
+- JLP（LNT :TVZ DFJ
+- (ABIJ) : DEHI: MNQR: STWX
+- (RHCAI) OEST HNDA ADEH （只有这个不是身体部位,toes, hand, head） 
+- ADF (MPR) ILN EHJ (MPR不是以元音开头？)
+- STV XYA （KKT） BDE
+- 956 794 884 (678）(前面三个加起来都是20，最后一个加起来是21)
+- 1,4,16；17,20,24；8,11,18；（19,20,5）（前面三个均是递增，最后一个不是）
+- AE5 DF6 HN14 （KP2）（E=5,F=6,N=14,P!=2）
+- (HIK) DGJ LPT SUW（其他都是等间距）
+
+## Example - Fill Blank
+- 3,6,18,108,(1944) （3x6=18, 6x18=108, 18x108 = 1944）
+- 1,1,4,2,13,3,40,4,(121)
+- 3 7 13 21 (31) (间隔以4，6，8，10递增)
+- 3 11 25 45 （71）(间隔为8，14，20，26)
+- 5 11 19 29 (41) (间隔以6，8，10，12递增)
+- 0 2 6 12 20 (30) （间隔以2，4，6，8，10递增）
+- 4 12 6 18 12 36 30 (90)
+- 1 5 7 (8) (1+2^2 = 5 5+2^1 = 7 7+2^0 = 8)
+- 10 14 23 39 64 (100)
+- 10 74 202 394 (650)
+- 2 8 5 6 8 (4) 11 
+- 16 30 46 62 (78) （30 + 16, 46 + 16, 62 + 16）
+- 2, 5, 26，(677)（规律是当前数字是前一个数字平方加1）
+- ASSERTIVENESS-> SENSSAEVISTRE : MULTINATIONAL ->(ANOLUMITALNIT)
+
+***
+
+
+
