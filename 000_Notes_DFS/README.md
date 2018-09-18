@@ -513,3 +513,66 @@ stringStack.offerLast(stringStack.pollLast().append(c));
 - 3. 使用Target還是RemainTarget？ 我們要的解是在底層發生嗎？返回條件為何？
 - 4. 有些題目可以減枝來優化，當符合某種條件時，繼續處理下去是沒有意義的。（這題就是remainTarget大於剩下的值可以組合成最大的數，直接reture回上層。
 
+
+***
+
+# Backtracking
+
+兩種選擇時，使用的 Binary BackTrackig Algorithm，另一種情況，是每個 backtracking 是透過 for loop 進行的。
+
+```java
+/*
+
+Image there is a binary tree, 
+we start from the dummy root, 
+and the left child node means choice 1 (append a lower case), 
+and right child node is choice 2 (upper case). 
+
+Hence if String here is abc, we have a tree looks like this.
+
+  /   \
+ a     A
+/ \   / \ 
+ab aB Ab AB
+/ \ / \ / \ / 
+abc abC................................
+
+Obviously our goal here will be printing out all leaf nodes, 
+which we can accomplished by using DFS with backTracking or BFS.
+*/
+
+
+class Solution {
+  public List<String> letterCasePermutation(String S) {
+      List<String> result = new ArrayList<>();
+      StringBuilder sb = new StringBuilder();
+      backtracking(S, 0, sb, result);
+      return result;
+  }
+  
+  public void backtracking(String S, int index, StringBuilder sb, List<String> result) {
+      if(index == S.length()) {
+          result.add(new String(sb.toString()));
+          return;
+      }
+      
+      /* isDigit */
+      if(S.charAt(index) >= '0' && S.charAt(index) <= '9') {
+          sb.append(S.charAt(index));
+          backtracking(S, index + 1, sb, result);
+          sb.deleteCharAt(sb.length() - 1);
+      }
+      else {
+          /* isAlph */
+          sb.append(Character.toUpperCase(S.charAt(index)));
+          backtracking(S, index + 1, sb, result);
+          sb.deleteCharAt(sb.length() - 1);
+          
+          sb.append(Character.toLowerCase(S.charAt(index)));
+          backtracking(S, index + 1, sb, result);
+          sb.deleteCharAt(sb.length() - 1);
+      }
+  }
+}
+
+```
