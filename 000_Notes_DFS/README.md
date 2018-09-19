@@ -518,6 +518,186 @@ stringStack.offerLast(stringStack.pollLast().append(c));
 
 # Backtracking
 
+## Subset 
+
+[1, 2, 3] -> [], [1], [2], [3], [1,2] [1,3] [2,3] [1,2,3]
+
+```java
+/*
+    Maintain 3 variables:
+        - currentIndex
+        - tempList
+    
+    Steps:
+        - get to the next index of elements
+        - Add current index of element in to the temp list
+        
+    Base case:
+        - when the result list doesn't contains current temp list add 
+*/
+
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        backtracking(results, nums, 0, new ArrayList<>());
+        return results;
+    }
+    
+    public void backtracking(List<List<Integer>> results, int[] nums, int currentIndex, List<Integer> tempList) {
+        if(results.contains(tempList)) return;
+        results.add(new ArrayList<>(tempList));
+        for(int i = currentIndex; i < nums.length; i++) {
+            tempList.add(nums[i]);
+            backtracking(results, nums, i + 1, tempList);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+```
+
+## Subsets II (Contains duplicated number)
+
+[1, 2, 2] -> [2], [1] , [1,2,2], [2,2], [1,2], []
+
+```java
+/*
+    Maintain 3 variables:
+        - currentIndex
+        - tempList
+    
+    Steps:
+        - get to the next index of elements
+        - Add current index of element in to the temp list
+        
+    Base case:
+        - when the result list doesn't contains current temp list add 
+*/
+
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        Arrays.sort(nums);
+        backtracking(results, nums, 0, new ArrayList<>());
+        return results;
+    }
+    
+    public void backtracking(List<List<Integer>> results, int[] nums, int currentIndex, List<Integer> tempList) {
+        if(results.contains(tempList)) return;
+        results.add(new ArrayList<>(tempList));
+        for(int i = currentIndex; i < nums.length; i++) {
+            if(i > currentIndex && nums[i] == nums[i-1]) continue; // skip duplicates
+            tempList.add(nums[i]);
+            backtracking(results, nums, i + 1, tempList);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+```
+
+
+## Permutations
+
+[1, 2, 3] -> [1, 2, 3] [1, 3, 2] [2, 1, 3] [2, 3, 1] [3, 1, 2] [3, 2, 1]
+
+- 使用 contains 檢查是否將數字加入過List當中（因為unique number，不需要檢查重複的狀況）
+
+```java
+/*
+    Maintains only one variables:
+        - tempList: record the current add-in result
+        
+    Only one step to do:
+        - Add in a new element after checking its not exist in the list
+    
+    Base case:
+        - If the length of temp list is equal the origin arr, add them into the result list
+
+*/
+
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        dfsHelper(results, nums, new ArrayList<>());
+        return results;
+    }
+    
+    public void dfsHelper(List<List<Integer>> results, int[] nums, List<Integer> tempList) {
+        if(tempList.size() == nums.length) {
+            results.add(new ArrayList<>(tempList));
+            return;
+        }
+        
+        for(int i = 0; i < nums.length; i++) {
+            if(tempList.contains(nums[i])) continue;
+            tempList.add(nums[i]);
+            dfsHelper(results, nums, tempList);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+```
+
+## Permutations II (Contains Duplicated number)
+
+- 解題技巧：先畫出 Recursion Tree
+- 將 Original Array 做排序
+- 檢查目前這條支線，是否與前一個數字相同，如果相同，而且前一個數字已經使用過，應該減掉整個支線（第一層的檢查）
+- 增加了 Visited array，因為要在往下探索時，確保不要加入已經使用過的數字（往下層的檢查）
+
+```java
+/*
+    Sorted the array to make sure the situation likes [3,3,0,3] which might not deal with the last 3 in my method
+
+    Maintains only one variables:
+        - tempList: record the current add-in result
+        - boolean visited[]: record the index of number that has been added
+        
+    Only one step to do:
+        - Add in a new element after checking its not exist in the list
+    
+    Base case:
+        - If the length of temp list is equal the origin arr, add them into the result list
+
+*/
+
+
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        Arrays.sort(nums);
+        dfsHelper(results, nums, visited, new ArrayList<>());
+        return results;
+    }
+    
+    public void dfsHelper(List<List<Integer>> results, int[] nums, boolean[] visited, List<Integer> tempList) {
+        
+        if(tempList.size() == nums.length) {
+            results.add(new ArrayList<>(tempList));
+            return;
+        }
+        
+        for(int i = 0; i < nums.length; i++) {
+            if(visited[i]) continue;
+            
+            if(i != 0 && nums[i] == nums[i - 1] && !visited[i - 1]) continue;
+            
+            tempList.add(nums[i]);
+            visited[i] = !visited[i];
+            dfsHelper(results, nums, visited, tempList);
+            visited[i] = !visited[i];
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+```
+
+
+## Letter Case permutation (Only 2 ways)
+
 兩種選擇時，使用的 Binary BackTrackig Algorithm，另一種情況，是每個 backtracking 是透過 for loop 進行的。
 
 ```java
@@ -576,3 +756,110 @@ class Solution {
 }
 
 ```
+
+
+## Combination Sum
+
+- 用 Remainder 代表著 Target，去每一層找尋需要的數字。
+- 分析三種 Remainder 的狀況。
+- 當還需要找數字時，使用 backtracking 的技術去進入與回到上一層。
+
+```java
+/* 
+    Maintains:
+        - tempList
+        - currentIndex: record the current element
+
+    Steps:
+        - Sort the original integer array
+        - Remainder < 0: The total sum is too large, return
+        - Remainder == 0: Find the combination, add into the result
+        - Remainder > 0: Still need to find the number, check if the current Index of value is larger than remainder
+        
+    Base case:
+        - Remainder < 0
+*/
+
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> results = new ArrayList<>();
+        if(candidates.length == 0) return results;
+        
+        backtracking(results, candidates, target, 0, new ArrayList<>());
+        return results;
+        
+    }
+    
+    public void backtracking(List<List<Integer>> results, int[] nums, int remainder, int currentIndex, List<Integer> tempList) {
+        if(remainder < 0) return;
+        else if(remainder == 0) {
+            if(results.contains(tempList)) return;
+            results.add(new ArrayList<>(tempList));
+        } else {
+            for(int i = currentIndex; i < nums.length; i++) {
+                if(nums[i] > remainder) break;
+                tempList.add(nums[i]);
+                backtracking(results, nums, remainder - nums[i], i, tempList);
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+    }
+}
+```
+
+## Combinatino Sum II (Can not reuse same element)
+
+- 與上一題的差別在於，不使用重複的數字，所以 dfs 往下一面一層傳遞時， Start Index 要 ++
+
+```java
+/* 
+    Maintains:
+        - tempList
+        - currentIndex: record the current element
+
+    Steps:
+        - Sort the original integer array
+        - Remainder < 0: The total sum is too large, return
+        - Remainder == 0: Find the combination, add into the result
+        - Remainder > 0: Still need to find the number, check if the current Index of value is larger than remainder
+        
+    Base case:
+        - Remainder < 0
+*/
+
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> results = new ArrayList<>();
+        if(candidates.length == 0) return results;
+        
+        backtracking(results, candidates, target, 0, new ArrayList<>());
+        return results;
+        
+    }
+    
+    public void backtracking(List<List<Integer>> results, int[] nums, int remainder, int currentIndex, List<Integer> tempList) {
+        if(remainder < 0) return;
+        else if(remainder == 0) {
+            if(results.contains(tempList)) return;
+            results.add(new ArrayList<>(tempList));
+        } else {
+            for(int i = currentIndex; i < nums.length; i++) {
+                if(nums[i] > remainder) break;
+                tempList.add(nums[i]);
+                backtracking(results, nums, remainder - nums[i], i + 1, tempList); /* We are not going to reuse the same element */
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+    }
+}
+```
+
+
+## Combination Sum III
+
+
+
