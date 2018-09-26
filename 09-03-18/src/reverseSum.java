@@ -10,17 +10,11 @@ public class reverseSum {
         int count = 1;
 
         sum = tempNum + reverseInteger(tempNum);
-        System.out.println(tempNum + " + " + reverseInteger(tempNum));
-
         while (!checkHeadAndTail(sum)) {
             tempNum = sum;
             sum = tempNum + reverseInteger(tempNum);
             count++;
-            System.out.println(tempNum + " + " + reverseInteger(tempNum));
         }
-
-
-        System.out.println("Count " + count + " times.");
         return sum;
 
     }
