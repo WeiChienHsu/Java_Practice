@@ -163,8 +163,43 @@ return result;
 
 ***
 
+## PriorityQueue and Sorted array
 
-
-
-
-
+```java
+class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        List<Integer> results = new ArrayList<>();
+        
+        /* Created a MaxHeap */
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] q1, int[]q2) {
+                return q2[1] - q1[1];
+            }
+        });
+        
+        /* O(nlogn) n = nums.lenth */
+        Arrays.sort(nums);
+        
+        /* O(n) to record the freq of integers */
+        int left = 0;
+        for(int i = 0; i < nums.length - 1; i++) {
+            if(nums[i] < nums[i + 1]) {
+                pq.offer(new int[]{nums[i], i - left + 1});
+                left = i + 1;
+            }
+        }
+        
+        if(left != nums.length) {
+            pq.offer(new int[]{nums[left], nums.length - left});
+        }
+        
+        while(k > 0) {
+            results.add(pq.poll()[0]);
+            k--;
+        }
+        
+        return results;
+    }
+}
+```
